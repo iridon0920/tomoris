@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using UnityEngine;
 
 public class Board
 {
@@ -105,6 +106,21 @@ public class Board
             if (movePlanPositionY < 0)
             {
                 result = true;
+            }
+            else
+            {
+                if (movePlanPositionY < Height - 1)
+                {
+                    if (StatusByPositions[
+                        CurrentControlBlocksPositionX,
+                        movePlanPositionY
+                    ])
+                    {
+                        result = true;
+
+                    }
+                }
+
             }
         }
         return result;

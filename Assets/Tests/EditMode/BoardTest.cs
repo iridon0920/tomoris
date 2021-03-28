@@ -89,7 +89,7 @@ namespace Tests
         [Test]
         public void ControlBlocksPutTest()
         {
-            var board = new Board(10, 5);
+            var board = new Board(10, 10);
             var IBlocks = new ControlBlocks(CreateIBlockList());
             board.InsertBlocks(IBlocks);
 
@@ -101,6 +101,11 @@ namespace Tests
 
             // ブロックが一度右移動後一番下に着地するように置かれる。
             Assert.IsTrue(board.MoveBlocksRight());
+            Assert.IsTrue(board.MoveBlocksDown());
+            Assert.IsTrue(board.MoveBlocksDown());
+            Assert.IsTrue(board.MoveBlocksDown());
+            Assert.IsTrue(board.MoveBlocksDown());
+            Assert.IsTrue(board.MoveBlocksDown());
             Assert.IsTrue(board.MoveBlocksDown());
             Assert.IsTrue(board.MoveBlocksDown());
             Assert.IsTrue(board.MoveBlocksDown());
@@ -116,7 +121,31 @@ namespace Tests
             // CurrentBlocks関係のプロパティが初期化されている
             Assert.IsNull(board.CurrentControlBlocks);
             Assert.AreEqual(4, board.CurrentControlBlocksPositionX);
-            Assert.AreEqual(4, board.CurrentControlBlocksPositionY);
+            Assert.AreEqual(9, board.CurrentControlBlocksPositionY);
+
+            // 2つ目のブロック投入
+            IBlocks = new ControlBlocks(CreateIBlockList());
+            board.InsertBlocks(IBlocks);
+
+            // 1つ目に置いたブロックの上に置くようにブロックを動かす
+            Assert.IsTrue(board.MoveBlocksRight());
+            Assert.IsTrue(board.MoveBlocksDown());
+            Assert.IsTrue(board.MoveBlocksDown());
+            Assert.IsTrue(board.MoveBlocksDown());
+            Assert.IsTrue(board.MoveBlocksDown());
+            // 既に存在するブロックの上に置こうとするとFalseが返る。
+            Assert.IsFalse(board.MoveBlocksDown());
+
+            // 1個目の上にI字ブロックが新たにゲーム盤に適用されている。
+            Assert.IsTrue(board.StatusByPositions[5, 7]);
+            Assert.IsTrue(board.StatusByPositions[5, 6]);
+            Assert.IsTrue(board.StatusByPositions[5, 5]);
+            Assert.IsTrue(board.StatusByPositions[5, 4]);
+
+            // CurrentBlocks関係のプロパティが初期化されている
+            Assert.IsNull(board.CurrentControlBlocks);
+            Assert.AreEqual(4, board.CurrentControlBlocksPositionX);
+            Assert.AreEqual(9, board.CurrentControlBlocksPositionY);
         }
 
 
