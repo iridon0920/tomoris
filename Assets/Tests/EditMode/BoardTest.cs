@@ -19,78 +19,104 @@ namespace Tests
             Assert.AreEqual(19, board.CurrentControlBlocksPositionY);
         }
 
-        [Test]
-        public void ControlBlocksMoveTest()
-        {
-            var board = new Board(10, 20);
-            var IBlocks = new ControlBlocks(CreateIBlockList());
-            board.InsertBlocks(IBlocks);
-            Assert.IsTrue(board.MoveBlocks(5, 20));
-
-            Assert.AreEqual(5, board.CurrentControlBlocksPositionX);
-            Assert.AreEqual(20, board.CurrentControlBlocksPositionY);
-        }
-
         // 移動先でブロックがゲーム盤の外側へ衝突する場合、移動不可としてfalseを返すテスト
+        // 右側移動の場合
         [Test]
-        public void ControlBlocksMoveCollisionOutSideTest()
+        public void ControlBlocksRightMoveCollisionOutSideTest()
         {
-            var board = new Board(10, 20);
+            var board = new Board(5, 20);
             var IBlocks = new ControlBlocks(CreateIBlockList());
             board.InsertBlocks(IBlocks);
 
             // 衝突しない場合True, 衝突する場合false
-            Assert.IsTrue(board.MoveBlocks(9, 20));
-            Assert.IsFalse(board.MoveBlocks(10, 20));
-            Assert.IsTrue(board.MoveBlocks(0, 20));
-            Assert.IsFalse(board.MoveBlocks(-1, 20));
+            Assert.IsTrue(board.MoveBlocksRight());
+            Assert.IsTrue(board.MoveBlocksRight());
+            Assert.IsFalse(board.MoveBlocksRight());
 
-            // I字ブロックを横回転させた場合、異なる結果となる
-            Assert.IsTrue(board.MoveBlocks(4, 20));
-            board.SpinBlocks();
-            Assert.IsTrue(board.MoveBlocks(8, 20));
-            Assert.IsFalse(board.MoveBlocks(9, 20));
-            Assert.IsTrue(board.MoveBlocks(2, 20));
-            Assert.IsFalse(board.MoveBlocks(1, 20));
-            Assert.IsFalse(board.MoveBlocks(0, 20));
+            Assert.AreEqual(4, board.CurrentControlBlocksPositionX);
+            Assert.AreEqual(19, board.CurrentControlBlocksPositionY);
+        }
+
+
+        // 移動先でブロックがゲーム盤の外側へ衝突する場合、移動不可としてfalseを返すテスト
+        // 左側移動の場合
+        [Test]
+        public void ControlBlocksLeftMoveCollisionOutSideTest()
+        {
+            var board = new Board(5, 20);
+            var IBlocks = new ControlBlocks(CreateIBlockList());
+            board.InsertBlocks(IBlocks);
+
+            // 衝突しない場合True, 衝突する場合false
+            Assert.IsTrue(board.MoveBlocksLeft());
+            Assert.IsTrue(board.MoveBlocksLeft());
+            Assert.IsFalse(board.MoveBlocksLeft());
+
+            Assert.AreEqual(0, board.CurrentControlBlocksPositionX);
+            Assert.AreEqual(19, board.CurrentControlBlocksPositionY);
+        }
+
+        // 移動先でブロックがゲーム盤の外側へ衝突する場合、移動不可としてfalseを返すテスト
+        // 回転した上で左側移動の場合
+        [Test]
+        public void ControlBlocksSpinAndMoveCollisionOutSideTest()
+        {
+            var board = new Board(5, 20);
+            var IBlocks = new ControlBlocks(CreateIBlockList());
+            board.InsertBlocks(IBlocks);
+
+            // I字ブロックが横向きの状態で、左移動は衝突し、右移動は衝突しない
+            Assert.IsTrue(board.SpinBlocks());
+            Assert.IsFalse(board.MoveBlocksLeft());
+            Assert.IsTrue(board.MoveBlocksRight());
+
+            Assert.AreEqual(3, board.CurrentControlBlocksPositionX);
+            Assert.AreEqual(19, board.CurrentControlBlocksPositionY);
         }
 
         [Test]
         public void ControlBlockSpinCollisionOutSideTest()
         {
-            var board = new Board(10, 20);
+            var board = new Board(5, 20);
             var IBlocks = new ControlBlocks(CreateIBlockList());
             board.InsertBlocks(IBlocks);
-            board.MoveBlocks(9, 20);
+
+            Assert.IsTrue(board.MoveBlocksLeft());
+            // 移動した先で回転したら衝突する
             Assert.IsFalse(board.SpinBlocks());
         }
 
         [Test]
         public void ControlBlocksPutTest()
         {
-            var board = new Board(10, 20);
+            var board = new Board(10, 5);
             var IBlocks = new ControlBlocks(CreateIBlockList());
             board.InsertBlocks(IBlocks);
 
             // まだブロックは置かれていない。
-            Assert.IsFalse(board.StatusByPositions[4, 0]);
-            Assert.IsFalse(board.StatusByPositions[4, 1]);
-            Assert.IsFalse(board.StatusByPositions[4, 2]);
             Assert.IsFalse(board.StatusByPositions[4, 3]);
+            Assert.IsFalse(board.StatusByPositions[4, 2]);
+            Assert.IsFalse(board.StatusByPositions[4, 1]);
+            Assert.IsFalse(board.StatusByPositions[4, 0]);
 
-            // ブロックが一番下に着地するように置かれる。
-            board.MoveBlocks(5, 1);
+            // ブロックが一度右移動後一番下に着地するように置かれる。
+            Assert.IsTrue(board.MoveBlocksRight());
+            Assert.IsTrue(board.MoveBlocksDown());
+            Assert.IsTrue(board.MoveBlocksDown());
+            Assert.IsTrue(board.MoveBlocksDown());
+            // 接地するとFalseが返る。
+            Assert.IsFalse(board.MoveBlocksDown());
 
             // I字ブロックがゲーム盤に適用されている。
-            Assert.IsTrue(board.StatusByPositions[5, 0]);
-            Assert.IsTrue(board.StatusByPositions[5, 1]);
-            Assert.IsTrue(board.StatusByPositions[5, 2]);
             Assert.IsTrue(board.StatusByPositions[5, 3]);
+            Assert.IsTrue(board.StatusByPositions[5, 2]);
+            Assert.IsTrue(board.StatusByPositions[5, 1]);
+            Assert.IsTrue(board.StatusByPositions[5, 0]);
 
             // CurrentBlocks関係のプロパティが初期化されている
             Assert.IsNull(board.CurrentControlBlocks);
             Assert.AreEqual(4, board.CurrentControlBlocksPositionX);
-            Assert.AreEqual(19, board.CurrentControlBlocksPositionY);
+            Assert.AreEqual(4, board.CurrentControlBlocksPositionY);
         }
 
 

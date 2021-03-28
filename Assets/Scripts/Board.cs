@@ -18,7 +18,7 @@ public class Board
     {
         Width = width;
         Height = height;
-        InsertPositionX = width / 2 - 1;
+        InsertPositionX = (width - 1) / 2;
 
         StatusByPositions = new bool[width, height];
         for (var x = 0; x < width; x++)
@@ -42,24 +42,45 @@ public class Board
         CurrentControlBlocksPositionX = InsertPositionX;
         CurrentControlBlocksPositionY = Height - 1;
     }
-    public bool MoveBlocks(int movePositionX, int movePositionY)
+
+    public bool MoveBlocksRight()
     {
-        if (IsBlocksCollisionSide(CurrentControlBlocks, movePositionX))
+        var movePosition = CurrentControlBlocksPositionX + 1;
+        if (IsBlocksCollisionSide(CurrentControlBlocks, movePosition))
         {
             return false;
         }
-        if (IsBlockCollisionBottom(CurrentControlBlocks, movePositionX, movePositionY))
+        CurrentControlBlocksPositionX = movePosition;
+        return true;
+    }
+
+    public bool MoveBlocksLeft()
+    {
+        var movePosition = CurrentControlBlocksPositionX - 1;
+        if (IsBlocksCollisionSide(CurrentControlBlocks, movePosition))
+        {
+            return false;
+        }
+        CurrentControlBlocksPositionX = movePosition;
+        return true;
+    }
+
+    public bool MoveBlocksDown()
+    {
+        var movePositionY = CurrentControlBlocksPositionY - 1;
+        if (IsBlockCollisionBottom(CurrentControlBlocks, movePositionY))
         {
             foreach (var controlBlock in CurrentControlBlocks.BlockList)
             {
-                StatusByPositions[movePositionX + controlBlock.X, movePositionY + controlBlock.Y] = true;
+                StatusByPositions[
+                    CurrentControlBlocksPositionX + controlBlock.X,
+                    CurrentControlBlocksPositionY + controlBlock.Y
+                ] = true;
             }
             InitCurrentControlBlocksPosition();
-            return true;
+            return false;
         }
-        CurrentControlBlocksPositionX = movePositionX;
         CurrentControlBlocksPositionY = movePositionY;
-
         return true;
     }
 
@@ -75,13 +96,13 @@ public class Board
     }
 
     // 下の衝突判定
-    private bool IsBlockCollisionBottom(ControlBlocks controlBlocks, int movePositionX, int movePositionY)
+    private bool IsBlockCollisionBottom(ControlBlocks controlBlocks, int movePositionY)
     {
         var result = false;
         foreach (var controlBlock in controlBlocks.BlockList)
         {
             var movePlanPositionY = movePositionY + controlBlock.Y;
-            if (movePlanPositionY <= 0)
+            if (movePlanPositionY < 0)
             {
                 result = true;
             }
