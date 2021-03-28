@@ -24,7 +24,7 @@ namespace Tests
         [Test]
         public void ControlBlocksRightMoveCollisionOutSideTest()
         {
-            var board = new Board(5, 20);
+            var board = new Board(5, 5);
             var IBlocks = new ControlBlocks(CreateIBlockList());
             board.InsertBlocks(IBlocks);
 
@@ -34,7 +34,29 @@ namespace Tests
             Assert.IsFalse(board.MoveBlocksRight());
 
             Assert.AreEqual(4, board.CurrentControlBlocksPositionX);
-            Assert.AreEqual(19, board.CurrentControlBlocksPositionY);
+            Assert.AreEqual(4, board.CurrentControlBlocksPositionY);
+
+            // ブロックを1つ接地
+            Assert.IsTrue(board.MoveBlocksDown());
+            Assert.IsTrue(board.MoveBlocksDown());
+            Assert.IsTrue(board.MoveBlocksDown());
+            Assert.IsFalse(board.MoveBlocksDown());
+
+            // 2つ目のブロック投入
+            IBlocks = new ControlBlocks(CreateIBlockList());
+            board.InsertBlocks(IBlocks);
+
+            // 既に存在するブロックに衝突しようとするとFalse
+            Assert.IsTrue(board.MoveBlocksRight());
+            Assert.IsFalse(board.MoveBlocksRight());
+            Assert.IsTrue(board.MoveBlocksDown());
+            Assert.IsFalse(board.MoveBlocksRight());
+            Assert.IsTrue(board.MoveBlocksDown());
+            Assert.IsFalse(board.MoveBlocksRight());
+            Assert.IsTrue(board.MoveBlocksDown());
+            Assert.IsFalse(board.MoveBlocksRight());
+            // 2つ目が接地
+            Assert.IsFalse(board.MoveBlocksDown());
         }
 
 
@@ -43,7 +65,7 @@ namespace Tests
         [Test]
         public void ControlBlocksLeftMoveCollisionOutSideTest()
         {
-            var board = new Board(5, 20);
+            var board = new Board(5, 5);
             var IBlocks = new ControlBlocks(CreateIBlockList());
             board.InsertBlocks(IBlocks);
 
@@ -53,7 +75,30 @@ namespace Tests
             Assert.IsFalse(board.MoveBlocksLeft());
 
             Assert.AreEqual(0, board.CurrentControlBlocksPositionX);
-            Assert.AreEqual(19, board.CurrentControlBlocksPositionY);
+            Assert.AreEqual(4, board.CurrentControlBlocksPositionY);
+
+            // ブロックを1つ接地
+            Assert.IsTrue(board.MoveBlocksDown());
+            Assert.IsTrue(board.MoveBlocksDown());
+            Assert.IsTrue(board.MoveBlocksDown());
+            Assert.IsFalse(board.MoveBlocksDown());
+
+            // 2つ目のブロック投入
+            IBlocks = new ControlBlocks(CreateIBlockList());
+            board.InsertBlocks(IBlocks);
+
+            // 既に存在するブロックに衝突しようとするとFalse
+            Assert.IsTrue(board.MoveBlocksLeft());
+            Assert.IsFalse(board.MoveBlocksLeft());
+            Assert.IsTrue(board.MoveBlocksDown());
+            Assert.IsFalse(board.MoveBlocksLeft());
+            Assert.IsTrue(board.MoveBlocksDown());
+            Assert.IsFalse(board.MoveBlocksLeft());
+            Assert.IsTrue(board.MoveBlocksDown());
+            Assert.IsFalse(board.MoveBlocksLeft());
+            // 2つ目が接地
+            Assert.IsFalse(board.MoveBlocksDown());
+
         }
 
         // 移動先でブロックがゲーム盤の外側へ衝突する場合、移動不可としてfalseを返すテスト
@@ -77,13 +122,33 @@ namespace Tests
         [Test]
         public void ControlBlockSpinCollisionOutSideTest()
         {
-            var board = new Board(5, 20);
+            var board = new Board(5, 5);
             var IBlocks = new ControlBlocks(CreateIBlockList());
             board.InsertBlocks(IBlocks);
 
             Assert.IsTrue(board.MoveBlocksLeft());
             // 移動した先で回転したら衝突する
             Assert.IsFalse(board.SpinBlocks());
+
+            // ブロックを1つ接地
+            Assert.IsTrue(board.MoveBlocksDown());
+            Assert.IsTrue(board.MoveBlocksDown());
+            Assert.IsTrue(board.MoveBlocksDown());
+            Assert.IsFalse(board.MoveBlocksDown());
+
+            // 2つ目のブロック投入
+            IBlocks = new ControlBlocks(CreateIBlockList());
+            board.InsertBlocks(IBlocks);
+
+            // 既に存在するブロックに衝突しようとするとFalse
+            Assert.IsTrue(board.MoveBlocksDown());
+            Assert.IsFalse(board.SpinBlocks());
+            Assert.IsTrue(board.MoveBlocksDown());
+            Assert.IsFalse(board.SpinBlocks());
+            Assert.IsTrue(board.MoveBlocksDown());
+            Assert.IsFalse(board.SpinBlocks());
+            // 2つ目が接地
+            Assert.IsFalse(board.MoveBlocksDown());
         }
 
         [Test]

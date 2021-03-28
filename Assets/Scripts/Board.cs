@@ -117,7 +117,6 @@ public class Board
                     ])
                     {
                         result = true;
-
                     }
                 }
 
@@ -136,6 +135,20 @@ public class Board
             if (movePlanPositoinX < 0 || movePlanPositoinX > Width - 1)
             {
                 result = true;
+            }
+            else
+            {
+                var movePlanPositionY = CurrentControlBlocksPositionY + controlBlock.Y;
+                if (movePlanPositionY >= 0 && movePlanPositionY < Height - 1)
+                {
+                    if (StatusByPositions[
+                        movePlanPositoinX,
+                        movePlanPositionY
+                    ])
+                    {
+                        result = true;
+                    }
+                }
             }
         }
         return result;
