@@ -32,11 +32,16 @@ public class Board
 
     public void InsertBlocks(ControlBlocks controlBlocks)
     {
+        InitCurrentControlBlocksPosition();
         CurrentControlBlocks = controlBlocks;
+    }
+
+    private void InitCurrentControlBlocksPosition()
+    {
+        CurrentControlBlocks = null;
         CurrentControlBlocksPositionX = InsertPositionX;
         CurrentControlBlocksPositionY = Height - 1;
     }
-
     public bool MoveBlocks(int movePositionX, int movePositionY)
     {
         if (IsBlocksCollisionSide(CurrentControlBlocks, movePositionX))
@@ -48,8 +53,9 @@ public class Board
             foreach (var controlBlock in CurrentControlBlocks.BlockList)
             {
                 StatusByPositions[movePositionX + controlBlock.X, movePositionY + controlBlock.Y] = true;
-                CurrentControlBlocks = null;
             }
+            InitCurrentControlBlocksPosition();
+            return true;
         }
         CurrentControlBlocksPositionX = movePositionX;
         CurrentControlBlocksPositionY = movePositionY;

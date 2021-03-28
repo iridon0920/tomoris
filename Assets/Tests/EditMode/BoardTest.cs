@@ -79,15 +79,18 @@ namespace Tests
             Assert.IsFalse(board.StatusByPositions[4, 3]);
 
             // ブロックが一番下に着地するように置かれる。
-            board.MoveBlocks(4, 1);
+            board.MoveBlocks(5, 1);
 
             // I字ブロックがゲーム盤に適用されている。
-            Assert.IsTrue(board.StatusByPositions[4, 0]);
-            Assert.IsTrue(board.StatusByPositions[4, 1]);
-            Assert.IsTrue(board.StatusByPositions[4, 2]);
-            Assert.IsTrue(board.StatusByPositions[4, 3]);
+            Assert.IsTrue(board.StatusByPositions[5, 0]);
+            Assert.IsTrue(board.StatusByPositions[5, 1]);
+            Assert.IsTrue(board.StatusByPositions[5, 2]);
+            Assert.IsTrue(board.StatusByPositions[5, 3]);
 
-            board.InsertBlocks(IBlocks);
+            // CurrentBlocks関係のプロパティが初期化されている
+            Assert.IsNull(board.CurrentControlBlocks);
+            Assert.AreEqual(4, board.CurrentControlBlocksPositionX);
+            Assert.AreEqual(19, board.CurrentControlBlocksPositionY);
         }
 
 
