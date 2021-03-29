@@ -78,6 +78,52 @@ public class Board
                     CurrentControlBlocksPositionY + controlBlock.Y
                 ] = true;
             }
+
+            int blockCount;
+            var isErase = false;
+            for (var y = 0; y < Height; y++)
+            {
+                blockCount = 0;
+                for (var x = 0; x < Width; x++)
+                {
+                    if (StatusByPositions[x, y])
+                    {
+                        blockCount++;
+                    }
+                }
+                if (blockCount == Width)
+                {
+                    isErase = true;
+                    for (var x = 0; x < Width; x++)
+                    {
+                        StatusByPositions[x, y] = false;
+                    }
+                }
+            }
+
+            if (isErase)
+            {
+                for (var y = 0; y < Height - 1; y++)
+                {
+                    blockCount = 0;
+                    for (var x = 0; x < Width; x++)
+                    {
+                        if (!StatusByPositions[x, y])
+                        {
+                            blockCount++;
+                        }
+                    }
+                    if (blockCount == Width)
+                    {
+                        for (var x = 0; x < Width; x++)
+                        {
+                            StatusByPositions[x, y] = StatusByPositions[x, y + 1];
+                            StatusByPositions[x, y + 1] = false;
+                        }
+                    }
+                }
+            }
+
             InitCurrentControlBlocksPosition();
             return false;
         }
