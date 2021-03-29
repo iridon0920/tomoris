@@ -107,19 +107,9 @@ public class Board
             {
                 result = true;
             }
-            else
+            if (IsMovePlanCollisionPutBlock(CurrentControlBlocksPositionX, movePlanPositionY))
             {
-                if (movePlanPositionY < Height - 1)
-                {
-                    if (StatusByPositions[
-                        CurrentControlBlocksPositionX,
-                        movePlanPositionY
-                    ])
-                    {
-                        result = true;
-                    }
-                }
-
+                result = true;
             }
         }
         return result;
@@ -131,26 +121,30 @@ public class Board
         var result = false;
         foreach (var controlBlock in controlBlocks.BlockList)
         {
-            var movePlanPositoinX = movePositionX + controlBlock.X;
-            if (movePlanPositoinX < 0 || movePlanPositoinX > Width - 1)
+            var movePlanPositionX = movePositionX + controlBlock.X;
+            if (movePlanPositionX < 0 || movePlanPositionX > Width - 1)
             {
                 result = true;
             }
-            else
+            var movePlanPositionY = CurrentControlBlocksPositionY + controlBlock.Y;
+            if (IsMovePlanCollisionPutBlock(movePlanPositionX, movePlanPositionY))
             {
-                var movePlanPositionY = CurrentControlBlocksPositionY + controlBlock.Y;
-                if (movePlanPositionY >= 0 && movePlanPositionY < Height - 1)
-                {
-                    if (StatusByPositions[
-                        movePlanPositoinX,
-                        movePlanPositionY
-                    ])
-                    {
-                        result = true;
-                    }
-                }
+                result = true;
             }
         }
         return result;
+    }
+
+    // ブロックとの衝突判定
+    private bool IsMovePlanCollisionPutBlock(int movePlanX, int movePlanY)
+    {
+        if (movePlanX >= 0 && movePlanX <= Width - 1 && movePlanY >= 0 && movePlanY <= Height - 1)
+        {
+            if (StatusByPositions[movePlanX, movePlanY])
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
