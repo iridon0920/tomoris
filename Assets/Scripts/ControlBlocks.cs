@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-public class ControlBlocks
+public class ControlBlocks : IEquatable<ControlBlocks>
 {
     public List<ControlBlock> BlockList { get; }
     public ControlBlocks(List<ControlBlock> blockList)
@@ -18,5 +18,23 @@ public class ControlBlocks
         }
 
         return new ControlBlocks(newBlockList);
+    }
+
+    public bool Equals(ControlBlocks controlBlocks)
+    {
+        if (BlockList.Count != controlBlocks.BlockList.Count)
+        {
+            return false;
+        }
+
+        var result = true;
+        for (var i = 0; i < BlockList.Count; i++)
+        {
+            if (!BlockList[i].Equals(controlBlocks.BlockList[i]))
+            {
+                result = false;
+            }
+        }
+        return result;
     }
 }

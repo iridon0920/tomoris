@@ -17,6 +17,16 @@ namespace Tests
         }
 
         [Test]
+        public void EqualsTest()
+        {
+            var controlBlocks1 = new ControlBlocks(CreateIBlockList());
+            var controlBlocks2 = new ControlBlocks(CreateIBlockList());
+            var controlBlocks3 = new ControlBlocks(CreateLBlockList());
+            Assert.IsTrue(controlBlocks1.Equals(controlBlocks2));
+            Assert.IsFalse(controlBlocks1.Equals(controlBlocks3));
+        }
+
+        [Test]
         public void IBlockSpinTest()
         {
             var controlBlocks = new ControlBlocks(CreateIBlockList());
