@@ -1,26 +1,26 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-public class ControlBlocks : IEquatable<ControlBlocks>
+
+public class Blocks : IEquatable<Blocks>
 {
-    public List<ControlBlock> BlockList { get; }
-    public ControlBlocks(List<ControlBlock> blockList)
+    public List<Block> BlockList { get; }
+    public Blocks(List<Block> blockList)
     {
         BlockList = blockList;
     }
 
-    public ControlBlocks Spin()
+    public Blocks Spin()
     {
-        var newBlockList = new List<ControlBlock>();
+        var newBlockList = new List<Block>();
         foreach (var block in BlockList)
         {
-            newBlockList.Add(new ControlBlock(-block.Y, block.X));
+            newBlockList.Add(new Block(-block.Y, block.X));
         }
 
-        return new ControlBlocks(newBlockList);
+        return new Blocks(newBlockList);
     }
 
-    public bool Equals(ControlBlocks controlBlocks)
+    public bool Equals(Blocks controlBlocks)
     {
         if (BlockList.Count != controlBlocks.BlockList.Count)
         {

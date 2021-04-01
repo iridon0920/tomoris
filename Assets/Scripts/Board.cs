@@ -2,15 +2,23 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-public class Board
+public interface IBoard
+{
+    int Width { get; }
+    int Height { get; }
+    int InsertPositionX { get; }
+
+    bool[,] StatusByPositions { get; }
+}
+public class Board : IBoard
 {
     public int Width { get; }
     public int Height { get; }
-    private int InsertPositionX { get; }
+    public int InsertPositionX { get; }
 
-    public ControlBlocks CurrentControlBlocks { get; private set; }
-    public int CurrentControlBlocksPositionX { get; private set; }
-    public int CurrentControlBlocksPositionY { get; private set; }
+    public Blocks CurrentBlocks { get; private set; }
+    public int CurrentBlocksPositionX { get; private set; }
+    public int CurrentBlocksPositionY { get; private set; }
 
     // 二次元配列を使って各座標のブロックの存在を管理
     public bool[,] StatusByPositions { get; private set; }
@@ -31,51 +39,51 @@ public class Board
         }
     }
 
-    public void InsertBlocks(ControlBlocks controlBlocks)
+    public void InsertBlocks(Blocks controlBlocks)
     {
-        InitCurrentControlBlocksPosition();
-        CurrentControlBlocks = controlBlocks;
+        InitCurrentBlocksPosition();
+        CurrentBlocks = controlBlocks;
     }
 
-    private void InitCurrentControlBlocksPosition()
+    private void InitCurrentBlocksPosition()
     {
-        CurrentControlBlocks = null;
-        CurrentControlBlocksPositionX = InsertPositionX;
-        CurrentControlBlocksPositionY = Height - 1;
+        CurrentBlocks = null;
+        CurrentBlocksPositionX = InsertPositionX;
+        CurrentBlocksPositionY = Height - 1;
     }
 
     public bool MoveBlocksRight()
     {
-        var movePosition = CurrentControlBlocksPositionX + 1;
-        if (IsBlocksCollisionSide(CurrentControlBlocks, movePosition))
+        var movePosition = CurrentBlocksPositionX + 1;
+        if (IsBlocksCollisionSide(CurrentBlocks, movePosition))
         {
             return false;
         }
-        CurrentControlBlocksPositionX = movePosition;
+        CurrentBlocksPositionX = movePosition;
         return true;
     }
 
     public bool MoveBlocksLeft()
     {
-        var movePosition = CurrentControlBlocksPositionX - 1;
-        if (IsBlocksCollisionSide(CurrentControlBlocks, movePosition))
+        var movePosition = CurrentBlocksPositionX - 1;
+        if (IsBlocksCollisionSide(CurrentBlocks, movePosition))
         {
             return false;
         }
-        CurrentControlBlocksPositionX = movePosition;
+        CurrentBlocksPositionX = movePosition;
         return true;
     }
 
     public bool MoveBlocksDown()
     {
-        var movePositionY = CurrentControlBlocksPositionY - 1;
-        if (IsBlockCollisionBottom(CurrentControlBlocks, movePositionY))
+        var movePositionY = CurrentBlocksPositionY - 1;
+        if (IsBlockCollisionBottom(CurrentBlocks, movePositionY))
         {
-            foreach (var controlBlock in CurrentControlBlocks.BlockList)
+            foreach (var controlBlock in CurrentBlocks.BlockList)
             {
                 StatusByPositions[
-                    CurrentControlBlocksPositionX + controlBlock.X,
-                    CurrentControlBlocksPositionY + controlBlock.Y
+                    CurrentBlocksPositionX + controlBlock.X,
+                    CurrentBlocksPositionY + controlBlock.Y
                 ] = true;
             }
 
@@ -84,10 +92,10 @@ public class Board
                 FallToEmptyRow();
             }
 
-            InitCurrentControlBlocksPosition();
+            InitCurrentBlocksPosition();
             return false;
         }
-        CurrentControlBlocksPositionY = movePositionY;
+        CurrentBlocksPositionY = movePositionY;
         return true;
     }
 
@@ -144,17 +152,17 @@ public class Board
 
     public bool SpinBlocks()
     {
-        var newControlBlocks = CurrentControlBlocks.Spin();
-        if (IsBlocksCollisionSide(newControlBlocks, CurrentControlBlocksPositionX))
+        var newBlocks = CurrentBlocks.Spin();
+        if (IsBlocksCollisionSide(newBlocks, CurrentBlocksPositionX))
         {
             return false;
         }
-        CurrentControlBlocks = newControlBlocks;
+        CurrentBlocks = newBlocks;
         return true;
     }
 
     // 下の衝突判定
-    private bool IsBlockCollisionBottom(ControlBlocks controlBlocks, int movePositionY)
+    private bool IsBlockCollisionBottom(Blocks controlBlocks, int movePositionY)
     {
         var result = false;
         foreach (var controlBlock in controlBlocks.BlockList)
@@ -164,7 +172,7 @@ public class Board
             {
                 result = true;
             }
-            if (IsMovePlanCollisionPutBlock(CurrentControlBlocksPositionX, movePlanPositionY))
+            if (IsMovePlanCollisionPutBlock(CurrentBlocksPositionX, movePlanPositionY))
             {
                 result = true;
             }
@@ -173,7 +181,7 @@ public class Board
     }
 
     // 横向きの衝突判定
-    private bool IsBlocksCollisionSide(ControlBlocks controlBlocks, int movePositionX)
+    private bool IsBlocksCollisionSide(Blocks controlBlocks, int movePositionX)
     {
         var result = false;
         foreach (var controlBlock in controlBlocks.BlockList)
@@ -183,7 +191,7 @@ public class Board
             {
                 result = true;
             }
-            var movePlanPositionY = CurrentControlBlocksPositionY + controlBlock.Y;
+            var movePlanPositionY = CurrentBlocksPositionY + controlBlock.Y;
             if (IsMovePlanCollisionPutBlock(movePlanPositionX, movePlanPositionY))
             {
                 result = true;
