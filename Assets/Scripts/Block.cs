@@ -10,16 +10,6 @@ public class Block : IEquatable<Block>
         Y = y;
     }
 
-    public Block MoveX(int addX)
-    {
-        return new Block(X + addX, Y);
-    }
-
-    public Block MoveY(int addY)
-    {
-        return new Block(X, Y + addY);
-    }
-
     public bool Equals(Block block)
     {
         return X == block.X && Y == block.Y;
