@@ -16,7 +16,7 @@ public class Board : IBoard
     public int Height { get; }
     public int InsertPositionX { get; }
 
-    public Blocks CurrentBlocks { get; private set; }
+    public IBlocks CurrentBlocks { get; private set; }
     public int CurrentBlocksPositionX { get; private set; }
     public int CurrentBlocksPositionY { get; private set; }
 
@@ -162,7 +162,7 @@ public class Board : IBoard
     }
 
     // 下の衝突判定
-    private bool IsBlockCollisionBottom(Blocks controlBlocks, int movePositionY)
+    private bool IsBlockCollisionBottom(IBlocks controlBlocks, int movePositionY)
     {
         var result = false;
         foreach (var controlBlock in controlBlocks.BlockList)
@@ -181,7 +181,7 @@ public class Board : IBoard
     }
 
     // 横向きの衝突判定
-    private bool IsBlocksCollisionSide(Blocks controlBlocks, int movePositionX)
+    private bool IsBlocksCollisionSide(IBlocks controlBlocks, int movePositionX)
     {
         var result = false;
         foreach (var controlBlock in controlBlocks.BlockList)

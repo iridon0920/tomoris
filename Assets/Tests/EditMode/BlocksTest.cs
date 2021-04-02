@@ -29,7 +29,7 @@ namespace Tests
         [Test]
         public void IBlockSpinTest()
         {
-            var blocks = new Blocks(CreateIBlockList());
+            IBlocks blocks = new Blocks(CreateIBlockList());
 
             blocks = blocks.Spin();
             Assert.IsTrue(new Block(-2, 0).Equals(blocks.BlockList[0]));
@@ -53,7 +53,7 @@ namespace Tests
         [Test]
         public void LBlockSpinTest()
         {
-            var blocks = new Blocks(CreateLBlockList());
+            IBlocks blocks = new Blocks(CreateLBlockList());
 
             blocks = blocks.Spin();
             Assert.IsTrue(new Block(-1, 0).Equals(blocks.BlockList[0]));

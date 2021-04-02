@@ -1,7 +1,12 @@
 using System;
 using System.Collections.Generic;
 
-public class Blocks : IEquatable<Blocks>
+public interface IBlocks : IEquatable<IBlocks>
+{
+    List<Block> BlockList { get; }
+    IBlocks Spin();
+}
+public class Blocks : IBlocks
 {
     public List<Block> BlockList { get; }
     public Blocks(List<Block> blockList)
@@ -9,7 +14,7 @@ public class Blocks : IEquatable<Blocks>
         BlockList = blockList;
     }
 
-    public Blocks Spin()
+    public IBlocks Spin()
     {
         var newBlockList = new List<Block>();
         foreach (var block in BlockList)
@@ -20,9 +25,14 @@ public class Blocks : IEquatable<Blocks>
         return new Blocks(newBlockList);
     }
 
-    public bool Equals(Blocks controlBlocks)
+    public bool Equals(IBlocks blocks)
     {
-        if (BlockList.Count != controlBlocks.BlockList.Count)
+        if (blocks.GetType() != typeof(Blocks))
+        {
+            return false;
+        }
+
+        if (BlockList.Count != blocks.BlockList.Count)
         {
             return false;
         }
@@ -30,7 +40,7 @@ public class Blocks : IEquatable<Blocks>
         var result = true;
         for (var i = 0; i < BlockList.Count; i++)
         {
-            if (!BlockList[i].Equals(controlBlocks.BlockList[i]))
+            if (!BlockList[i].Equals(blocks.BlockList[i]))
             {
                 result = false;
             }
