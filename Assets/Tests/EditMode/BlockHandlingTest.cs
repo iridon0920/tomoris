@@ -81,11 +81,14 @@ namespace Tests
             var blockHandling = new BlockHandling(MockBoard.Object, MockBlockQueue.Object);
 
             var controlBlocks = new ControlBlocks(1, 4, -2, MockLBlocks.Object);
+            var PutControlBlocks = new ControlBlocks(1, 4, 1, MockLBlocks.Object);
 
             blockHandling.AdjustControlBlocksPosition(controlBlocks);
             Assert.AreEqual(MockBoard.Object.InsertPositionX, controlBlocks.X);
             Assert.AreEqual(MockBoard.Object.Height - 1, controlBlocks.Y);
             Assert.AreEqual(MockIBlocks.Object, controlBlocks.Blocks);
+
+            MockBoard.Verify(m => m.PutBlocks(controlBlocks), Times.Once());
         }
 
         // I字ブロックのリスト作成

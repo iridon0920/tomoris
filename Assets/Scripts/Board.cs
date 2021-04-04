@@ -9,6 +9,11 @@ public interface IBoard
     int InsertPositionX { get; }
 
     bool[,] StatusByPositions { get; }
+
+    void PutBlocks(IControlBlocks controlBlocks);
+    bool EraseIfAlign();
+    void FallToEmptyRow();
+    bool IsMovePlanCollisionPutBlock(int movePlanX, int movePlanY);
 }
 public class Board : IBoard
 {
@@ -16,9 +21,6 @@ public class Board : IBoard
     public int Height { get; }
     public int InsertPositionX { get; }
 
-    public IBlocks CurrentBlocks { get; private set; }
-    public int CurrentBlocksPositionX { get; private set; }
-    public int CurrentBlocksPositionY { get; private set; }
 
     // 二次元配列を使って各座標のブロックの存在を管理
     public bool[,] StatusByPositions { get; private set; }
@@ -39,58 +41,16 @@ public class Board : IBoard
         }
     }
 
-    public void InsertBlocks(Blocks controlBlocks)
+    public void PutBlocks(IControlBlocks controlBlocks)
     {
-        InitCurrentBlocksPosition();
-        CurrentBlocks = controlBlocks;
-    }
-
-    private void InitCurrentBlocksPosition()
-    {
-        CurrentBlocks = null;
-        CurrentBlocksPositionX = InsertPositionX;
-        CurrentBlocksPositionY = Height - 1;
-    }
-
-    public bool MoveBlocksRight()
-    {
-        var movePosition = CurrentBlocksPositionX + 1;
-        if (IsBlocksCollisionSide(CurrentBlocks, movePosition))
+        foreach (var block in controlBlocks.Blocks.BlockList)
         {
-            return false;
+            StatusByPositions[
+                controlBlocks.X + block.X,
+                controlBlocks.Y + block.Y
+            ] = true;
         }
-        CurrentBlocksPositionX = movePosition;
-        return true;
     }
-
-    public bool MoveBlocksLeft()
-    {
-        var movePosition = CurrentBlocksPositionX - 1;
-        if (IsBlocksCollisionSide(CurrentBlocks, movePosition))
-        {
-            return false;
-        }
-        CurrentBlocksPositionX = movePosition;
-        return true;
-    }
-
-    public bool MoveBlocksDown()
-    {
-        var movePositionY = CurrentBlocksPositionY - 1;
-        if (IsBlockCollisionBottom(CurrentBlocks, movePositionY))
-        {
-            foreach (var controlBlock in CurrentBlocks.BlockList)
-            {
-                StatusByPositions[
-                    CurrentBlocksPositionX + controlBlock.X,
-                    CurrentBlocksPositionY + controlBlock.Y
-                ] = true;
-            }
-
-            if (EraseIfAlign())
-            {
-                FallToEmptyRow();
-            }
 
             InitCurrentBlocksPosition();
             return false;
