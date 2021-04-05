@@ -1,31 +1,20 @@
 using UnityEngine;
 public class BlockHandling
 {
-    private IBoard Board { get; }
+    private IControlBlocksCollisionDetection CollisionDetection { get; }
 
-    public BlockHandling(IBoard board)
+    public BlockHandling(IControlBlocksCollisionDetection collisionDetection)
     {
-        Board = board;
+        CollisionDetection = collisionDetection;
     }
 
-    public void AdjustControlBlocksPosition(IControlBlocks controlBlocks)
+    public void AdjustBlocksForMoveRight(IControlBlocks controlBlocks)
     {
         while (true)
         {
-            if (IsCollisionRightWall(controlBlocks))
+            if (CollisionDetection.IsCollision(controlBlocks))
             {
                 controlBlocks.MoveLeft();
-                continue;
-            }
-
-            if (IsCollisionLeftWall(controlBlocks))
-            {
-                controlBlocks.MoveRight();
-                continue;
-            }
-            if (IsCollisionGround(controlBlocks))
-            {
-                controlBlocks.MoveUp();
                 continue;
             }
 
@@ -33,45 +22,31 @@ public class BlockHandling
         }
     }
 
-    private bool IsCollisionRightWall(IControlBlocks controlBlocks)
+    public void AdjustBlocksForMoveLeft(IControlBlocks controlBlocks)
     {
-        var result = false;
-        foreach (var controlBlock in controlBlocks.Blocks.BlockList)
+        while (true)
         {
-            var movePlanPositionX = controlBlocks.X + controlBlock.X;
-            if (movePlanPositionX > Board.Width - 1)
+            if (CollisionDetection.IsCollision(controlBlocks))
             {
-                result = true;
+                controlBlocks.MoveRight();
+                continue;
             }
+
+            break;
         }
-        return result;
     }
 
-    private bool IsCollisionLeftWall(IControlBlocks controlBlocks)
+    public void AdjustBlocksForMoveDown(IControlBlocks controlBlocks)
     {
-        var result = false;
-        foreach (var controlBlock in controlBlocks.Blocks.BlockList)
+        while (true)
         {
-            var movePlanPositionX = controlBlocks.X + controlBlock.X;
-            if (movePlanPositionX < 0)
+            if (CollisionDetection.IsCollision(controlBlocks))
             {
-                result = true;
+                controlBlocks.MoveUp();
+                continue;
             }
-        }
-        return result;
-    }
 
-    private bool IsCollisionGround(IControlBlocks controlBlocks)
-    {
-        var result = false;
-        foreach (var controlBlock in controlBlocks.Blocks.BlockList)
-        {
-            var movePlanPositionY = controlBlocks.Y + controlBlock.Y;
-            if (movePlanPositionY < 0)
-            {
-                result = true;
-            }
+            break;
         }
-        return result;
     }
 }

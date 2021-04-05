@@ -11,7 +11,6 @@ public interface IBoard
     bool[,] StatusByPositions { get; }
 
     void PutBlocks(IControlBlocks controlBlocks);
-    bool IsMovePlanCollisionPutBlock(int movePlanX, int movePlanY);
 }
 public class Board : IBoard
 {
@@ -98,19 +97,5 @@ public class Board : IBoard
                 }
             }
         }
-    }
-
-
-    // ブロックとの衝突判定
-    public bool IsMovePlanCollisionPutBlock(int movePlanX, int movePlanY)
-    {
-        if (movePlanX >= 0 && movePlanX <= Width - 1 && movePlanY >= 0 && movePlanY <= Height - 1)
-        {
-            if (StatusByPositions[movePlanX, movePlanY])
-            {
-                return true;
-            }
-        }
-        return false;
     }
 }

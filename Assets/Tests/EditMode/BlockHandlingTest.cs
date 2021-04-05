@@ -9,39 +9,32 @@ namespace Tests
 
     public class BlockHandlingTest
     {
-        private Mock<IBoard> MockBoard;
-        private Mock<IBlocks> MockLBlocks;
-        private Mock<IBlocks> MockIBlocks;
+        private Mock<IControlBlocksCollisionDetection> MockCollisionDetection;
+        private Mock<IBlocks> MockBlocks;
 
         [SetUp]
         public void SetUp()
         {
-            MockBoard = new Mock<IBoard>();
-            MockBoard.Setup(m => m.Width).Returns(10);
-            MockBoard.Setup(m => m.Height).Returns(20);
-            MockBoard.Setup(m => m.InsertPositionX).Returns(4);
-
-            MockLBlocks = new Mock<IBlocks>();
-            MockLBlocks.Setup(m => m.BlockList).Returns(
-                CreateLBlockList()
-            );
-
-            MockIBlocks = new Mock<IBlocks>();
-            MockIBlocks.Setup(m => m.BlockList).Returns(
-                CreateIBlockList()
-            );
+            MockCollisionDetection = new Mock<IControlBlocksCollisionDetection>();
+            MockBlocks = new Mock<IBlocks>();
         }
 
         [Test]
         public void AdjustControlBlocksSuccessTest()
         {
             var blockHandling = new BlockHandling(
-                MockBoard.Object
+                MockCollisionDetection.Object
             );
 
-            var controlBlocks = new ControlBlocks(1, 5, 10, MockLBlocks.Object);
+            var controlBlocks = new ControlBlocks(1, 5, 10, MockBlocks.Object);
 
-            blockHandling.AdjustControlBlocksPosition(controlBlocks);
+            blockHandling.AdjustBlocksForMoveRight(controlBlocks);
+            Assert.AreEqual(5, controlBlocks.X);
+            Assert.AreEqual(10, controlBlocks.Y);
+            blockHandling.AdjustBlocksForMoveLeft(controlBlocks);
+            Assert.AreEqual(5, controlBlocks.X);
+            Assert.AreEqual(10, controlBlocks.Y);
+            blockHandling.AdjustBlocksForMoveDown(controlBlocks);
             Assert.AreEqual(5, controlBlocks.X);
             Assert.AreEqual(10, controlBlocks.Y);
         }
@@ -49,11 +42,15 @@ namespace Tests
         [Test]
         public void AdjustControlBlocksRightCollisionTest()
         {
-            var blockHandling = new BlockHandling(MockBoard.Object);
+            var controlBlocks = new ControlBlocks(1, 10, 19, MockBlocks.Object);
+            MockCollisionDetection
+                .SetupSequence(m => m.IsCollision(controlBlocks))
+                .Returns(true)
+                .Returns(true)
+                .Returns(false);
+            var blockHandling = new BlockHandling(MockCollisionDetection.Object);
 
-            var controlBlocks = new ControlBlocks(1, 11, 19, MockLBlocks.Object);
-
-            blockHandling.AdjustControlBlocksPosition(controlBlocks);
+            blockHandling.AdjustBlocksForMoveRight(controlBlocks);
             Assert.AreEqual(8, controlBlocks.X);
             Assert.AreEqual(19, controlBlocks.Y);
         }
@@ -61,11 +58,15 @@ namespace Tests
         [Test]
         public void AdjustControlBlocksLeftCollisionTest()
         {
-            var blockHandling = new BlockHandling(MockBoard.Object);
+            var controlBlocks = new ControlBlocks(1, -2, 15, MockBlocks.Object);
+            MockCollisionDetection
+                .SetupSequence(m => m.IsCollision(controlBlocks))
+                .Returns(true)
+                .Returns(true)
+                .Returns(false);
+            var blockHandling = new BlockHandling(MockCollisionDetection.Object);
 
-            var controlBlocks = new ControlBlocks(1, -2, 15, MockLBlocks.Object);
-
-            blockHandling.AdjustControlBlocksPosition(controlBlocks);
+            blockHandling.AdjustBlocksForMoveLeft(controlBlocks);
             Assert.AreEqual(0, controlBlocks.X);
             Assert.AreEqual(15, controlBlocks.Y);
         }
@@ -73,37 +74,16 @@ namespace Tests
         [Test]
         public void AdjustControlBlocksDownCollisionTest()
         {
-            var blockHandling = new BlockHandling(MockBoard.Object);
+            var controlBlocks = new ControlBlocks(1, 4, -2, MockBlocks.Object);
+            MockCollisionDetection
+                .SetupSequence(m => m.IsCollision(controlBlocks))
+                .Returns(true)
+                .Returns(false);
+            var blockHandling = new BlockHandling(MockCollisionDetection.Object);
 
-            var controlBlocks = new ControlBlocks(1, 4, -2, MockLBlocks.Object);
-
-            blockHandling.AdjustControlBlocksPosition(controlBlocks);
-            Assert.AreEqual(MockBoard.Object.InsertPositionX, controlBlocks.X);
+            blockHandling.AdjustBlocksForMoveDown(controlBlocks);
+            Assert.AreEqual(4, controlBlocks.X);
+            Assert.AreEqual(-1, controlBlocks.Y);
         }
-
-        // I字ブロックのリスト作成
-        private List<Block> CreateIBlockList()
-        {
-            return new List<Block>
-            {
-                new Block(0, 2),
-                new Block(0, 1),
-                new Block(0, 0),
-                new Block(0, -1)
-            };
-        }
-
-        // L字ブロックのリスト作成
-        private List<Block> CreateLBlockList()
-        {
-            return new List<Block>
-            {
-            new Block(0, 1),
-            new Block(0, 0),
-            new Block(0, -1),
-            new Block(1, -1)
-            };
-        }
-
     }
 }
