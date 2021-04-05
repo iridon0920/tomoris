@@ -10,7 +10,6 @@ namespace Tests
     public class BlockHandlingTest
     {
         private Mock<IBoard> MockBoard;
-        private Mock<IBlocksQueue> MockBlockQueue;
         private Mock<IBlocks> MockLBlocks;
         private Mock<IBlocks> MockIBlocks;
 
@@ -31,17 +30,13 @@ namespace Tests
             MockIBlocks.Setup(m => m.BlockList).Returns(
                 CreateIBlockList()
             );
-
-            MockBlockQueue = new Mock<IBlocksQueue>();
-            MockBlockQueue.Setup(m => m.Dequeue()).Returns(MockIBlocks.Object);
         }
 
         [Test]
         public void AdjustControlBlocksSuccessTest()
         {
             var blockHandling = new BlockHandling(
-                MockBoard.Object,
-                MockBlockQueue.Object
+                MockBoard.Object
             );
 
             var controlBlocks = new ControlBlocks(1, 5, 10, MockLBlocks.Object);
@@ -54,7 +49,7 @@ namespace Tests
         [Test]
         public void AdjustControlBlocksRightCollisionTest()
         {
-            var blockHandling = new BlockHandling(MockBoard.Object, MockBlockQueue.Object);
+            var blockHandling = new BlockHandling(MockBoard.Object);
 
             var controlBlocks = new ControlBlocks(1, 11, 19, MockLBlocks.Object);
 
@@ -66,7 +61,7 @@ namespace Tests
         [Test]
         public void AdjustControlBlocksLeftCollisionTest()
         {
-            var blockHandling = new BlockHandling(MockBoard.Object, MockBlockQueue.Object);
+            var blockHandling = new BlockHandling(MockBoard.Object);
 
             var controlBlocks = new ControlBlocks(1, -2, 15, MockLBlocks.Object);
 
@@ -78,17 +73,12 @@ namespace Tests
         [Test]
         public void AdjustControlBlocksDownCollisionTest()
         {
-            var blockHandling = new BlockHandling(MockBoard.Object, MockBlockQueue.Object);
+            var blockHandling = new BlockHandling(MockBoard.Object);
 
             var controlBlocks = new ControlBlocks(1, 4, -2, MockLBlocks.Object);
-            var PutControlBlocks = new ControlBlocks(1, 4, 1, MockLBlocks.Object);
 
             blockHandling.AdjustControlBlocksPosition(controlBlocks);
             Assert.AreEqual(MockBoard.Object.InsertPositionX, controlBlocks.X);
-            Assert.AreEqual(MockBoard.Object.Height - 1, controlBlocks.Y);
-            Assert.AreEqual(MockIBlocks.Object, controlBlocks.Blocks);
-
-            MockBoard.Verify(m => m.PutBlocks(controlBlocks), Times.Once());
         }
 
         // I字ブロックのリスト作成

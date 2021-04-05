@@ -10,6 +10,7 @@ public interface IControlBlocks
     void Initialization(int x, int y, IBlocks blocks);
     void MoveRight();
     void MoveLeft();
+    void MoveUp();
     void MoveDown();
     void Spin();
 }
@@ -46,6 +47,11 @@ public class ControlBlocks : IControlBlocks
     public void MoveLeft()
     {
         X--;
+    }
+
+    public void MoveUp()
+    {
+        Y++;
     }
 
     public void MoveDown()

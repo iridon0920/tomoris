@@ -2,12 +2,10 @@ using UnityEngine;
 public class BlockHandling
 {
     private IBoard Board { get; }
-    private IBlocksQueue BlocksQueue { get; }
 
-    public BlockHandling(IBoard board, IBlocksQueue blocksQueue)
+    public BlockHandling(IBoard board)
     {
         Board = board;
-        BlocksQueue = blocksQueue;
     }
 
     public void AdjustControlBlocksPosition(IControlBlocks controlBlocks)
@@ -27,18 +25,8 @@ public class BlockHandling
             }
             if (IsCollisionGround(controlBlocks))
             {
-                while (true)
-                {
-                    if (IsCollisionGround(controlBlocks))
-                    {
-                        controlBlocks.MoveUp();
-                        continue;
-                    }
-                    break;
-                }
-                Board.PutBlocks(controlBlocks);
-                var newBlocks = BlocksQueue.Dequeue();
-                controlBlocks.Initialization(Board.InsertPositionX, Board.Height - 1, newBlocks);
+                controlBlocks.MoveUp();
+                continue;
             }
 
             break;
