@@ -11,8 +11,6 @@ public interface IBoard
     bool[,] StatusByPositions { get; }
 
     void PutBlocks(IControlBlocks controlBlocks);
-    bool EraseIfAlign();
-    void FallToEmptyRow();
     bool IsMovePlanCollisionPutBlock(int movePlanX, int movePlanY);
 }
 public class Board : IBoard
@@ -50,20 +48,14 @@ public class Board : IBoard
                 controlBlocks.Y + block.Y
             ] = true;
         }
+
+        EraseIfAlign();
+        FallToEmptyRow();
     }
 
-            InitCurrentBlocksPosition();
-            return false;
-        }
-        CurrentBlocksPositionY = movePositionY;
-        return true;
-    }
-
-    private bool EraseIfAlign()
+    private void EraseIfAlign()
     {
-
         int blockCount;
-        var isErase = false;
         for (var y = 0; y < Height; y++)
         {
             blockCount = 0;
@@ -76,14 +68,12 @@ public class Board : IBoard
             }
             if (blockCount == Width)
             {
-                isErase = true;
                 for (var x = 0; x < Width; x++)
                 {
                     StatusByPositions[x, y] = false;
                 }
             }
         }
-        return isErase;
     }
 
     private void FallToEmptyRow()
@@ -110,58 +100,9 @@ public class Board : IBoard
         }
     }
 
-    public bool SpinBlocks()
-    {
-        var newBlocks = CurrentBlocks.Spin();
-        if (IsBlocksCollisionSide(newBlocks, CurrentBlocksPositionX))
-        {
-            return false;
-        }
-        CurrentBlocks = newBlocks;
-        return true;
-    }
-
-    // 下の衝突判定
-    private bool IsBlockCollisionBottom(IBlocks controlBlocks, int movePositionY)
-    {
-        var result = false;
-        foreach (var controlBlock in controlBlocks.BlockList)
-        {
-            var movePlanPositionY = movePositionY + controlBlock.Y;
-            if (movePlanPositionY < 0)
-            {
-                result = true;
-            }
-            if (IsMovePlanCollisionPutBlock(CurrentBlocksPositionX, movePlanPositionY))
-            {
-                result = true;
-            }
-        }
-        return result;
-    }
-
-    // 横向きの衝突判定
-    private bool IsBlocksCollisionSide(IBlocks controlBlocks, int movePositionX)
-    {
-        var result = false;
-        foreach (var controlBlock in controlBlocks.BlockList)
-        {
-            var movePlanPositionX = movePositionX + controlBlock.X;
-            if (movePlanPositionX < 0 || movePlanPositionX > Width - 1)
-            {
-                result = true;
-            }
-            var movePlanPositionY = CurrentBlocksPositionY + controlBlock.Y;
-            if (IsMovePlanCollisionPutBlock(movePlanPositionX, movePlanPositionY))
-            {
-                result = true;
-            }
-        }
-        return result;
-    }
 
     // ブロックとの衝突判定
-    private bool IsMovePlanCollisionPutBlock(int movePlanX, int movePlanY)
+    public bool IsMovePlanCollisionPutBlock(int movePlanX, int movePlanY)
     {
         if (movePlanX >= 0 && movePlanX <= Width - 1 && movePlanY >= 0 && movePlanY <= Height - 1)
         {
