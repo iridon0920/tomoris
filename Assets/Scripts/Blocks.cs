@@ -4,7 +4,8 @@ using System.Collections.Generic;
 public interface IBlocks : IEquatable<IBlocks>
 {
     List<Block> BlockList { get; }
-    IBlocks Spin();
+    IBlocks LeftSpin();
+    IBlocks RightSpin();
 }
 public class Blocks : IBlocks
 {
@@ -14,12 +15,23 @@ public class Blocks : IBlocks
         BlockList = blockList;
     }
 
-    public IBlocks Spin()
+    public IBlocks LeftSpin()
     {
         var newBlockList = new List<Block>();
         foreach (var block in BlockList)
         {
             newBlockList.Add(new Block(-block.Y, block.X));
+        }
+
+        return new Blocks(newBlockList);
+    }
+
+    public IBlocks RightSpin()
+    {
+        var newBlockList = new List<Block>();
+        foreach (var block in BlockList)
+        {
+            newBlockList.Add(new Block(block.Y, -block.X));
         }
 
         return new Blocks(newBlockList);

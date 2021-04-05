@@ -55,12 +55,17 @@ namespace Tests
         {
             var mockBlocks = new Mock<IBlocks>();
             var mockBlocks2 = new Mock<IBlocks>().Object;
+            var mockBlocks3 = new Mock<IBlocks>().Object;
+            mockBlocks.Setup(m => m.LeftSpin()).Returns(mockBlocks2);
+            mockBlocks.Setup(m => m.RightSpin()).Returns(mockBlocks3);
 
-            mockBlocks.Setup(m => m.Spin()).Returns(mockBlocks2);
             var controlBlocks = new ControlBlocks(1, 5, 15, mockBlocks.Object);
-
-            controlBlocks.Spin();
+            controlBlocks.LeftSpin();
             Assert.AreEqual(mockBlocks2, controlBlocks.Blocks);
+
+            var controlBlocks2 = new ControlBlocks(1, 5, 15, mockBlocks.Object);
+            controlBlocks2.RightSpin();
+            Assert.AreEqual(mockBlocks3, controlBlocks2.Blocks);
         }
     }
 }

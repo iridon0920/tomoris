@@ -12,7 +12,8 @@ public interface IControlBlocks
     void MoveLeft();
     void MoveUp();
     void MoveDown();
-    void Spin();
+    void LeftSpin();
+    void RightSpin();
 }
 
 /**
@@ -59,8 +60,13 @@ public class ControlBlocks : IControlBlocks
         Y--;
     }
 
-    public void Spin()
+    public void LeftSpin()
     {
-        Blocks = Blocks.Spin();
+        Blocks = Blocks.LeftSpin();
+    }
+
+    public void RightSpin()
+    {
+        Blocks = Blocks.RightSpin();
     }
 }

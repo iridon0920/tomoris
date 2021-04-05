@@ -31,23 +31,35 @@ namespace Tests
         {
             IBlocks blocks = new Blocks(CreateIBlockList());
 
-            blocks = blocks.Spin();
+            blocks = blocks.LeftSpin();
             Assert.IsTrue(new Block(-2, 0).Equals(blocks.BlockList[0]));
             Assert.IsTrue(new Block(-1, 0).Equals(blocks.BlockList[1]));
             Assert.IsTrue(new Block(0, 0).Equals(blocks.BlockList[2]));
             Assert.IsTrue(new Block(1, 0).Equals(blocks.BlockList[3]));
 
-            blocks = blocks.Spin();
+            blocks = blocks.LeftSpin();
             Assert.IsTrue(new Block(0, -2).Equals(blocks.BlockList[0]));
             Assert.IsTrue(new Block(0, -1).Equals(blocks.BlockList[1]));
             Assert.IsTrue(new Block(0, 0).Equals(blocks.BlockList[2]));
             Assert.IsTrue(new Block(0, 1).Equals(blocks.BlockList[3]));
 
-            blocks = blocks.Spin();
+            blocks = blocks.LeftSpin();
             Assert.IsTrue(new Block(2, 0).Equals(blocks.BlockList[0]));
             Assert.IsTrue(new Block(1, 0).Equals(blocks.BlockList[1]));
             Assert.IsTrue(new Block(0, 0).Equals(blocks.BlockList[2]));
             Assert.IsTrue(new Block(-1, 0).Equals(blocks.BlockList[3]));
+
+            blocks = blocks.RightSpin();
+            Assert.IsTrue(new Block(0, -2).Equals(blocks.BlockList[0]));
+            Assert.IsTrue(new Block(0, -1).Equals(blocks.BlockList[1]));
+            Assert.IsTrue(new Block(0, 0).Equals(blocks.BlockList[2]));
+            Assert.IsTrue(new Block(0, 1).Equals(blocks.BlockList[3]));
+
+            blocks = blocks.RightSpin();
+            Assert.IsTrue(new Block(-2, 0).Equals(blocks.BlockList[0]));
+            Assert.IsTrue(new Block(-1, 0).Equals(blocks.BlockList[1]));
+            Assert.IsTrue(new Block(0, 0).Equals(blocks.BlockList[2]));
+            Assert.IsTrue(new Block(1, 0).Equals(blocks.BlockList[3]));
         }
 
         [Test]
@@ -55,23 +67,35 @@ namespace Tests
         {
             IBlocks blocks = new Blocks(CreateLBlockList());
 
-            blocks = blocks.Spin();
+            blocks = blocks.LeftSpin();
             Assert.IsTrue(new Block(-1, 0).Equals(blocks.BlockList[0]));
             Assert.IsTrue(new Block(0, 0).Equals(blocks.BlockList[1]));
             Assert.IsTrue(new Block(1, 0).Equals(blocks.BlockList[2]));
             Assert.IsTrue(new Block(1, 1).Equals(blocks.BlockList[3]));
 
-            blocks = blocks.Spin();
+            blocks = blocks.LeftSpin();
             Assert.IsTrue(new Block(0, -1).Equals(blocks.BlockList[0]));
             Assert.IsTrue(new Block(0, 0).Equals(blocks.BlockList[1]));
             Assert.IsTrue(new Block(0, 1).Equals(blocks.BlockList[2]));
             Assert.IsTrue(new Block(-1, 1).Equals(blocks.BlockList[3]));
 
-            blocks = blocks.Spin();
+            blocks = blocks.LeftSpin();
             Assert.IsTrue(new Block(1, 0).Equals(blocks.BlockList[0]));
             Assert.IsTrue(new Block(0, 0).Equals(blocks.BlockList[1]));
             Assert.IsTrue(new Block(-1, 0).Equals(blocks.BlockList[2]));
             Assert.IsTrue(new Block(-1, -1).Equals(blocks.BlockList[3]));
+
+            blocks = blocks.RightSpin();
+            Assert.IsTrue(new Block(0, -1).Equals(blocks.BlockList[0]));
+            Assert.IsTrue(new Block(0, 0).Equals(blocks.BlockList[1]));
+            Assert.IsTrue(new Block(0, 1).Equals(blocks.BlockList[2]));
+            Assert.IsTrue(new Block(-1, 1).Equals(blocks.BlockList[3]));
+
+            blocks = blocks.RightSpin();
+            Assert.IsTrue(new Block(-1, 0).Equals(blocks.BlockList[0]));
+            Assert.IsTrue(new Block(0, 0).Equals(blocks.BlockList[1]));
+            Assert.IsTrue(new Block(1, 0).Equals(blocks.BlockList[2]));
+            Assert.IsTrue(new Block(1, 1).Equals(blocks.BlockList[3]));
         }
 
 
