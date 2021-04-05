@@ -7,7 +7,7 @@ using Moq;
 namespace Tests
 {
 
-    public class BlockHandlingTest
+    public class ControlBlocksAdjusterTest
     {
         private Mock<IControlBlocksCollisionDetection> MockCollisionDetection;
         private Mock<IBlocks> MockBlocks;
@@ -22,7 +22,7 @@ namespace Tests
         [Test]
         public void AdjustControlBlocksSuccessTest()
         {
-            var blockHandling = new BlockHandling(
+            var blockHandling = new ControlBlocksAdjuster(
                 MockCollisionDetection.Object
             );
 
@@ -48,7 +48,7 @@ namespace Tests
                 .Returns(true)
                 .Returns(true)
                 .Returns(false);
-            var blockHandling = new BlockHandling(MockCollisionDetection.Object);
+            var blockHandling = new ControlBlocksAdjuster(MockCollisionDetection.Object);
 
             blockHandling.AdjustBlocksForMoveRight(controlBlocks);
             Assert.AreEqual(8, controlBlocks.X);
@@ -64,7 +64,7 @@ namespace Tests
                 .Returns(true)
                 .Returns(true)
                 .Returns(false);
-            var blockHandling = new BlockHandling(MockCollisionDetection.Object);
+            var blockHandling = new ControlBlocksAdjuster(MockCollisionDetection.Object);
 
             blockHandling.AdjustBlocksForMoveLeft(controlBlocks);
             Assert.AreEqual(0, controlBlocks.X);
@@ -79,7 +79,7 @@ namespace Tests
                 .SetupSequence(m => m.IsCollision(controlBlocks))
                 .Returns(true)
                 .Returns(false);
-            var blockHandling = new BlockHandling(MockCollisionDetection.Object);
+            var blockHandling = new ControlBlocksAdjuster(MockCollisionDetection.Object);
 
             blockHandling.AdjustBlocksForMoveDown(controlBlocks);
             Assert.AreEqual(4, controlBlocks.X);

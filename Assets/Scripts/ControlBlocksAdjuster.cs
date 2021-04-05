@@ -1,9 +1,9 @@
 using UnityEngine;
-public class BlockHandling
+public class ControlBlocksAdjuster
 {
     private IControlBlocksCollisionDetection CollisionDetection { get; }
 
-    public BlockHandling(IControlBlocksCollisionDetection collisionDetection)
+    public ControlBlocksAdjuster(IControlBlocksCollisionDetection collisionDetection)
     {
         CollisionDetection = collisionDetection;
     }
