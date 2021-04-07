@@ -1,8 +1,6 @@
 {
-    "name": "MyProject",
-    "references": [
-        "GUID:0d8beb7f090555447a6cf5ce9e54dbb4"
-    ],
+    "name": "UniRx",
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
@@ -10,6 +8,5 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [],
-    "noEngineReferences": false
+    "versionDefines": []
 }
