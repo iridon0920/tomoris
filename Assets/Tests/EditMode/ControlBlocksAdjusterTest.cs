@@ -26,7 +26,7 @@ namespace Tests
                 MockCollisionDetection.Object
             );
 
-            var controlBlocks = new ControlBlocks(1, 5, 10, MockBlocks.Object);
+            var controlBlocks = new ControlBlocks(5, 10, MockBlocks.Object);
 
             blockHandling.AdjustBlocksForMoveRight(controlBlocks);
             Assert.AreEqual(5, controlBlocks.X);
@@ -42,7 +42,7 @@ namespace Tests
         [Test]
         public void AdjustControlBlocksRightCollisionTest()
         {
-            var controlBlocks = new ControlBlocks(1, 10, 19, MockBlocks.Object);
+            var controlBlocks = new ControlBlocks(10, 19, MockBlocks.Object);
             MockCollisionDetection
                 .SetupSequence(m => m.IsCollision(controlBlocks))
                 .Returns(true)
@@ -58,7 +58,7 @@ namespace Tests
         [Test]
         public void AdjustControlBlocksLeftCollisionTest()
         {
-            var controlBlocks = new ControlBlocks(1, -2, 15, MockBlocks.Object);
+            var controlBlocks = new ControlBlocks(-2, 15, MockBlocks.Object);
             MockCollisionDetection
                 .SetupSequence(m => m.IsCollision(controlBlocks))
                 .Returns(true)
@@ -74,7 +74,7 @@ namespace Tests
         [Test]
         public void AdjustControlBlocksDownCollisionTest()
         {
-            var controlBlocks = new ControlBlocks(1, 4, -2, MockBlocks.Object);
+            var controlBlocks = new ControlBlocks(4, -2, MockBlocks.Object);
             MockCollisionDetection
                 .SetupSequence(m => m.IsCollision(controlBlocks))
                 .Returns(true)

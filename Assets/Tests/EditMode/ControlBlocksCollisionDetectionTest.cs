@@ -4,9 +4,12 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 using Moq;
+using Zenject;
+
 namespace Tests
 {
-    public class ControlBlocksCollisionDetectionTest
+    [TestFixture]
+    public class ControlBlocksCollisionDetectionTest : ZenjectUnitTestFixture
     {
         private Mock<IBoard> MockBoard;
         private Mock<IBlocks> MockLBlocks;
@@ -18,6 +21,7 @@ namespace Tests
             MockBoard = new Mock<IBoard>();
             MockBoard.Setup(m => m.Width).Returns(10);
             MockBoard.Setup(m => m.Height).Returns(20);
+
 
             var statusByPositions = new bool[10, 20];
             for (var x = 0; x < 10; x++)
@@ -50,11 +54,11 @@ namespace Tests
         {
             var collisionDetection = new ControlBlocksCollisionDetection(MockBoard.Object);
 
-            var controlBlocks = new ControlBlocks(1, 10, 19, MockLBlocks.Object);
+            var controlBlocks = new ControlBlocks(10, 19, MockLBlocks.Object);
             Assert.IsTrue(collisionDetection.IsCollision(controlBlocks));
-            controlBlocks = new ControlBlocks(1, 9, 19, MockLBlocks.Object);
+            controlBlocks = new ControlBlocks(9, 19, MockLBlocks.Object);
             Assert.IsTrue(collisionDetection.IsCollision(controlBlocks));
-            controlBlocks = new ControlBlocks(1, 8, 19, MockLBlocks.Object);
+            controlBlocks = new ControlBlocks(8, 19, MockLBlocks.Object);
             Assert.IsFalse(collisionDetection.IsCollision(controlBlocks));
         }
 
@@ -64,9 +68,9 @@ namespace Tests
         {
             var collisionDetection = new ControlBlocksCollisionDetection(MockBoard.Object);
 
-            var controlBlocks = new ControlBlocks(1, -2, 19, MockLBlocks.Object);
+            var controlBlocks = new ControlBlocks(-2, 19, MockLBlocks.Object);
             Assert.IsTrue(collisionDetection.IsCollision(controlBlocks));
-            controlBlocks = new ControlBlocks(1, 0, 19, MockLBlocks.Object);
+            controlBlocks = new ControlBlocks(0, 19, MockLBlocks.Object);
             Assert.IsFalse(collisionDetection.IsCollision(controlBlocks));
         }
 
@@ -75,11 +79,11 @@ namespace Tests
         {
             var collisionDetection = new ControlBlocksCollisionDetection(MockBoard.Object);
 
-            var controlBlocks = new ControlBlocks(1, 4, -2, MockIBlocks.Object);
+            var controlBlocks = new ControlBlocks(4, -2, MockIBlocks.Object);
             Assert.IsTrue(collisionDetection.IsCollision(controlBlocks));
-            controlBlocks = new ControlBlocks(1, 4, 0, MockIBlocks.Object);
+            controlBlocks = new ControlBlocks(4, 0, MockIBlocks.Object);
             Assert.IsTrue(collisionDetection.IsCollision(controlBlocks));
-            controlBlocks = new ControlBlocks(1, 4, 1, MockIBlocks.Object);
+            controlBlocks = new ControlBlocks(4, 1, MockIBlocks.Object);
             Assert.IsFalse(collisionDetection.IsCollision(controlBlocks));
         }
 
@@ -88,13 +92,13 @@ namespace Tests
         {
             var collisionDetection = new ControlBlocksCollisionDetection(MockBoard.Object);
 
-            var controlBlocks = new ControlBlocks(1, 7, 0, MockLBlocks.Object);
+            var controlBlocks = new ControlBlocks(7, 0, MockLBlocks.Object);
             Assert.IsTrue(collisionDetection.IsCollision(controlBlocks));
 
-            controlBlocks = new ControlBlocks(1, 2, 0, MockLBlocks.Object);
+            controlBlocks = new ControlBlocks(2, 0, MockLBlocks.Object);
             Assert.IsTrue(collisionDetection.IsCollision(controlBlocks));
 
-            controlBlocks = new ControlBlocks(1, 1, 1, MockIBlocks.Object);
+            controlBlocks = new ControlBlocks(1, 1, MockIBlocks.Object);
             Assert.IsTrue(collisionDetection.IsCollision(controlBlocks));
         }
 

@@ -40,7 +40,7 @@ namespace Tests
         public void PutBlocksTest()
         {
             var board = new Board(10, 20);
-            var controlBlocks = new ControlBlocks(1, 4, 1, MockIBlocks.Object);
+            var controlBlocks = new ControlBlocks(4, 1, MockIBlocks.Object);
 
             Assert.IsFalse(board.StatusByPositions[4, 4]);
             Assert.IsFalse(board.StatusByPositions[4, 3]);
@@ -62,18 +62,18 @@ namespace Tests
         {
             var board = new Board(8, 20);
             // 1つ目のブロックを左下へ
-            var controlBlocks = new ControlBlocks(1, 2, 0, new Blocks(CreateIBlockList()));
-            controlBlocks.Spin();
+            var controlBlocks = new ControlBlocks(2, 0, new Blocks(CreateIBlockList()));
+            controlBlocks.LeftSpin();
             board.PutBlocks(controlBlocks);
 
             // 2つ目のブロックを左下二段目へ
-            controlBlocks.Initialization(2, 1, new Blocks(CreateIBlockList()));
-            controlBlocks.Spin();
+            controlBlocks = new ControlBlocks(2, 1, new Blocks(CreateIBlockList()));
+            controlBlocks.LeftSpin();
             board.PutBlocks(controlBlocks);
 
             // 3つ目のブロックを左下三段目へ
-            controlBlocks.Initialization(2, 2, new Blocks(CreateIBlockList()));
-            controlBlocks.Spin();
+            controlBlocks = new ControlBlocks(2, 2, new Blocks(CreateIBlockList()));
+            controlBlocks.LeftSpin();
             board.PutBlocks(controlBlocks);
 
             // まだブロックは揃っていない
@@ -95,8 +95,8 @@ namespace Tests
             Assert.IsFalse(board.StatusByPositions[7, 0]);
 
             // 4つ目のブロックを右下へ
-            controlBlocks.Initialization(6, 0, new Blocks(CreateIBlockList()));
-            controlBlocks.Spin();
+            controlBlocks = new ControlBlocks(6, 0, new Blocks(CreateIBlockList()));
+            controlBlocks.LeftSpin();
             board.PutBlocks(controlBlocks);
 
             // ブロックが揃ったことで一番下の段が消え、上に積み重なっていたブロックが下に落ちる

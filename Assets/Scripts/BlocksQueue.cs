@@ -1,15 +1,19 @@
-
 using System.Collections.Generic;
 
-public class BlocksQueue
+public interface IBlocksQueue
 {
-    public Queue<Blocks> Queue { get; private set; }
+    Queue<IBlocks> Queue { get; }
+    IBlocks Dequeue();
+}
+public class BlocksQueue : IBlocksQueue
+{
+    public Queue<IBlocks> Queue { get; private set; }
 
     private int Count;
 
     public BlocksQueue(int size)
     {
-        Queue = new Queue<Blocks>();
+        Queue = new Queue<IBlocks>();
         for (var i = 0; i < size; i++)
         {
             Queue.Enqueue(CreateBlocks(i));
@@ -18,7 +22,7 @@ public class BlocksQueue
         Count = size;
     }
 
-    public Blocks Dequeue()
+    public IBlocks Dequeue()
     {
         Queue.Enqueue(CreateBlocks(Count));
         Count++;
@@ -26,7 +30,7 @@ public class BlocksQueue
         return Queue.Dequeue();
     }
 
-    private Blocks CreateBlocks(int i)
+    private IBlocks CreateBlocks(int i)
     {
         if (i % 2 == 0)
         {

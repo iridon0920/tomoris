@@ -1,4 +1,5 @@
 using UnityEngine;
+using Zenject;
 
 public interface IControlBlocksCollisionDetection
 {
@@ -8,6 +9,7 @@ public class ControlBlocksCollisionDetection : IControlBlocksCollisionDetection
 {
     private IBoard Board { get; }
 
+    [Inject]
     public ControlBlocksCollisionDetection(IBoard board)
     {
         Board = board;

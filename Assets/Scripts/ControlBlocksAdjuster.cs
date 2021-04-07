@@ -1,8 +1,17 @@
-using UnityEngine;
-public class ControlBlocksAdjuster
+using Zenject;
+
+public interface IControlBlocksAdjuster
+{
+    void AdjustBlocksForMoveRight(IControlBlocks controlBlocks);
+    void AdjustBlocksForMoveLeft(IControlBlocks controlBlocks);
+    void AdjustBlocksForMoveDown(IControlBlocks controlBlocks);
+
+}
+public class ControlBlocksAdjuster : IControlBlocksAdjuster
 {
     private IControlBlocksCollisionDetection CollisionDetection { get; }
 
+    [Inject]
     public ControlBlocksAdjuster(IControlBlocksCollisionDetection collisionDetection)
     {
         CollisionDetection = collisionDetection;

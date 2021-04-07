@@ -21,15 +21,29 @@ namespace Tests
         [Test]
         public void CreateInstanceTest()
         {
-            var controlBlocks = new ControlBlocks(1, 5, 10, MockBlocks);
+            var controlBlocks = new ControlBlocks(5, 10, MockBlocks);
             Assert.AreEqual(5, controlBlocks.X);
             Assert.AreEqual(10, controlBlocks.Y);
         }
 
         [Test]
+        public void CloneTest()
+        {
+            var controlBlocks = new ControlBlocks(5, 10, MockBlocks);
+            var controlBlocks2 = controlBlocks;
+            var controlBlocks3 = controlBlocks.Clone();
+            controlBlocks.MoveRight();
+
+            Assert.AreEqual(6, controlBlocks.X);
+            Assert.AreEqual(6, controlBlocks2.X);
+            Assert.AreEqual(5, controlBlocks3.X);
+
+        }
+
+        [Test]
         public void MoveRightTest()
         {
-            var controlBlocks = new ControlBlocks(1, 4, 14, MockBlocks);
+            var controlBlocks = new ControlBlocks(4, 14, MockBlocks);
             controlBlocks.MoveRight();
             Assert.AreEqual(5, controlBlocks.X);
         }
@@ -37,7 +51,7 @@ namespace Tests
         [Test]
         public void MoveLeftTest()
         {
-            var controlBlocks = new ControlBlocks(1, 20, 14, MockBlocks);
+            var controlBlocks = new ControlBlocks(20, 14, MockBlocks);
             controlBlocks.MoveLeft();
             Assert.AreEqual(19, controlBlocks.X);
         }
@@ -45,7 +59,7 @@ namespace Tests
         [Test]
         public void MoveDownTest()
         {
-            var controlBlocks = new ControlBlocks(1, 4, 14, MockBlocks);
+            var controlBlocks = new ControlBlocks(4, 14, MockBlocks);
             controlBlocks.MoveDown();
             Assert.AreEqual(13, controlBlocks.Y);
         }
@@ -59,11 +73,11 @@ namespace Tests
             mockBlocks.Setup(m => m.LeftSpin()).Returns(mockBlocks2);
             mockBlocks.Setup(m => m.RightSpin()).Returns(mockBlocks3);
 
-            var controlBlocks = new ControlBlocks(1, 5, 15, mockBlocks.Object);
+            var controlBlocks = new ControlBlocks(5, 15, mockBlocks.Object);
             controlBlocks.LeftSpin();
             Assert.AreEqual(mockBlocks2, controlBlocks.Blocks);
 
-            var controlBlocks2 = new ControlBlocks(1, 5, 15, mockBlocks.Object);
+            var controlBlocks2 = new ControlBlocks(5, 15, mockBlocks.Object);
             controlBlocks2.RightSpin();
             Assert.AreEqual(mockBlocks3, controlBlocks2.Blocks);
         }
