@@ -46,7 +46,7 @@ namespace Tests
         private Blocks CreateIBlocks()
         {
             return new Blocks(
-                new List<Block>
+                new List<IBlock>
                 {
                     new Block(0, 2),
                     new Block(0, 1),
@@ -59,7 +59,7 @@ namespace Tests
         private Blocks CreateLBlocks()
         {
             return new Blocks(
-                new List<Block>
+                new List<IBlock>
                 {
                     new Block(0, 1),
                     new Block(0, 0),

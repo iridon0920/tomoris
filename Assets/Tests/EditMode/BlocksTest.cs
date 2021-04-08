@@ -7,15 +7,6 @@ namespace Tests
 {
     public class BlocksTest
     {
-        // A Test behaves as an ordinary method
-        [Test]
-        public void GetBlockListTest()
-        {
-            var blocks = new Blocks(CreateIBlockList());
-            Assert.AreEqual(CreateIBlockList(), blocks.BlockList);
-            // Use the Assert class to test conditions
-        }
-
         [Test]
         public void EqualsTest()
         {
@@ -36,30 +27,6 @@ namespace Tests
             Assert.IsTrue(new Block(-1, 0).Equals(blocks.BlockList[1]));
             Assert.IsTrue(new Block(0, 0).Equals(blocks.BlockList[2]));
             Assert.IsTrue(new Block(1, 0).Equals(blocks.BlockList[3]));
-
-            blocks = blocks.LeftSpin();
-            Assert.IsTrue(new Block(0, -2).Equals(blocks.BlockList[0]));
-            Assert.IsTrue(new Block(0, -1).Equals(blocks.BlockList[1]));
-            Assert.IsTrue(new Block(0, 0).Equals(blocks.BlockList[2]));
-            Assert.IsTrue(new Block(0, 1).Equals(blocks.BlockList[3]));
-
-            blocks = blocks.LeftSpin();
-            Assert.IsTrue(new Block(2, 0).Equals(blocks.BlockList[0]));
-            Assert.IsTrue(new Block(1, 0).Equals(blocks.BlockList[1]));
-            Assert.IsTrue(new Block(0, 0).Equals(blocks.BlockList[2]));
-            Assert.IsTrue(new Block(-1, 0).Equals(blocks.BlockList[3]));
-
-            blocks = blocks.RightSpin();
-            Assert.IsTrue(new Block(0, -2).Equals(blocks.BlockList[0]));
-            Assert.IsTrue(new Block(0, -1).Equals(blocks.BlockList[1]));
-            Assert.IsTrue(new Block(0, 0).Equals(blocks.BlockList[2]));
-            Assert.IsTrue(new Block(0, 1).Equals(blocks.BlockList[3]));
-
-            blocks = blocks.RightSpin();
-            Assert.IsTrue(new Block(-2, 0).Equals(blocks.BlockList[0]));
-            Assert.IsTrue(new Block(-1, 0).Equals(blocks.BlockList[1]));
-            Assert.IsTrue(new Block(0, 0).Equals(blocks.BlockList[2]));
-            Assert.IsTrue(new Block(1, 0).Equals(blocks.BlockList[3]));
         }
 
         [Test]
@@ -67,42 +34,18 @@ namespace Tests
         {
             IBlocks blocks = new Blocks(CreateLBlockList());
 
-            blocks = blocks.LeftSpin();
-            Assert.IsTrue(new Block(-1, 0).Equals(blocks.BlockList[0]));
-            Assert.IsTrue(new Block(0, 0).Equals(blocks.BlockList[1]));
-            Assert.IsTrue(new Block(1, 0).Equals(blocks.BlockList[2]));
-            Assert.IsTrue(new Block(1, 1).Equals(blocks.BlockList[3]));
-
-            blocks = blocks.LeftSpin();
-            Assert.IsTrue(new Block(0, -1).Equals(blocks.BlockList[0]));
-            Assert.IsTrue(new Block(0, 0).Equals(blocks.BlockList[1]));
-            Assert.IsTrue(new Block(0, 1).Equals(blocks.BlockList[2]));
-            Assert.IsTrue(new Block(-1, 1).Equals(blocks.BlockList[3]));
-
-            blocks = blocks.LeftSpin();
+            blocks = blocks.RightSpin();
             Assert.IsTrue(new Block(1, 0).Equals(blocks.BlockList[0]));
             Assert.IsTrue(new Block(0, 0).Equals(blocks.BlockList[1]));
             Assert.IsTrue(new Block(-1, 0).Equals(blocks.BlockList[2]));
             Assert.IsTrue(new Block(-1, -1).Equals(blocks.BlockList[3]));
-
-            blocks = blocks.RightSpin();
-            Assert.IsTrue(new Block(0, -1).Equals(blocks.BlockList[0]));
-            Assert.IsTrue(new Block(0, 0).Equals(blocks.BlockList[1]));
-            Assert.IsTrue(new Block(0, 1).Equals(blocks.BlockList[2]));
-            Assert.IsTrue(new Block(-1, 1).Equals(blocks.BlockList[3]));
-
-            blocks = blocks.RightSpin();
-            Assert.IsTrue(new Block(-1, 0).Equals(blocks.BlockList[0]));
-            Assert.IsTrue(new Block(0, 0).Equals(blocks.BlockList[1]));
-            Assert.IsTrue(new Block(1, 0).Equals(blocks.BlockList[2]));
-            Assert.IsTrue(new Block(1, 1).Equals(blocks.BlockList[3]));
         }
 
 
         // I字ブロックのリスト作成
-        private List<Block> CreateIBlockList()
+        private List<IBlock> CreateIBlockList()
         {
-            return new List<Block>
+            return new List<IBlock>
             {
                 new Block(0, 2),
                 new Block(0, 1),
@@ -112,9 +55,9 @@ namespace Tests
         }
 
         // L字ブロックのリスト作成
-        private List<Block> CreateLBlockList()
+        private List<IBlock> CreateLBlockList()
         {
-            return new List<Block>
+            return new List<IBlock>
             {
             new Block(0, 1),
             new Block(0, 0),

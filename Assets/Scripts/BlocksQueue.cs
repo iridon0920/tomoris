@@ -35,7 +35,7 @@ public class BlocksQueue : IBlocksQueue
         if (i % 2 == 0)
         {
             return new Blocks(
-                new List<Block>
+                new List<IBlock>
                 {
                         new Block(0, 2),
                         new Block(0, 1),
@@ -47,7 +47,7 @@ public class BlocksQueue : IBlocksQueue
         else
         {
             return new Blocks(
-                 new List<Block>
+                 new List<IBlock>
                  {
                         new Block(0, 1),
                         new Block(0, 0),

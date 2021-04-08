@@ -120,9 +120,9 @@ namespace Tests
 
 
         // I字ブロックのリスト作成
-        private List<Block> CreateIBlockList()
+        private List<IBlock> CreateIBlockList()
         {
-            return new List<Block>
+            return new List<IBlock>
             {
                 new Block(0, 2),
                 new Block(0, 1),
@@ -132,9 +132,9 @@ namespace Tests
         }
 
         // L字ブロックのリスト作成
-        private List<Block> CreateLBlockList()
+        private List<IBlock> CreateLBlockList()
         {
-            return new List<Block>
+            return new List<IBlock>
             {
             new Block(0, 1),
             new Block(0, 0),

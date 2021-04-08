@@ -3,24 +3,24 @@ using System.Collections.Generic;
 
 public interface IBlocks : IEquatable<IBlocks>
 {
-    List<Block> BlockList { get; }
+    List<IBlock> BlockList { get; }
     IBlocks LeftSpin();
     IBlocks RightSpin();
 }
 public class Blocks : IBlocks
 {
-    public List<Block> BlockList { get; }
-    public Blocks(List<Block> blockList)
+    public List<IBlock> BlockList { get; }
+    public Blocks(List<IBlock> blockList)
     {
         BlockList = blockList;
     }
 
     public IBlocks LeftSpin()
     {
-        var newBlockList = new List<Block>();
+        var newBlockList = new List<IBlock>();
         foreach (var block in BlockList)
         {
-            newBlockList.Add(new Block(-block.Y, block.X));
+            newBlockList.Add(block.RotateLeft90Degree());
         }
 
         return new Blocks(newBlockList);
@@ -28,10 +28,10 @@ public class Blocks : IBlocks
 
     public IBlocks RightSpin()
     {
-        var newBlockList = new List<Block>();
+        var newBlockList = new List<IBlock>();
         foreach (var block in BlockList)
         {
-            newBlockList.Add(new Block(block.Y, -block.X));
+            newBlockList.Add(block.RotateRight90Degree());
         }
 
         return new Blocks(newBlockList);
