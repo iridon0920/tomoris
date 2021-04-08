@@ -14,6 +14,7 @@ public interface IControlBlocks
     void LeftSpin();
     void RightSpin();
     IControlBlocks Clone();
+    List<IBlock> GetBoardPositionBlockList();
 }
 
 /**
@@ -66,6 +67,19 @@ public class ControlBlocks : IControlBlocks
     public IControlBlocks Clone()
     {
         return new ControlBlocks(X, Y, Blocks);
+    }
+
+    public List<IBlock> GetBoardPositionBlockList()
+    {
+        var boardPositionBlockList = new List<IBlock>();
+        foreach (var Block in Blocks.BlockList)
+        {
+            var boardPositionX = X + Block.X;
+            var boardPositionY = Y + Block.Y;
+            var boardPositionBlock = new Block(boardPositionX, boardPositionY);
+            boardPositionBlockList.Add(boardPositionBlock);
+        }
+        return boardPositionBlockList;
     }
 
 }

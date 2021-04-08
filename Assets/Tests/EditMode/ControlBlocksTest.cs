@@ -81,5 +81,25 @@ namespace Tests
             controlBlocks2.RightSpin();
             Assert.AreEqual(mockBlocks3, controlBlocks2.Blocks);
         }
+
+        [Test]
+        public void GetBoardPositionBlockList()
+        {
+            var mockBlocks = new Mock<IBlocks>();
+            var blockList = new List<IBlock>
+            {
+                new Block(5, -2),
+                new Block(-3, 0)
+            };
+            mockBlocks.Setup(m => m.BlockList).Returns(blockList);
+
+            var controlBlocks = new ControlBlocks(5, 10, mockBlocks.Object);
+            var boardPositionBlockList = controlBlocks.GetBoardPositionBlockList();
+
+            Assert.AreEqual(10, boardPositionBlockList[0].X);
+            Assert.AreEqual(8, boardPositionBlockList[0].Y);
+            Assert.AreEqual(2, boardPositionBlockList[1].X);
+            Assert.AreEqual(10, boardPositionBlockList[1].Y);
+        }
     }
 }

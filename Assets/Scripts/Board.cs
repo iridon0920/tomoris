@@ -1,7 +1,8 @@
 using System;
 using System.Linq;
 using UnityEngine;
-
+using System.Collections.Generic;
+using UniRx;
 public interface IBoard
 {
     int Width { get; }
@@ -9,8 +10,10 @@ public interface IBoard
     int InsertPositionX { get; }
 
     bool[,] StatusByPositions { get; }
+    IReadOnlyReactiveCollection<IBlock> RxBlocks { get; }
 
     void PutBlocks(IControlBlocks controlBlocks);
+    bool ExistPosition(int x, int y);
 }
 public class Board : IBoard
 {
@@ -21,6 +24,11 @@ public class Board : IBoard
 
     // 二次元配列を使って各座標のブロックの存在を管理
     public bool[,] StatusByPositions { get; private set; }
+    private ReactiveCollection<IBlock> Blocks { get; }
+    public IReadOnlyReactiveCollection<IBlock> RxBlocks
+    {
+        get { return Blocks; }
+    }
 
     public Board(int width, int height)
     {
@@ -36,20 +44,24 @@ public class Board : IBoard
                 StatusByPositions[x, y] = false;
             }
         }
+
+        Blocks = new ReactiveCollection<IBlock>();
     }
 
     public void PutBlocks(IControlBlocks controlBlocks)
     {
-        foreach (var block in controlBlocks.Blocks.BlockList)
+        foreach (var block in controlBlocks.GetBoardPositionBlockList())
         {
-            StatusByPositions[
-                controlBlocks.X + block.X,
-                controlBlocks.Y + block.Y
-            ] = true;
+            Blocks.Add(block);
         }
 
         EraseIfAlign();
         FallToEmptyRow();
+    }
+
+    public bool ExistPosition(int x, int y)
+    {
+        return Blocks.Any(block => block.X == x && block.Y == y);
     }
 
     private void EraseIfAlign()

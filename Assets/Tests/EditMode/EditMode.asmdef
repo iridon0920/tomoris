@@ -5,7 +5,8 @@
         "UnityEditor.TestRunner",
         "MyProject",
         "Zenject",
-        "Zenject-TestFramework"
+        "Zenject-TestFramework",
+        "UniRx"
     ],
     "includePlatforms": [
         "Editor"

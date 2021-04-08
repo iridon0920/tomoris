@@ -11,7 +11,8 @@ public interface IBlockControllUseCase
 }
 public class BlockControllUseCase : IBlockControllUseCase
 {
-    private IControlBlocksAdjuster ControlBlocksAdjuster;
+    private IControlBlocksAdjuster Adjuster;
+    private IControlBlocksCollisionDetection CollisionDetection;
     private IBlocksQueue Queue;
     private IBoard Board;
     private ReactiveProperty<IControlBlocks> ControlBlocks;
@@ -21,9 +22,15 @@ public class BlockControllUseCase : IBlockControllUseCase
     }
 
     [Inject]
-    public BlockControllUseCase(IControlBlocksAdjuster controlBlocksAdjuster, IBlocksQueue queue, IBoard board)
+    public BlockControllUseCase(
+        IControlBlocksAdjuster adjuster,
+        IControlBlocksCollisionDetection collisionDetection,
+        IBlocksQueue queue,
+        IBoard board
+    )
     {
-        ControlBlocksAdjuster = controlBlocksAdjuster;
+        Adjuster = adjuster;
+        CollisionDetection = collisionDetection;
         Queue = queue;
         Board = board;
 
@@ -39,7 +46,7 @@ public class BlockControllUseCase : IBlockControllUseCase
     {
         var newControlBlocks = ControlBlocks.Value.Clone();
         newControlBlocks.MoveLeft();
-        ControlBlocksAdjuster.AdjustBlocksForMoveLeft(newControlBlocks);
+        Adjuster.AdjustBlocksForMoveLeft(newControlBlocks);
 
         ControlBlocks.Value = newControlBlocks;
     }
@@ -48,7 +55,7 @@ public class BlockControllUseCase : IBlockControllUseCase
     {
         var newControlBlocks = ControlBlocks.Value.Clone();
         newControlBlocks.MoveRight();
-        ControlBlocksAdjuster.AdjustBlocksForMoveRight(newControlBlocks);
+        Adjuster.AdjustBlocksForMoveRight(newControlBlocks);
 
         ControlBlocks.Value = newControlBlocks;
     }
@@ -57,8 +64,18 @@ public class BlockControllUseCase : IBlockControllUseCase
     {
         var newControlBlocks = ControlBlocks.Value.Clone();
         newControlBlocks.MoveDown();
-        ControlBlocksAdjuster.AdjustBlocksForMoveDown(newControlBlocks);
-
-        ControlBlocks.Value = newControlBlocks;
+        if (CollisionDetection.IsCollisionGround(newControlBlocks))
+        {
+            Board.PutBlocks(ControlBlocks.Value);
+            ControlBlocks.Value = new ControlBlocks(
+                Board.InsertPositionX,
+                Board.Height - 1,
+                Queue.Dequeue()
+            );
+        }
+        else
+        {
+            ControlBlocks.Value = newControlBlocks;
+        }
     }
 }

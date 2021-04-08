@@ -4,6 +4,7 @@ using Zenject;
 public interface IControlBlocksCollisionDetection
 {
     bool IsCollision(IControlBlocks controlBlocks);
+    bool IsCollisionGround(IControlBlocks controlBlocks);
 }
 public class ControlBlocksCollisionDetection : IControlBlocksCollisionDetection
 {
@@ -54,7 +55,7 @@ public class ControlBlocksCollisionDetection : IControlBlocksCollisionDetection
         return result;
     }
 
-    private bool IsCollisionGround(IControlBlocks controlBlocks)
+    public bool IsCollisionGround(IControlBlocks controlBlocks)
     {
         var result = false;
         foreach (var controlBlock in controlBlocks.Blocks.BlockList)
@@ -79,7 +80,7 @@ public class ControlBlocksCollisionDetection : IControlBlocksCollisionDetection
             && movePlanY >= 0
             && movePlanY <= Board.Height - 1)
         {
-            if (Board.StatusByPositions[movePlanX, movePlanY])
+            if (Board.ExistPosition(movePlanX, movePlanY))
             {
                 return true;
             }
