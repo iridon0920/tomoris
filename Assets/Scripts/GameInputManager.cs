@@ -17,7 +17,7 @@ public class GameInputManager : MonoBehaviour
                 var newPosition = transform.position;
                 newPosition.x += controlBlocks.X + block.X;
                 newPosition.y += controlBlocks.Y + block.Y;
-                Blocks.Add(Instantiate(BlockPrefab, newPosition, Quaternion.identity, this.transform));
+                Blocks.Add(Instantiate(BlockPrefab, newPosition, Quaternion.identity, transform));
             }
         }
         else
@@ -25,7 +25,9 @@ public class GameInputManager : MonoBehaviour
             int i = 0;
             foreach (var block in controlBlocks.Blocks.BlockList)
             {
-                var newPosition = new Vector3(controlBlocks.X + block.X, controlBlocks.Y + block.Y, 0);
+                var newPosition = transform.position;
+                newPosition.x += controlBlocks.X + block.X;
+                newPosition.y += controlBlocks.Y + block.Y;
                 Blocks[i].transform.position = newPosition;
                 i++;
             }
