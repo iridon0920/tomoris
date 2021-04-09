@@ -10,18 +10,24 @@ namespace Tests
 {
     public class ControlBlocksTest
     {
-        private IBlocks MockBlocks;
+        private IBlocks IBlocks;
 
         [SetUp]
         public void SetUp()
         {
-            MockBlocks = new Mock<IBlocks>().Object;
+            IBlocks = new Blocks(new List<IBlock>
+            {
+                new Block(0, 2),
+                new Block(0, 1),
+                new Block(0, 0),
+                new Block(0, -1)
+            });
         }
 
         [Test]
         public void CreateInstanceTest()
         {
-            var controlBlocks = new ControlBlocks(5, 10, MockBlocks);
+            var controlBlocks = new ControlBlocks(5, 10, IBlocks);
             Assert.AreEqual(5, controlBlocks.X);
             Assert.AreEqual(10, controlBlocks.Y);
         }
@@ -29,21 +35,24 @@ namespace Tests
         [Test]
         public void CloneTest()
         {
-            var controlBlocks = new ControlBlocks(5, 10, MockBlocks);
-            var controlBlocks2 = controlBlocks;
+            var controlBlocks = new ControlBlocks(5, 10, IBlocks);
+            var controlBlocks2 = controlBlocks.Clone();
+            controlBlocks2.MoveDown();
             var controlBlocks3 = controlBlocks.Clone();
-            controlBlocks.MoveRight();
+            controlBlocks3.MoveRight();
 
-            Assert.AreEqual(6, controlBlocks.X);
-            Assert.AreEqual(6, controlBlocks2.X);
-            Assert.AreEqual(5, controlBlocks3.X);
-
+            Assert.AreEqual(5, controlBlocks.X);
+            Assert.AreEqual(10, controlBlocks.Y);
+            Assert.AreEqual(5, controlBlocks2.X);
+            Assert.AreEqual(9, controlBlocks2.Y);
+            Assert.AreEqual(6, controlBlocks3.X);
+            Assert.AreEqual(10, controlBlocks3.Y);
         }
 
         [Test]
         public void MoveRightTest()
         {
-            var controlBlocks = new ControlBlocks(4, 14, MockBlocks);
+            var controlBlocks = new ControlBlocks(4, 14, IBlocks);
             controlBlocks.MoveRight();
             Assert.AreEqual(5, controlBlocks.X);
         }
@@ -51,7 +60,7 @@ namespace Tests
         [Test]
         public void MoveLeftTest()
         {
-            var controlBlocks = new ControlBlocks(20, 14, MockBlocks);
+            var controlBlocks = new ControlBlocks(20, 14, IBlocks);
             controlBlocks.MoveLeft();
             Assert.AreEqual(19, controlBlocks.X);
         }
@@ -59,7 +68,7 @@ namespace Tests
         [Test]
         public void MoveDownTest()
         {
-            var controlBlocks = new ControlBlocks(4, 14, MockBlocks);
+            var controlBlocks = new ControlBlocks(4, 14, IBlocks);
             controlBlocks.MoveDown();
             Assert.AreEqual(13, controlBlocks.Y);
         }
@@ -67,39 +76,32 @@ namespace Tests
         [Test]
         public void SpinTest()
         {
-            var mockBlocks = new Mock<IBlocks>();
-            var mockBlocks2 = new Mock<IBlocks>().Object;
-            var mockBlocks3 = new Mock<IBlocks>().Object;
-            mockBlocks.Setup(m => m.LeftSpin()).Returns(mockBlocks2);
-            mockBlocks.Setup(m => m.RightSpin()).Returns(mockBlocks3);
+            var controlBlocks = new ControlBlocks(5, 15, IBlocks);
+            var IBlocksLeftSpin = IBlocks.LeftSpin();
 
-            var controlBlocks = new ControlBlocks(5, 15, mockBlocks.Object);
             controlBlocks.LeftSpin();
-            Assert.AreEqual(mockBlocks2, controlBlocks.Blocks);
+            Assert.AreEqual(IBlocksLeftSpin, controlBlocks.Blocks);
 
-            var controlBlocks2 = new ControlBlocks(5, 15, mockBlocks.Object);
+            var controlBlocks2 = new ControlBlocks(5, 15, IBlocks);
+            var IBlocksRightSpin = IBlocks.RightSpin();
             controlBlocks2.RightSpin();
-            Assert.AreEqual(mockBlocks3, controlBlocks2.Blocks);
+            Assert.AreEqual(IBlocksRightSpin, controlBlocks2.Blocks);
         }
 
         [Test]
         public void GetBoardPositionBlockList()
         {
-            var mockBlocks = new Mock<IBlocks>();
-            var blockList = new List<IBlock>
-            {
-                new Block(5, -2),
-                new Block(-3, 0)
-            };
-            mockBlocks.Setup(m => m.BlockList).Returns(blockList);
-
-            var controlBlocks = new ControlBlocks(5, 10, mockBlocks.Object);
+            var controlBlocks = new ControlBlocks(5, 1, IBlocks);
             var boardPositionBlockList = controlBlocks.GetBoardPositionBlockList();
 
-            Assert.AreEqual(10, boardPositionBlockList[0].X);
-            Assert.AreEqual(8, boardPositionBlockList[0].Y);
-            Assert.AreEqual(2, boardPositionBlockList[1].X);
-            Assert.AreEqual(10, boardPositionBlockList[1].Y);
+            Assert.AreEqual(5, boardPositionBlockList[0].X);
+            Assert.AreEqual(3, boardPositionBlockList[0].Y);
+            Assert.AreEqual(5, boardPositionBlockList[1].X);
+            Assert.AreEqual(2, boardPositionBlockList[1].Y);
+            Assert.AreEqual(5, boardPositionBlockList[2].X);
+            Assert.AreEqual(1, boardPositionBlockList[2].Y);
+            Assert.AreEqual(5, boardPositionBlockList[3].X);
+            Assert.AreEqual(0, boardPositionBlockList[3].Y);
         }
     }
 }

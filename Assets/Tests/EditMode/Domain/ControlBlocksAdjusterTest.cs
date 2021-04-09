@@ -3,38 +3,38 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
-using Moq;
 namespace Tests
 {
 
     public class ControlBlocksAdjusterTest
     {
-        private Mock<IControlBlocksCollisionDetection> MockCollisionDetection;
-        private Mock<IBlocks> MockBlocks;
+        private ControlBlocksCollisionDetection CollisionDetection;
+        private ControlBlocksAdjuster Adjuster;
 
         [SetUp]
         public void SetUp()
         {
-            MockCollisionDetection = new Mock<IControlBlocksCollisionDetection>();
-            MockBlocks = new Mock<IBlocks>();
+            var board = new Board(10, 20);
+            CollisionDetection = new ControlBlocksCollisionDetection(board);
+            Adjuster = new ControlBlocksAdjuster(CollisionDetection);
         }
 
         [Test]
         public void AdjustControlBlocksSuccessTest()
         {
-            var blockHandling = new ControlBlocksAdjuster(
-                MockCollisionDetection.Object
-            );
+            var blockList = new List<IBlock> { new Block(0, 0) };
+            var blocks = new Blocks(blockList);
+            var controlBlocks = new ControlBlocks(5, 10, blocks);
 
-            var controlBlocks = new ControlBlocks(5, 10, MockBlocks.Object);
-
-            blockHandling.AdjustBlocksForMoveRight(controlBlocks);
+            Adjuster.AdjustBlocksForMoveRight(controlBlocks);
             Assert.AreEqual(5, controlBlocks.X);
             Assert.AreEqual(10, controlBlocks.Y);
-            blockHandling.AdjustBlocksForMoveLeft(controlBlocks);
+
+            Adjuster.AdjustBlocksForMoveLeft(controlBlocks);
             Assert.AreEqual(5, controlBlocks.X);
             Assert.AreEqual(10, controlBlocks.Y);
-            blockHandling.AdjustBlocksForMoveDown(controlBlocks);
+
+            Adjuster.AdjustBlocksForMoveDown(controlBlocks);
             Assert.AreEqual(5, controlBlocks.X);
             Assert.AreEqual(10, controlBlocks.Y);
         }
@@ -42,31 +42,23 @@ namespace Tests
         [Test]
         public void AdjustControlBlocksRightCollisionTest()
         {
-            var controlBlocks = new ControlBlocks(10, 19, MockBlocks.Object);
-            MockCollisionDetection
-                .SetupSequence(m => m.IsCollision(controlBlocks))
-                .Returns(true)
-                .Returns(true)
-                .Returns(false);
-            var blockHandling = new ControlBlocksAdjuster(MockCollisionDetection.Object);
+            var blockList = new List<IBlock> { new Block(0, 0) };
+            var blocks = new Blocks(blockList);
+            var controlBlocks = new ControlBlocks(10, 19, blocks);
 
-            blockHandling.AdjustBlocksForMoveRight(controlBlocks);
-            Assert.AreEqual(8, controlBlocks.X);
+            Adjuster.AdjustBlocksForMoveRight(controlBlocks);
+            Assert.AreEqual(9, controlBlocks.X);
             Assert.AreEqual(19, controlBlocks.Y);
         }
 
         [Test]
         public void AdjustControlBlocksLeftCollisionTest()
         {
-            var controlBlocks = new ControlBlocks(-2, 15, MockBlocks.Object);
-            MockCollisionDetection
-                .SetupSequence(m => m.IsCollision(controlBlocks))
-                .Returns(true)
-                .Returns(true)
-                .Returns(false);
-            var blockHandling = new ControlBlocksAdjuster(MockCollisionDetection.Object);
+            var blockList = new List<IBlock> { new Block(0, 0) };
+            var blocks = new Blocks(blockList);
+            var controlBlocks = new ControlBlocks(-2, 15, blocks);
 
-            blockHandling.AdjustBlocksForMoveLeft(controlBlocks);
+            Adjuster.AdjustBlocksForMoveLeft(controlBlocks);
             Assert.AreEqual(0, controlBlocks.X);
             Assert.AreEqual(15, controlBlocks.Y);
         }
@@ -74,16 +66,13 @@ namespace Tests
         [Test]
         public void AdjustControlBlocksDownCollisionTest()
         {
-            var controlBlocks = new ControlBlocks(4, -2, MockBlocks.Object);
-            MockCollisionDetection
-                .SetupSequence(m => m.IsCollision(controlBlocks))
-                .Returns(true)
-                .Returns(false);
-            var blockHandling = new ControlBlocksAdjuster(MockCollisionDetection.Object);
+            var blockList = new List<IBlock> { new Block(0, 0) };
+            var blocks = new Blocks(blockList);
+            var controlBlocks = new ControlBlocks(4, -2, blocks);
 
-            blockHandling.AdjustBlocksForMoveDown(controlBlocks);
+            Adjuster.AdjustBlocksForMoveDown(controlBlocks);
             Assert.AreEqual(4, controlBlocks.X);
-            Assert.AreEqual(-1, controlBlocks.Y);
+            Assert.AreEqual(0, controlBlocks.Y);
         }
     }
 }

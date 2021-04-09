@@ -3,61 +3,63 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
-using Moq;
 using UniRx;
 namespace Tests
 {
 
     public class BoardTest
     {
-        private Mock<IBlocks> MockLBlocks;
-        private Mock<IBlocks> MockIBlocks;
+        private IBoard Board;
+        private IBlocks LBlocks;
+        private IBlocks IBlocks;
 
 
         [SetUp]
         public void SetUp()
         {
-            MockLBlocks = new Mock<IBlocks>();
-            MockLBlocks.Setup(m => m.BlockList).Returns(
-                CreateLBlockList()
-            );
+            Board = new Board(10, 20);
 
-            MockIBlocks = new Mock<IBlocks>();
-            MockIBlocks.Setup(m => m.BlockList).Returns(
-                CreateIBlockList()
-            );
+            IBlocks = new Blocks(new List<IBlock>
+            {
+                new Block(0, 2),
+                new Block(0, 1),
+                new Block(0, 0),
+                new Block(0, -1)
+            });
+
+            LBlocks = new Blocks(new List<IBlock>
+            {
+                new Block(0, 1),
+                new Block(0, 0),
+                new Block(0, -1),
+                new Block(1, -1)
+            });
         }
 
         [Test]
         public void CreateInstanceTest()
         {
-            var board = new Board(10, 20);
-            Assert.AreEqual(4, board.InsertPositionX);
+            Assert.AreEqual(4, Board.InsertPositionX);
         }
 
         [Test]
         public void PutBlocksTest()
         {
-            var board = new Board(10, 20);
+            var controlBlocks = new ControlBlocks(0, 1, LBlocks);
 
-            var mockControlBlocks = new Mock<IControlBlocks>();
-            mockControlBlocks.Setup(m => m.GetBoardPositionBlockList()).Returns(
-                new List<IBlock>
-                {
-                    new Block(0, 2),
-                    new Block(1, 3)
-                }
-            );
+            Assert.AreEqual(0, Board.RxBlocks.Count);
 
-            Assert.AreEqual(0, board.RxBlocks.Count);
+            Board.PutBlocks(controlBlocks);
 
-            board.PutBlocks(mockControlBlocks.Object);
-
-            Assert.AreEqual(2, board.RxBlocks.Count);
-            Assert.AreEqual(0, board.RxBlocks[0].X);
-            Assert.AreEqual(2, board.RxBlocks[0].Y);
-            Assert.AreEqual(1, board.RxBlocks[1].X);
-            Assert.AreEqual(3, board.RxBlocks[1].Y);
+            Assert.AreEqual(4, Board.RxBlocks.Count);
+            Assert.AreEqual(0, Board.RxBlocks[0].X);
+            Assert.AreEqual(2, Board.RxBlocks[0].Y);
+            Assert.AreEqual(0, Board.RxBlocks[1].X);
+            Assert.AreEqual(1, Board.RxBlocks[1].Y);
+            Assert.AreEqual(0, Board.RxBlocks[2].X);
+            Assert.AreEqual(0, Board.RxBlocks[2].Y);
+            Assert.AreEqual(1, Board.RxBlocks[3].X);
+            Assert.AreEqual(0, Board.RxBlocks[3].Y);
         }
 
         // [Test]
@@ -120,31 +122,5 @@ namespace Tests
         //     Assert.IsFalse(board.StatusByPositions[6, 0]);
         //     Assert.IsFalse(board.StatusByPositions[7, 0]);
         // }
-
-
-        // I字ブロックのリスト作成
-        private List<IBlock> CreateIBlockList()
-        {
-            return new List<IBlock>
-            {
-                new Block(0, 2),
-                new Block(0, 1),
-                new Block(0, 0),
-                new Block(0, -1)
-            };
-        }
-
-        // L字ブロックのリスト作成
-        private List<IBlock> CreateLBlockList()
-        {
-            return new List<IBlock>
-            {
-            new Block(0, 1),
-            new Block(0, 0),
-            new Block(0, -1),
-            new Block(1, -1)
-            };
-        }
-
     }
 }
