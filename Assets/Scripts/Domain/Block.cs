@@ -40,6 +40,4 @@ public class Block : IBlock
     {
         return X == block.X && Y == block.Y;
     }
-
-
 }

@@ -21,5 +21,11 @@ public class BoardPresenter : MonoBehaviour
             .ObserveAdd()
             .Subscribe(block => BoardView.DrawBoardBlock(block.Value));
 
+        Board
+            .RxBlocks
+            .ObserveRemove()
+            .Subscribe(block => BoardView.DeleteBoardBlock(block.Value));
+
+        Board.RxFallBlock.Where(block => block != null).Subscribe(block => BoardView.ChangeBoardBlockPosition(block));
     }
 }

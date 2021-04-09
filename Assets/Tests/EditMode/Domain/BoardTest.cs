@@ -52,75 +52,83 @@ namespace Tests
             Board.PutBlocks(controlBlocks);
 
             Assert.AreEqual(4, Board.RxBlocks.Count);
-            Assert.AreEqual(0, Board.RxBlocks[0].X);
-            Assert.AreEqual(2, Board.RxBlocks[0].Y);
-            Assert.AreEqual(0, Board.RxBlocks[1].X);
-            Assert.AreEqual(1, Board.RxBlocks[1].Y);
-            Assert.AreEqual(0, Board.RxBlocks[2].X);
-            Assert.AreEqual(0, Board.RxBlocks[2].Y);
-            Assert.AreEqual(1, Board.RxBlocks[3].X);
-            Assert.AreEqual(0, Board.RxBlocks[3].Y);
+
+            Assert.AreEqual(1, Board.RxBlocks[0].Id);
+            Assert.AreEqual(0, Board.RxBlocks[0].GetX());
+            Assert.AreEqual(2, Board.RxBlocks[0].GetY());
+
+            Assert.AreEqual(2, Board.RxBlocks[1].Id);
+            Assert.AreEqual(0, Board.RxBlocks[1].GetX());
+            Assert.AreEqual(1, Board.RxBlocks[1].GetY());
+
+            Assert.AreEqual(3, Board.RxBlocks[2].Id);
+            Assert.AreEqual(0, Board.RxBlocks[2].GetX());
+            Assert.AreEqual(0, Board.RxBlocks[2].GetY());
+
+            Assert.AreEqual(4, Board.RxBlocks[3].Id);
+            Assert.AreEqual(1, Board.RxBlocks[3].GetX());
+            Assert.AreEqual(0, Board.RxBlocks[3].GetY());
         }
 
-        // [Test]
-        // public void AlignBlockEraseTest()
-        // {
-        //     var board = new Board(8, 20);
-        //     // 1つ目のブロックを左下へ
-        //     var controlBlocks = new ControlBlocks(2, 0, new Blocks(CreateIBlockList()));
-        //     controlBlocks.LeftSpin();
-        //     board.PutBlocks(controlBlocks);
+        [Test]
+        public void AlignBlockEraseTest()
+        {
+            var board = new Board(8, 20);
+            // 1つ目のブロックを左下へ
+            var controlBlocks = new ControlBlocks(2, 0, IBlocks);
+            controlBlocks.LeftSpin();
+            board.PutBlocks(controlBlocks);
 
-        //     // 2つ目のブロックを左下二段目へ
-        //     controlBlocks = new ControlBlocks(2, 1, new Blocks(CreateIBlockList()));
-        //     controlBlocks.LeftSpin();
-        //     board.PutBlocks(controlBlocks);
+            // 2つ目のブロックを左下二段目へ
+            controlBlocks = new ControlBlocks(2, 1, IBlocks);
+            controlBlocks.LeftSpin();
+            board.PutBlocks(controlBlocks);
 
-        //     // 3つ目のブロックを左下三段目へ
-        //     controlBlocks = new ControlBlocks(2, 2, new Blocks(CreateIBlockList()));
-        //     controlBlocks.LeftSpin();
-        //     board.PutBlocks(controlBlocks);
+            // 3つ目のブロックを左下三段目へ
+            controlBlocks = new ControlBlocks(2, 2, IBlocks);
+            controlBlocks.LeftSpin();
+            board.PutBlocks(controlBlocks);
 
-        //     // まだブロックは揃っていない
-        //     Assert.IsTrue(board.StatusByPositions[0, 2]);
-        //     Assert.IsTrue(board.StatusByPositions[1, 2]);
-        //     Assert.IsTrue(board.StatusByPositions[2, 2]);
-        //     Assert.IsTrue(board.StatusByPositions[3, 2]);
-        //     Assert.IsTrue(board.StatusByPositions[0, 1]);
-        //     Assert.IsTrue(board.StatusByPositions[1, 1]);
-        //     Assert.IsTrue(board.StatusByPositions[2, 1]);
-        //     Assert.IsTrue(board.StatusByPositions[3, 1]);
-        //     Assert.IsTrue(board.StatusByPositions[0, 0]);
-        //     Assert.IsTrue(board.StatusByPositions[1, 0]);
-        //     Assert.IsTrue(board.StatusByPositions[2, 0]);
-        //     Assert.IsTrue(board.StatusByPositions[3, 0]);
-        //     Assert.IsFalse(board.StatusByPositions[4, 0]);
-        //     Assert.IsFalse(board.StatusByPositions[5, 0]);
-        //     Assert.IsFalse(board.StatusByPositions[6, 0]);
-        //     Assert.IsFalse(board.StatusByPositions[7, 0]);
+            // まだブロックは揃っていない
+            Assert.IsTrue(board.ExistPosition(0, 2));
+            Assert.IsTrue(board.ExistPosition(1, 2));
+            Assert.IsTrue(board.ExistPosition(2, 2));
+            Assert.IsTrue(board.ExistPosition(3, 2));
+            Assert.IsTrue(board.ExistPosition(0, 1));
+            Assert.IsTrue(board.ExistPosition(1, 1));
+            Assert.IsTrue(board.ExistPosition(2, 1));
+            Assert.IsTrue(board.ExistPosition(3, 1));
+            Assert.IsTrue(board.ExistPosition(0, 0));
+            Assert.IsTrue(board.ExistPosition(1, 0));
+            Assert.IsTrue(board.ExistPosition(2, 0));
+            Assert.IsTrue(board.ExistPosition(3, 0));
+            Assert.IsFalse(board.ExistPosition(4, 0));
+            Assert.IsFalse(board.ExistPosition(5, 0));
+            Assert.IsFalse(board.ExistPosition(6, 0));
+            Assert.IsFalse(board.ExistPosition(7, 0));
 
-        //     // 4つ目のブロックを右下へ
-        //     controlBlocks = new ControlBlocks(6, 0, new Blocks(CreateIBlockList()));
-        //     controlBlocks.LeftSpin();
-        //     board.PutBlocks(controlBlocks);
+            // 4つ目のブロックを右下へ
+            controlBlocks = new ControlBlocks(6, 0, IBlocks);
+            controlBlocks.LeftSpin();
+            board.PutBlocks(controlBlocks);
 
-        //     // ブロックが揃ったことで一番下の段が消え、上に積み重なっていたブロックが下に落ちる
-        //     Assert.IsFalse(board.StatusByPositions[0, 2]);
-        //     Assert.IsFalse(board.StatusByPositions[1, 2]);
-        //     Assert.IsFalse(board.StatusByPositions[2, 2]);
-        //     Assert.IsFalse(board.StatusByPositions[3, 2]);
-        //     Assert.IsTrue(board.StatusByPositions[0, 1]);
-        //     Assert.IsTrue(board.StatusByPositions[1, 1]);
-        //     Assert.IsTrue(board.StatusByPositions[2, 1]);
-        //     Assert.IsTrue(board.StatusByPositions[3, 1]);
-        //     Assert.IsTrue(board.StatusByPositions[0, 0]);
-        //     Assert.IsTrue(board.StatusByPositions[1, 0]);
-        //     Assert.IsTrue(board.StatusByPositions[2, 0]);
-        //     Assert.IsTrue(board.StatusByPositions[3, 0]);
-        //     Assert.IsFalse(board.StatusByPositions[4, 0]);
-        //     Assert.IsFalse(board.StatusByPositions[5, 0]);
-        //     Assert.IsFalse(board.StatusByPositions[6, 0]);
-        //     Assert.IsFalse(board.StatusByPositions[7, 0]);
-        // }
+            // ブロックが揃ったことで一番下の段が消え、上に積み重なっていたブロックが下に落ちる
+            Assert.IsFalse(board.ExistPosition(0, 2));
+            Assert.IsFalse(board.ExistPosition(1, 2));
+            Assert.IsFalse(board.ExistPosition(2, 2));
+            Assert.IsFalse(board.ExistPosition(3, 2));
+            Assert.IsTrue(board.ExistPosition(0, 1));
+            Assert.IsTrue(board.ExistPosition(1, 1));
+            Assert.IsTrue(board.ExistPosition(2, 1));
+            Assert.IsTrue(board.ExistPosition(3, 1));
+            Assert.IsTrue(board.ExistPosition(0, 0));
+            Assert.IsTrue(board.ExistPosition(1, 0));
+            Assert.IsTrue(board.ExistPosition(2, 0));
+            Assert.IsTrue(board.ExistPosition(3, 0));
+            Assert.IsFalse(board.ExistPosition(4, 0));
+            Assert.IsFalse(board.ExistPosition(5, 0));
+            Assert.IsFalse(board.ExistPosition(6, 0));
+            Assert.IsFalse(board.ExistPosition(7, 0));
+        }
     }
 }

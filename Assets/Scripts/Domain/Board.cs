@@ -10,7 +10,9 @@ public interface IBoard
     int InsertPositionX { get; }
 
     bool[,] StatusByPositions { get; }
-    IReadOnlyReactiveCollection<IBlock> RxBlocks { get; }
+
+    IReadOnlyReactiveCollection<BoardBlock> RxBlocks { get; }
+    IReadOnlyReactiveProperty<BoardBlock> RxFallBlock { get; }
 
     void PutBlocks(IControlBlocks controlBlocks);
     bool ExistPosition(int x, int y);
@@ -24,10 +26,16 @@ public class Board : IBoard
 
     // 二次元配列を使って各座標のブロックの存在を管理
     public bool[,] StatusByPositions { get; private set; }
-    private ReactiveCollection<IBlock> Blocks { get; }
-    public IReadOnlyReactiveCollection<IBlock> RxBlocks
+    private int NextBlockId = 1;
+    private ReactiveCollection<BoardBlock> Blocks { get; }
+    public IReadOnlyReactiveCollection<BoardBlock> RxBlocks
     {
         get { return Blocks; }
+    }
+    private ReactiveProperty<BoardBlock> FallBlock;
+    public IReadOnlyReactiveProperty<BoardBlock> RxFallBlock
+    {
+        get { return FallBlock; }
     }
 
     public Board(int width, int height)
@@ -44,15 +52,16 @@ public class Board : IBoard
                 StatusByPositions[x, y] = false;
             }
         }
-
-        Blocks = new ReactiveCollection<IBlock>();
+        FallBlock = new ReactiveProperty<BoardBlock>();
+        Blocks = new ReactiveCollection<BoardBlock>();
     }
 
     public void PutBlocks(IControlBlocks controlBlocks)
     {
         foreach (var block in controlBlocks.GetBoardPositionBlockList())
         {
-            Blocks.Add(block);
+            Blocks.Add(new BoardBlock(NextBlockId, block));
+            NextBlockId++;
         }
 
         EraseIfAlign();
@@ -61,28 +70,26 @@ public class Board : IBoard
 
     public bool ExistPosition(int x, int y)
     {
-        return Blocks.Any(block => block.X == x && block.Y == y);
+        return Blocks.Any(block => block.GetX() == x && block.GetY() == y);
     }
 
     private void EraseIfAlign()
     {
-        int blockCount;
         for (var y = 0; y < Height; y++)
         {
-            blockCount = 0;
-            for (var x = 0; x < Width; x++)
+            var AligenLineBlocks = Blocks.Where(block => block.GetY() == y).ToList();
+            if (AligenLineBlocks.Count == Width)
             {
-                if (StatusByPositions[x, y])
+                foreach (var lineBlock in AligenLineBlocks)
                 {
-                    blockCount++;
+                    Blocks.Remove(lineBlock);
                 }
-            }
-            if (blockCount == Width)
-            {
-                for (var x = 0; x < Width; x++)
+                Blocks.Where(block => block.GetY() > y).Select(block =>
                 {
-                    StatusByPositions[x, y] = false;
-                }
+                    block.MoveDown();
+                    FallBlock.Value = block;
+                    return block;
+                }).ToReactiveCollection();
             }
         }
     }
