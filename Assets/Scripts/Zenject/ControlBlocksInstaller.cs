@@ -9,7 +9,7 @@ public class ControlBlocksInstaller : MonoInstaller<ControlBlocksInstaller>
 
         Container.Bind<IControlBlocksAdjuster>().To<ControlBlocksAdjuster>().AsCached();
 
-        Container.Bind<IControlBlocksCollisionDetection>().To<ControlBlocksCollisionDetection>().AsCached();
+        Container.Bind<ICollisionDetection>().To<CollisionDetection>().AsCached();
 
         Container.Bind<IBlocksQueue>().To<BlocksQueue>().AsCached().WithArguments(4);
 

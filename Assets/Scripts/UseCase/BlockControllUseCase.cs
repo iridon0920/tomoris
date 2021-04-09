@@ -12,7 +12,7 @@ public interface IBlockControllUseCase
 public class BlockControllUseCase : IBlockControllUseCase
 {
     private IControlBlocksAdjuster Adjuster;
-    private IControlBlocksCollisionDetection CollisionDetection;
+    private ICollisionDetection CollisionDetection;
     private IBlocksQueue Queue;
     private IBoard Board;
     private ReactiveProperty<IControlBlocks> ControlBlocks;
@@ -24,7 +24,7 @@ public class BlockControllUseCase : IBlockControllUseCase
     [Inject]
     public BlockControllUseCase(
         IControlBlocksAdjuster adjuster,
-        IControlBlocksCollisionDetection collisionDetection,
+        ICollisionDetection collisionDetection,
         IBlocksQueue queue,
         IBoard board
     )
@@ -64,7 +64,7 @@ public class BlockControllUseCase : IBlockControllUseCase
     {
         var newControlBlocks = ControlBlocks.Value.Clone();
         newControlBlocks.MoveDown();
-        if (CollisionDetection.IsCollisionGround(newControlBlocks))
+        if (CollisionDetection.IsCollisionPutPosition(newControlBlocks))
         {
             Board.PutBlocks(ControlBlocks.Value);
             ControlBlocks.Value = new ControlBlocks(

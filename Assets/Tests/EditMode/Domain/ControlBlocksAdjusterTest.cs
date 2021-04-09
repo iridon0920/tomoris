@@ -8,14 +8,14 @@ namespace Tests
 
     public class ControlBlocksAdjusterTest
     {
-        private ControlBlocksCollisionDetection CollisionDetection;
+        private CollisionDetection CollisionDetection;
         private ControlBlocksAdjuster Adjuster;
 
         [SetUp]
         public void SetUp()
         {
             var board = new Board(10, 20);
-            CollisionDetection = new ControlBlocksCollisionDetection(board);
+            CollisionDetection = new CollisionDetection(board);
             Adjuster = new ControlBlocksAdjuster(CollisionDetection);
         }
 

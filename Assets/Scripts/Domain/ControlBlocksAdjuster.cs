@@ -9,10 +9,10 @@ public interface IControlBlocksAdjuster
 }
 public class ControlBlocksAdjuster : IControlBlocksAdjuster
 {
-    private IControlBlocksCollisionDetection CollisionDetection { get; }
+    private ICollisionDetection CollisionDetection { get; }
 
     [Inject]
-    public ControlBlocksAdjuster(IControlBlocksCollisionDetection collisionDetection)
+    public ControlBlocksAdjuster(ICollisionDetection collisionDetection)
     {
         CollisionDetection = collisionDetection;
     }
