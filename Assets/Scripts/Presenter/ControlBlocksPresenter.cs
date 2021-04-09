@@ -6,10 +6,10 @@ using Zenject;
 using UniRx;
 using UniRx.Triggers;
 
-public class BlockControllPresenter : MonoBehaviour
+public class ControlBlocksPresenter : MonoBehaviour
 {
     [SerializeField]
-    private GameInputManager GameInputManager;
+    private ControlBlocksView ControlBlocksView;
     [SerializeField]
     private float moveWaitSecond = 0.2f;
 
@@ -48,7 +48,7 @@ public class BlockControllPresenter : MonoBehaviour
             .Where(controlBlocks => controlBlocks != null)
             .Subscribe(
                 controlBlocks =>
-                        GameInputManager.DrawControlBlocks(controlBlocks)
+                        ControlBlocksView.DrawControlBlocks(controlBlocks)
             );
     }
 

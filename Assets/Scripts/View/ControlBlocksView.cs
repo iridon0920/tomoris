@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-public class GameInputManager : MonoBehaviour
+public class ControlBlocksView : MonoBehaviour
 {
 
     [SerializeField]

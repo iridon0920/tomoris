@@ -290,9 +290,8 @@ GameObject:
   m_Component:
   - component: {fileID: 596740868}
   - component: {fileID: 596740867}
-  - component: {fileID: 596740869}
   m_Layer: 0
-  m_Name: GameInputManager
+  m_Name: ControlBlocks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -307,11 +306,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 596740866}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdb207b8e596d234cb3b75596b7520d3, type: 3}
+  m_Script: {fileID: 11500000, guid: f0e52f3476a80f8499272a5a4bb35e15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BlockPrefab: {fileID: 6518838967622105746, guid: 94151acee0fddd14d90a3dc8e0be610c,
-    type: 3}
+  BlockPrefab: {fileID: 0}
 --- !u!4 &596740868
 Transform:
   m_ObjectHideFlags: 0
@@ -326,20 +324,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &596740869
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 596740866}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91e8d4b62c297674f82a40740ccc4552, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GameInputManager: {fileID: 596740867}
-  moveWaitSecond: 0.2
 --- !u!1 &1624854382
 GameObject:
   m_ObjectHideFlags: 0
