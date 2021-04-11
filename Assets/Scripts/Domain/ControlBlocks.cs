@@ -13,7 +13,7 @@ public interface IControlBlocks
     void MoveDown();
     void LeftSpin();
     void RightSpin();
-    IControlBlocks Clone();
+    ControlBlocks Clone();
     List<IBlock> GetBoardPositionBlockList();
 }
 
@@ -64,7 +64,7 @@ public class ControlBlocks : IControlBlocks
         Blocks = Blocks.RightSpin();
     }
 
-    public IControlBlocks Clone()
+    public ControlBlocks Clone()
     {
         return new ControlBlocks(X, Y, Blocks);
     }

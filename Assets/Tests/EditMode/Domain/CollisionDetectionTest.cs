@@ -4,22 +4,28 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 using Zenject;
+using Moq;
 
 namespace Tests
 {
     [TestFixture]
     public class CollisionDetectionTest : ZenjectUnitTestFixture
     {
-        private IBoard Board;
-        private ICollisionDetection CollisionDetection;
+        private CollisionDetection CollisionDetection;
         private IBlocks IBlocks;
         private IBlocks LBlocks;
 
         [SetUp]
         public void SetUp()
         {
-            Board = new Board(10, 20);
-            CollisionDetection = new CollisionDetection(Board);
+            var mockBoard = new Mock<IBoard>();
+            mockBoard.Setup(m => m.Width).Returns(10);
+            mockBoard.Setup(m => m.Height).Returns(20);
+
+            mockBoard.Setup(m => m.ExistPosition(8, 0)).Returns(true);
+            mockBoard.Setup(m => m.ExistPosition(2, 0)).Returns(true);
+
+            CollisionDetection = new CollisionDetection(mockBoard.Object);
 
             IBlocks = new Blocks(new List<IBlock>
             {
@@ -37,8 +43,6 @@ namespace Tests
                 new Block(1, -1)
             });
 
-            Board.PutBlocks(new ControlBlocks(0, 1, LBlocks));
-            Board.PutBlocks(new ControlBlocks(8, 1, LBlocks));
         }
 
 
@@ -81,10 +85,10 @@ namespace Tests
         [Test]
         public void IsCollisionPutBlocksTest()
         {
-            var controlBlocks = new ControlBlocks(7, 0, LBlocks);
+            var controlBlocks = new ControlBlocks(7, 1, LBlocks);
             Assert.IsTrue(CollisionDetection.IsCollision(controlBlocks));
 
-            controlBlocks = new ControlBlocks(2, 0, LBlocks);
+            controlBlocks = new ControlBlocks(2, 1, LBlocks);
             Assert.IsTrue(CollisionDetection.IsCollision(controlBlocks));
 
             controlBlocks = new ControlBlocks(1, 1, LBlocks);

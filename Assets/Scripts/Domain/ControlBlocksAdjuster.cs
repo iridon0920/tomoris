@@ -1,20 +1,22 @@
 using Zenject;
 
-public interface IControlBlocksAdjuster
+public class ControlBlocksAdjuster
 {
-    void AdjustBlocksForMoveRight(IControlBlocks controlBlocks);
-    void AdjustBlocksForMoveLeft(IControlBlocks controlBlocks);
-    void AdjustBlocksForMoveDown(IControlBlocks controlBlocks);
-
-}
-public class ControlBlocksAdjuster : IControlBlocksAdjuster
-{
-    private ICollisionDetection CollisionDetection { get; }
+    private CollisionDetection CollisionDetection { get; }
 
     [Inject]
-    public ControlBlocksAdjuster(ICollisionDetection collisionDetection)
+    public ControlBlocksAdjuster(CollisionDetection collisionDetection)
     {
         CollisionDetection = collisionDetection;
+    }
+
+    public ControlBlocks AdjustBlocksForMove(ControlBlocks currentControlBlocks, ControlBlocks newControlBlocks)
+    {
+        if (CollisionDetection.IsCollision(newControlBlocks))
+        {
+            return currentControlBlocks;
+        }
+        return newControlBlocks;
     }
 
     public void AdjustBlocksForMoveRight(IControlBlocks controlBlocks)

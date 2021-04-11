@@ -65,7 +65,6 @@ public class Board : IBoard
         }
 
         EraseIfAlign();
-        FallToEmptyRow();
     }
 
     public bool ExistPosition(int x, int y)
@@ -80,6 +79,7 @@ public class Board : IBoard
             var AligenLineBlocks = Blocks.Where(block => block.GetY() == y).ToList();
             if (AligenLineBlocks.Count == Width)
             {
+
                 foreach (var lineBlock in AligenLineBlocks)
                 {
                     Blocks.Remove(lineBlock);
@@ -90,6 +90,7 @@ public class Board : IBoard
                     FallBlock.Value = block;
                     return block;
                 }).ToReactiveCollection();
+                y = 0;
             }
         }
     }

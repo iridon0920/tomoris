@@ -3,7 +3,7 @@ using UniRx;
 
 public interface IBlockControllUseCase
 {
-    IReadOnlyReactiveProperty<IControlBlocks> RxControlBlocks { get; }
+    IReadOnlyReactiveProperty<ControlBlocks> RxControlBlocks { get; }
     void MoveLeft();
     void MoveRight();
     void MoveDown();
@@ -11,30 +11,30 @@ public interface IBlockControllUseCase
 }
 public class BlockControllUseCase : IBlockControllUseCase
 {
-    private IControlBlocksAdjuster Adjuster;
-    private ICollisionDetection CollisionDetection;
+    private MoveControlBlocksService MoveControlBlocksService;
+    private CollisionDetection CollisionDetection;
     private IBlocksQueue Queue;
     private IBoard Board;
-    private ReactiveProperty<IControlBlocks> ControlBlocks;
-    public IReadOnlyReactiveProperty<IControlBlocks> RxControlBlocks
+    private ReactiveProperty<ControlBlocks> ControlBlocks;
+    public IReadOnlyReactiveProperty<ControlBlocks> RxControlBlocks
     {
         get { return ControlBlocks; }
     }
 
     [Inject]
     public BlockControllUseCase(
-        IControlBlocksAdjuster adjuster,
-        ICollisionDetection collisionDetection,
+        MoveControlBlocksService moveControlBlocksService,
+        CollisionDetection collisionDetection,
         IBlocksQueue queue,
         IBoard board
     )
     {
-        Adjuster = adjuster;
+        MoveControlBlocksService = moveControlBlocksService;
         CollisionDetection = collisionDetection;
         Queue = queue;
         Board = board;
 
-        ControlBlocks = new ReactiveProperty<IControlBlocks>();
+        ControlBlocks = new ReactiveProperty<ControlBlocks>();
         ControlBlocks.Value = new ControlBlocks(
             Board.InsertPositionX,
             Board.Height - 1,
@@ -44,38 +44,26 @@ public class BlockControllUseCase : IBlockControllUseCase
 
     public void MoveLeft()
     {
-        var newControlBlocks = ControlBlocks.Value.Clone();
-        newControlBlocks.MoveLeft();
-        Adjuster.AdjustBlocksForMoveLeft(newControlBlocks);
-
-        ControlBlocks.Value = newControlBlocks;
+        ControlBlocks.Value = MoveControlBlocksService.MoveLeft(ControlBlocks.Value);
     }
 
     public void MoveRight()
     {
-        var newControlBlocks = ControlBlocks.Value.Clone();
-        newControlBlocks.MoveRight();
-        Adjuster.AdjustBlocksForMoveRight(newControlBlocks);
-
-        ControlBlocks.Value = newControlBlocks;
+        ControlBlocks.Value = MoveControlBlocksService.MoveRight(ControlBlocks.Value);
     }
 
     public void MoveDown()
     {
-        var newControlBlocks = ControlBlocks.Value.Clone();
-        newControlBlocks.MoveDown();
-        if (CollisionDetection.IsCollisionPutPosition(newControlBlocks))
+        ControlBlocks.Value = MoveControlBlocksService.MoveDown(ControlBlocks.Value);
+        if (CollisionDetection.IsCollisionPutPosition(ControlBlocks.Value))
         {
+            ControlBlocks.Value.MoveUp();
             Board.PutBlocks(ControlBlocks.Value);
             ControlBlocks.Value = new ControlBlocks(
                 Board.InsertPositionX,
                 Board.Height - 1,
                 Queue.Dequeue()
             );
-        }
-        else
-        {
-            ControlBlocks.Value = newControlBlocks;
         }
     }
 }

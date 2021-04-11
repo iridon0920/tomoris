@@ -2,12 +2,7 @@ using UnityEngine;
 using System.Linq;
 using Zenject;
 
-public interface ICollisionDetection
-{
-    bool IsCollision(IControlBlocks controlBlocks);
-    bool IsCollisionPutPosition(IControlBlocks controlBlocks);
-}
-public class CollisionDetection : ICollisionDetection
+public class CollisionDetection
 {
     private IBoard Board { get; }
 

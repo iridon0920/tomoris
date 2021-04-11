@@ -7,9 +7,11 @@ public class ControlBlocksInstaller : MonoInstaller<ControlBlocksInstaller>
     {
         Container.Bind<IBlockControllUseCase>().To<BlockControllUseCase>().AsCached();
 
-        Container.Bind<IControlBlocksAdjuster>().To<ControlBlocksAdjuster>().AsCached();
+        Container.Bind<MoveControlBlocksService>().To<MoveControlBlocksService>().AsCached();
 
-        Container.Bind<ICollisionDetection>().To<CollisionDetection>().AsCached();
+        Container.Bind<ControlBlocksAdjuster>().To<ControlBlocksAdjuster>().AsCached();
+
+        Container.Bind<CollisionDetection>().To<CollisionDetection>().AsCached();
 
         Container.Bind<IBlocksQueue>().To<BlocksQueue>().AsCached().WithArguments(4);
 
