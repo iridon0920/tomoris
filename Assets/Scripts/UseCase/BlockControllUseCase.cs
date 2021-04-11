@@ -3,8 +3,8 @@ using UniRx;
 
 public class BlockControllUseCase
 {
-    private MoveControlBlocksService MoveControlBlocksService;
-    private CollisionDetection CollisionDetection;
+    private readonly MoveControlBlocksService MoveControlBlocksService;
+    private readonly PutControlBlocksService PutControlBlocksService;
     private IBlocksQueue Queue;
     private IBoard Board;
     private ReactiveProperty<ControlBlocks> ControlBlocks;
@@ -16,13 +16,13 @@ public class BlockControllUseCase
     [Inject]
     public BlockControllUseCase(
         MoveControlBlocksService moveControlBlocksService,
-        CollisionDetection collisionDetection,
+        PutControlBlocksService putControlBlocksService,
         IBlocksQueue queue,
         IBoard board
     )
     {
         MoveControlBlocksService = moveControlBlocksService;
-        CollisionDetection = collisionDetection;
+        PutControlBlocksService = putControlBlocksService;
         Queue = queue;
         Board = board;
 
@@ -37,10 +37,8 @@ public class BlockControllUseCase
     public void Execute(float horizontal, float vertical)
     {
         ControlBlocks.Value = MoveControlBlocksService.Execute(ControlBlocks.Value, horizontal, vertical);
-        if (CollisionDetection.IsCollisionPutPosition(ControlBlocks.Value))
+        if (PutControlBlocksService.Execute(ControlBlocks.Value))
         {
-            ControlBlocks.Value.MoveUp();
-            Board.PutBlocks(ControlBlocks.Value);
             ControlBlocks.Value = new ControlBlocks(
                 Board.InsertPositionX,
                 Board.Height - 1,

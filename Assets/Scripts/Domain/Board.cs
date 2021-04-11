@@ -14,7 +14,7 @@ public interface IBoard
     IReadOnlyReactiveCollection<BoardBlock> RxBlocks { get; }
     IReadOnlyReactiveProperty<BoardBlock> RxFallBlock { get; }
 
-    void PutBlocks(IControlBlocks controlBlocks);
+    void PutBlocks(ControlBlocks controlBlocks);
     bool ExistPosition(int x, int y);
 }
 public class Board : IBoard
@@ -56,7 +56,7 @@ public class Board : IBoard
         Blocks = new ReactiveCollection<BoardBlock>();
     }
 
-    public void PutBlocks(IControlBlocks controlBlocks)
+    public void PutBlocks(ControlBlocks controlBlocks)
     {
         foreach (var block in controlBlocks.GetBoardPositionBlockList())
         {

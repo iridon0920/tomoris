@@ -10,7 +10,7 @@ public class ControlBlocksAdjuster
         CollisionDetection = collisionDetection;
     }
 
-    public ControlBlocks AdjustBlocksForMove(ControlBlocks currentControlBlocks, ControlBlocks newControlBlocks)
+    public ControlBlocks AdjustBlocksForSideMove(ControlBlocks currentControlBlocks, ControlBlocks newControlBlocks)
     {
         if (CollisionDetection.IsCollision(newControlBlocks))
         {
@@ -18,46 +18,13 @@ public class ControlBlocksAdjuster
         }
         return newControlBlocks;
     }
-
-    public void AdjustBlocksForMoveRight(IControlBlocks controlBlocks)
+    public ControlBlocks AdjustBlocksForDownMove(ControlBlocks currentControlBlocks, ControlBlocks newControlBlocks)
     {
-        while (true)
+        if (CollisionDetection.IsCollisionPutPosition(newControlBlocks))
         {
-            if (CollisionDetection.IsCollision(controlBlocks))
-            {
-                controlBlocks.MoveLeft();
-                continue;
-            }
-
-            break;
+            currentControlBlocks.SetTruePutable();
+            return currentControlBlocks;
         }
-    }
-
-    public void AdjustBlocksForMoveLeft(IControlBlocks controlBlocks)
-    {
-        while (true)
-        {
-            if (CollisionDetection.IsCollision(controlBlocks))
-            {
-                controlBlocks.MoveRight();
-                continue;
-            }
-
-            break;
-        }
-    }
-
-    public void AdjustBlocksForMoveDown(IControlBlocks controlBlocks)
-    {
-        while (true)
-        {
-            if (CollisionDetection.IsCollision(controlBlocks))
-            {
-                controlBlocks.MoveUp();
-                continue;
-            }
-
-            break;
-        }
+        return newControlBlocks;
     }
 }

@@ -2,7 +2,7 @@ using Zenject;
 
 public class MoveControlBlocksService
 {
-    private ControlBlocksAdjuster Adjuster;
+    private readonly ControlBlocksAdjuster Adjuster;
 
     [Inject]
     public MoveControlBlocksService(ControlBlocksAdjuster adjuster)
@@ -14,22 +14,20 @@ public class MoveControlBlocksService
     {
         var newControlBlocks = controlBlocks.Clone();
 
-        if (horizontal > 0)
+        if (vertical < 0)
+        {
+            newControlBlocks.MoveDown();
+            return Adjuster.AdjustBlocksForDownMove(controlBlocks, newControlBlocks);
+        }
+        else if (horizontal > 0)
         {
             newControlBlocks.MoveRight();
-            return Adjuster.AdjustBlocksForMove(controlBlocks, newControlBlocks);
         }
         else if (horizontal < 0)
         {
             newControlBlocks.MoveLeft();
-            return Adjuster.AdjustBlocksForMove(controlBlocks, newControlBlocks);
-        }
-        else if (vertical < 0)
-        {
-            newControlBlocks.MoveDown();
-            return newControlBlocks;
         }
 
-        return controlBlocks;
+        return Adjuster.AdjustBlocksForSideMove(controlBlocks, newControlBlocks);
     }
 }

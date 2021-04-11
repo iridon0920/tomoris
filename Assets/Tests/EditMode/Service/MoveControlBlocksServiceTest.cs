@@ -84,16 +84,18 @@ namespace Tests
             controlBlocks = Service.Execute(controlBlocks, 0, -1);
             Assert.AreEqual(5, controlBlocks.X);
             Assert.AreEqual(9, controlBlocks.Y);
+            Assert.IsFalse(controlBlocks.IsPutable);
         }
 
-        // 下方向の衝突があっても、移動位置はそのまま
+        // 下方向の衝突があったら、PuttableフラグがTrueになる
         [Test]
         public void MoveDownIfGroundCollision()
         {
             var controlBlocks = new ControlBlocks(0, 1, IBlocks);
             controlBlocks = Service.Execute(controlBlocks, 0, -1);
             Assert.AreEqual(0, controlBlocks.X);
-            Assert.AreEqual(0, controlBlocks.Y);
+            Assert.AreEqual(1, controlBlocks.Y);
+            Assert.IsTrue(controlBlocks.IsPutable);
         }
 
         // 右下入力時の動き
@@ -102,8 +104,8 @@ namespace Tests
         {
             var controlBlocks = new ControlBlocks(5, 10, IBlocks);
             controlBlocks = Service.Execute(controlBlocks, 1, -1);
-            Assert.AreEqual(6, controlBlocks.X);
-            Assert.AreEqual(10, controlBlocks.Y);
+            Assert.AreEqual(5, controlBlocks.X);
+            Assert.AreEqual(9, controlBlocks.Y);
         }
 
         // 左下入力時の動き
@@ -113,8 +115,8 @@ namespace Tests
 
             var controlBlocks = new ControlBlocks(5, 10, IBlocks);
             controlBlocks = Service.Execute(controlBlocks, 1, -1);
-            Assert.AreEqual(6, controlBlocks.X);
-            Assert.AreEqual(10, controlBlocks.Y);
+            Assert.AreEqual(5, controlBlocks.X);
+            Assert.AreEqual(9, controlBlocks.Y);
         }
     }
 

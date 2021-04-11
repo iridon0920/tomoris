@@ -8,6 +8,7 @@ public class ControlBlocksInstaller : MonoInstaller<ControlBlocksInstaller>
         Container.Bind<BlockControllUseCase>().To<BlockControllUseCase>().AsCached();
 
         Container.Bind<MoveControlBlocksService>().To<MoveControlBlocksService>().AsCached();
+        Container.Bind<PutControlBlocksService>().To<PutControlBlocksService>().AsCached();
 
         Container.Bind<ControlBlocksAdjuster>().To<ControlBlocksAdjuster>().AsCached();
 
