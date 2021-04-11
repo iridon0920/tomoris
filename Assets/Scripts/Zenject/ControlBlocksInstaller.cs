@@ -5,7 +5,7 @@ public class ControlBlocksInstaller : MonoInstaller<ControlBlocksInstaller>
 {
     public override void InstallBindings()
     {
-        Container.Bind<IBlockControllUseCase>().To<BlockControllUseCase>().AsCached();
+        Container.Bind<BlockControllUseCase>().To<BlockControllUseCase>().AsCached();
 
         Container.Bind<MoveControlBlocksService>().To<MoveControlBlocksService>().AsCached();
 

@@ -35,7 +35,7 @@ namespace Tests
         public void MoveRightSuccessTest()
         {
             var controlBlocks = new ControlBlocks(5, 10, IBlocks);
-            controlBlocks = Service.MoveRight(controlBlocks);
+            controlBlocks = Service.Execute(controlBlocks, 1, 0);
             Assert.AreEqual(6, controlBlocks.X);
             Assert.AreEqual(10, controlBlocks.Y);
         }
@@ -44,17 +44,17 @@ namespace Tests
         public void MoveRightIfWallCollision()
         {
             var controlBlocks = new ControlBlocks(9, 10, IBlocks);
-            controlBlocks = Service.MoveRight(controlBlocks);
+            controlBlocks = Service.Execute(controlBlocks, 1, 0);
             Assert.AreEqual(9, controlBlocks.X);
             Assert.AreEqual(10, controlBlocks.Y);
         }
 
+        // ボードの9, 0座標にはブロックが存在するため、衝突判定が発生
         [Test]
         public void MoveRightIfPutBlocksCollision()
         {
-            // ボードの9, 0座標にはブロックが存在するため、衝突判定が発生
             var controlBlocks = new ControlBlocks(8, 1, IBlocks);
-            controlBlocks = Service.MoveRight(controlBlocks);
+            controlBlocks = Service.Execute(controlBlocks, 1, 0);
             Assert.AreEqual(8, controlBlocks.X);
             Assert.AreEqual(1, controlBlocks.Y);
         }
@@ -63,8 +63,17 @@ namespace Tests
         public void MoveLeftSuccessTest()
         {
             var controlBlocks = new ControlBlocks(5, 10, IBlocks);
-            controlBlocks = Service.MoveLeft(controlBlocks);
+            controlBlocks = Service.Execute(controlBlocks, -1, 0);
             Assert.AreEqual(4, controlBlocks.X);
+            Assert.AreEqual(10, controlBlocks.Y);
+        }
+
+        [Test]
+        public void MoveLeftIfWallCollision()
+        {
+            var controlBlocks = new ControlBlocks(0, 10, IBlocks);
+            controlBlocks = Service.Execute(controlBlocks, -1, 0);
+            Assert.AreEqual(0, controlBlocks.X);
             Assert.AreEqual(10, controlBlocks.Y);
         }
 
@@ -72,30 +81,40 @@ namespace Tests
         public void MoveDownSuccessTest()
         {
             var controlBlocks = new ControlBlocks(5, 10, IBlocks);
-            controlBlocks = Service.MoveDown(controlBlocks);
+            controlBlocks = Service.Execute(controlBlocks, 0, -1);
             Assert.AreEqual(5, controlBlocks.X);
             Assert.AreEqual(9, controlBlocks.Y);
         }
 
-
-
-        [Test]
-        public void MoveLeftIfWallCollision()
-        {
-            var controlBlocks = new ControlBlocks(0, 10, IBlocks);
-            controlBlocks = Service.MoveLeft(controlBlocks);
-            Assert.AreEqual(0, controlBlocks.X);
-            Assert.AreEqual(10, controlBlocks.Y);
-        }
-
+        // 下方向の衝突があっても、移動位置はそのまま
         [Test]
         public void MoveDownIfGroundCollision()
         {
-            // 下方向の衝突があっても、移動位置はそのまま
             var controlBlocks = new ControlBlocks(0, 1, IBlocks);
-            controlBlocks = Service.MoveDown(controlBlocks);
+            controlBlocks = Service.Execute(controlBlocks, 0, -1);
             Assert.AreEqual(0, controlBlocks.X);
             Assert.AreEqual(0, controlBlocks.Y);
+        }
+
+        // 右下入力時の動き
+        [Test]
+        public void MoveRightDownSuccessTest()
+        {
+            var controlBlocks = new ControlBlocks(5, 10, IBlocks);
+            controlBlocks = Service.Execute(controlBlocks, 1, -1);
+            Assert.AreEqual(6, controlBlocks.X);
+            Assert.AreEqual(10, controlBlocks.Y);
+        }
+
+        // 左下入力時の動き
+        [Test]
+        public void MoveLeftDownSuccessTest()
+        {
+
+            var controlBlocks = new ControlBlocks(5, 10, IBlocks);
+            controlBlocks = Service.Execute(controlBlocks, 1, -1);
+            Assert.AreEqual(6, controlBlocks.X);
+            Assert.AreEqual(10, controlBlocks.Y);
         }
     }
 

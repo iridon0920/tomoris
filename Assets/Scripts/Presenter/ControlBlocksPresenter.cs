@@ -14,33 +14,18 @@ public class ControlBlocksPresenter : MonoBehaviour
     private float moveWaitSecond = 0.2f;
 
     [Inject]
-    private readonly IBlockControllUseCase BlockControllUseCase;
+    private readonly BlockControllUseCase BlockControllUseCase;
     private bool IsWaitMove = false;
 
     void Awake()
     {
         this.UpdateAsObservable()
-            .Where(_ => Input.GetKey(KeyCode.RightArrow) && IsWaitMove == false)
+            .Where(_ => (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+                         && IsWaitMove == false)
             .Subscribe(_ =>
             {
                 IsWaitMove = true;
-                BlockControllUseCase.MoveRight();
-            });
-
-        this.UpdateAsObservable()
-            .Where(_ => Input.GetKey(KeyCode.LeftArrow) && IsWaitMove == false)
-            .Subscribe(_ =>
-            {
-                IsWaitMove = true;
-                BlockControllUseCase.MoveLeft();
-            });
-
-        this.UpdateAsObservable()
-            .Where(_ => Input.GetKey(KeyCode.DownArrow) && IsWaitMove == false)
-            .Subscribe(_ =>
-            {
-                IsWaitMove = true;
-                BlockControllUseCase.MoveDown();
+                BlockControllUseCase.Execute(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
             });
 
         BlockControllUseCase

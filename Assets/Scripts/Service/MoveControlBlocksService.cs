@@ -10,25 +10,26 @@ public class MoveControlBlocksService
         Adjuster = adjuster;
     }
 
-    public ControlBlocks MoveRight(ControlBlocks controlBlocks)
+    public ControlBlocks Execute(ControlBlocks controlBlocks, float horizontal, float vertical)
     {
         var newControlBlocks = controlBlocks.Clone();
-        newControlBlocks.MoveRight();
-        return Adjuster.AdjustBlocksForMove(controlBlocks, newControlBlocks);
 
-    }
+        if (horizontal > 0)
+        {
+            newControlBlocks.MoveRight();
+            return Adjuster.AdjustBlocksForMove(controlBlocks, newControlBlocks);
+        }
+        else if (horizontal < 0)
+        {
+            newControlBlocks.MoveLeft();
+            return Adjuster.AdjustBlocksForMove(controlBlocks, newControlBlocks);
+        }
+        else if (vertical < 0)
+        {
+            newControlBlocks.MoveDown();
+            return newControlBlocks;
+        }
 
-    public ControlBlocks MoveLeft(ControlBlocks controlBlocks)
-    {
-        var newControlBlocks = controlBlocks.Clone();
-        newControlBlocks.MoveLeft();
-        return Adjuster.AdjustBlocksForMove(controlBlocks, newControlBlocks);
-    }
-
-    public ControlBlocks MoveDown(ControlBlocks controlBlocks)
-    {
-        var newControlBlocks = controlBlocks.Clone();
-        newControlBlocks.MoveDown();
-        return newControlBlocks;
+        return controlBlocks;
     }
 }

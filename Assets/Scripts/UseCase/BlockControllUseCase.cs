@@ -1,15 +1,7 @@
 using Zenject;
 using UniRx;
 
-public interface IBlockControllUseCase
-{
-    IReadOnlyReactiveProperty<ControlBlocks> RxControlBlocks { get; }
-    void MoveLeft();
-    void MoveRight();
-    void MoveDown();
-
-}
-public class BlockControllUseCase : IBlockControllUseCase
+public class BlockControllUseCase
 {
     private MoveControlBlocksService MoveControlBlocksService;
     private CollisionDetection CollisionDetection;
@@ -42,19 +34,9 @@ public class BlockControllUseCase : IBlockControllUseCase
         );
     }
 
-    public void MoveLeft()
+    public void Execute(float horizontal, float vertical)
     {
-        ControlBlocks.Value = MoveControlBlocksService.MoveLeft(ControlBlocks.Value);
-    }
-
-    public void MoveRight()
-    {
-        ControlBlocks.Value = MoveControlBlocksService.MoveRight(ControlBlocks.Value);
-    }
-
-    public void MoveDown()
-    {
-        ControlBlocks.Value = MoveControlBlocksService.MoveDown(ControlBlocks.Value);
+        ControlBlocks.Value = MoveControlBlocksService.Execute(ControlBlocks.Value, horizontal, vertical);
         if (CollisionDetection.IsCollisionPutPosition(ControlBlocks.Value))
         {
             ControlBlocks.Value.MoveUp();
