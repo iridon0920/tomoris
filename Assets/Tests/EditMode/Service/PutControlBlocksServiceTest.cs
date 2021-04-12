@@ -37,8 +37,7 @@ namespace Tests
             var controlBlocks = new ControlBlocks(5, 0, IBlocks);
             controlBlocks.SetTruePutable();
 
-            var result = Service.Execute(controlBlocks);
-            Assert.IsTrue(result);
+            Service.Execute(controlBlocks);
             MockBoard.Verify(m => m.PutBlocks(It.IsAny<ControlBlocks>()), Times.Once());
         }
 
@@ -46,8 +45,7 @@ namespace Tests
         public void PutGroundFailsTest()
         {
             var controlBlocks = new ControlBlocks(5, 1, IBlocks);
-            var result = Service.Execute(controlBlocks);
-            Assert.IsFalse(result);
+            Service.Execute(controlBlocks);
             MockBoard.Verify(m => m.PutBlocks(It.IsAny<ControlBlocks>()), Times.Never());
         }
 
@@ -57,8 +55,7 @@ namespace Tests
         {
             var controlBlocks = new ControlBlocks(5, 5, IBlocks);
             controlBlocks.SetTruePutable();
-            var result = Service.Execute(controlBlocks);
-            Assert.IsTrue(result);
+            Service.Execute(controlBlocks);
             MockBoard.Verify(m => m.PutBlocks(It.IsAny<ControlBlocks>()), Times.Once());
         }
     }

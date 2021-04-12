@@ -9,13 +9,13 @@ public interface IBoard
     int Height { get; }
     int InsertPositionX { get; }
 
-    bool[,] StatusByPositions { get; }
-
     IReadOnlyReactiveCollection<BoardBlock> RxBlocks { get; }
     IReadOnlyReactiveProperty<BoardBlock> RxFallBlock { get; }
 
-    void PutBlocks(ControlBlocks controlBlocks);
+    List<BoardBlock> PutBlocks(ControlBlocks controlBlocks);
     bool ExistPosition(int x, int y);
+    List<BoardBlock> EraseIfAlign();
+    List<BoardBlock> FallToEmptyLine();
 }
 public class Board : IBoard
 {
@@ -25,9 +25,8 @@ public class Board : IBoard
 
 
     // 二次元配列を使って各座標のブロックの存在を管理
-    public bool[,] StatusByPositions { get; private set; }
     private int NextBlockId = 1;
-    private ReactiveCollection<BoardBlock> Blocks { get; }
+    private ReactiveCollection<BoardBlock> Blocks;
     public IReadOnlyReactiveCollection<BoardBlock> RxBlocks
     {
         get { return Blocks; }
@@ -44,27 +43,21 @@ public class Board : IBoard
         Height = height;
         InsertPositionX = (width - 1) / 2;
 
-        StatusByPositions = new bool[width, height];
-        for (var x = 0; x < width; x++)
-        {
-            for (var y = 0; y < height; y++)
-            {
-                StatusByPositions[x, y] = false;
-            }
-        }
         FallBlock = new ReactiveProperty<BoardBlock>();
         Blocks = new ReactiveCollection<BoardBlock>();
     }
 
-    public void PutBlocks(ControlBlocks controlBlocks)
+    public List<BoardBlock> PutBlocks(ControlBlocks controlBlocks)
     {
+        var result = new List<BoardBlock>();
         foreach (var block in controlBlocks.GetBoardPositionBlockList())
         {
-            Blocks.Add(new BoardBlock(NextBlockId, block));
+            var newBoardBlock = new BoardBlock(NextBlockId, block);
+            Blocks.Add(newBoardBlock);
+            result.Add(newBoardBlock);
             NextBlockId++;
         }
-
-        EraseIfAlign();
+        return result;
     }
 
     public bool ExistPosition(int x, int y)
@@ -72,50 +65,54 @@ public class Board : IBoard
         return Blocks.Any(block => block.GetX() == x && block.GetY() == y);
     }
 
-    private void EraseIfAlign()
+    public List<BoardBlock> EraseIfAlign()
     {
+        var result = new List<BoardBlock>();
         for (var y = 0; y < Height; y++)
         {
-            var AligenLineBlocks = Blocks.Where(block => block.GetY() == y).ToList();
-            if (AligenLineBlocks.Count == Width)
+            var aligenLineBlocks = Blocks.Where(block => block.GetY() == y).ToList();
+            if (aligenLineBlocks.Count == Width)
             {
-
-                foreach (var lineBlock in AligenLineBlocks)
+                foreach (var lineBlock in aligenLineBlocks)
                 {
                     Blocks.Remove(lineBlock);
+                    result.Add(lineBlock);
                 }
-                Blocks.Where(block => block.GetY() > y).Select(block =>
-                {
-                    block.MoveDown();
-                    FallBlock.Value = block;
-                    return block;
-                }).ToReactiveCollection();
-                y = 0;
             }
         }
+        return result;
     }
 
-    private void FallToEmptyRow()
+    public List<BoardBlock> FallToEmptyLine()
     {
-        int blockCount;
-        for (var y = 0; y < Height - 1; y++)
+        var result = new List<BoardBlock>();
+        var blocksHeight = Blocks.Select(block => block.GetY()).Max() + 1;
+        int emptyMinLine = -1;
+        int emptyLineCount = 0;
+
+        for (var y = 0; y < blocksHeight; y++)
         {
-            blockCount = 0;
-            for (var x = 0; x < Width; x++)
+            var emptyLineBlocks = Blocks.Where(block => block.GetY() == y).ToList();
+            if (emptyLineBlocks.Count == 0)
             {
-                if (!StatusByPositions[x, y])
+                if (emptyMinLine == -1)
                 {
-                    blockCount++;
+                    emptyMinLine = y;
                 }
-            }
-            if (blockCount == Width)
-            {
-                for (var x = 0; x < Width; x++)
-                {
-                    StatusByPositions[x, y] = StatusByPositions[x, y + 1];
-                    StatusByPositions[x, y + 1] = false;
-                }
+                emptyLineCount++;
             }
         }
+
+        Blocks.Where(block => block.GetY() >= emptyMinLine).Select(block =>
+        {
+            for (var i = 0; i < emptyLineCount; i++)
+            {
+                block.MoveDown();
+                FallBlock.Value = block;
+            }
+            result.Add(block);
+            return block;
+        }).ToReactiveCollection();
+        return result;
     }
 }

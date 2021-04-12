@@ -1,4 +1,5 @@
 using Zenject;
+using System.Collections.Generic;
 
 public class PutControlBlocksService
 {
@@ -10,13 +11,13 @@ public class PutControlBlocksService
         Board = board;
     }
 
-    public bool Execute(ControlBlocks controlBlocks)
+    public List<BoardBlock> Execute(ControlBlocks controlBlocks)
     {
+        var result = new List<BoardBlock>();
         if (controlBlocks.IsPutable)
         {
-            Board.PutBlocks(controlBlocks);
-            return true;
+            result = Board.PutBlocks(controlBlocks);
         }
-        return false;
+        return result;
     }
 }
