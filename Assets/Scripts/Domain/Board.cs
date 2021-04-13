@@ -8,9 +8,7 @@ public interface IBoard
     int Width { get; }
     int Height { get; }
     int InsertPositionX { get; }
-
-    IReadOnlyReactiveCollection<BoardBlock> RxBlocks { get; }
-    IReadOnlyReactiveProperty<BoardBlock> RxFallBlock { get; }
+    List<BoardBlock> Blocks { get; }
 
     List<BoardBlock> PutBlocks(ControlBlocks controlBlocks);
     bool ExistPosition(int x, int y);
@@ -26,16 +24,9 @@ public class Board : IBoard
 
     // 二次元配列を使って各座標のブロックの存在を管理
     private int NextBlockId = 1;
-    private ReactiveCollection<BoardBlock> Blocks;
-    public IReadOnlyReactiveCollection<BoardBlock> RxBlocks
-    {
-        get { return Blocks; }
-    }
-    private ReactiveProperty<BoardBlock> FallBlock;
-    public IReadOnlyReactiveProperty<BoardBlock> RxFallBlock
-    {
-        get { return FallBlock; }
-    }
+    public List<BoardBlock> Blocks { get; }
+
+    private int BlocksHeight = 0;
 
     public Board(int width, int height)
     {
@@ -43,8 +34,7 @@ public class Board : IBoard
         Height = height;
         InsertPositionX = (width - 1) / 2;
 
-        FallBlock = new ReactiveProperty<BoardBlock>();
-        Blocks = new ReactiveCollection<BoardBlock>();
+        Blocks = new List<BoardBlock>();
     }
 
     public List<BoardBlock> PutBlocks(ControlBlocks controlBlocks)
@@ -53,9 +43,11 @@ public class Board : IBoard
         foreach (var block in controlBlocks.GetBoardPositionBlockList())
         {
             var newBoardBlock = new BoardBlock(NextBlockId, block);
-            Blocks.Add(newBoardBlock);
-            result.Add(newBoardBlock);
             NextBlockId++;
+            Blocks.Add(newBoardBlock);
+            BlocksHeight = Blocks.Select(boardblock => boardblock.GetY()).Max() + 1;
+
+            result.Add(newBoardBlock);
         }
         return result;
     }
@@ -86,11 +78,10 @@ public class Board : IBoard
     public List<BoardBlock> FallToEmptyLine()
     {
         var result = new List<BoardBlock>();
-        var blocksHeight = Blocks.Select(block => block.GetY()).Max() + 1;
         int emptyMinLine = -1;
         int emptyLineCount = 0;
 
-        for (var y = 0; y < blocksHeight; y++)
+        for (var y = 0; y < BlocksHeight; y++)
         {
             var emptyLineBlocks = Blocks.Where(block => block.GetY() == y).ToList();
             if (emptyLineBlocks.Count == 0)
@@ -108,7 +99,6 @@ public class Board : IBoard
             for (var i = 0; i < emptyLineCount; i++)
             {
                 block.MoveDown();
-                FallBlock.Value = block;
             }
             result.Add(block);
             return block;

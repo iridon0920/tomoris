@@ -3,11 +3,11 @@ using Zenject;
 
 public class PresenterMonoInstaller : MonoInstaller
 {
+
     [SerializeField]
-    private GameObject prefab;
+    private GameObject BoardPrefab;
     public override void InstallBindings()
     {
-        Container.Bind<BoardPresenter>().To<BoardPresenter>().FromComponentInNewPrefab(prefab).AsSingle();
-
+        Container.Bind<BoardPresenter>().FromComponentInNewPrefab(BoardPrefab).AsSingle();
     }
 }

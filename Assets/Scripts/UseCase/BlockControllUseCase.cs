@@ -1,5 +1,4 @@
 using Zenject;
-using UniRx;
 
 public class BlockControllUseCase
 {
@@ -7,43 +6,32 @@ public class BlockControllUseCase
     private readonly PutControlBlocksService PutControlBlocksService;
     private readonly GetNextControlBlocksService GetNextControlBlocksService;
     private readonly BoardPresenter BoardPresenter;
-    private IBlocksQueue Queue;
-    private IBoard Board;
-    private ReactiveProperty<ControlBlocks> ControlBlocks;
-    public IReadOnlyReactiveProperty<ControlBlocks> RxControlBlocks
-    {
-        get { return ControlBlocks; }
-    }
 
     [Inject]
     public BlockControllUseCase(
         MoveControlBlocksService moveControlBlocksService,
         PutControlBlocksService putControlBlocksService,
         GetNextControlBlocksService getNextControlBlocksService,
-        IBlocksQueue queue,
-        IBoard board,
         BoardPresenter boardPresenter
     )
     {
         MoveControlBlocksService = moveControlBlocksService;
         PutControlBlocksService = putControlBlocksService;
         GetNextControlBlocksService = getNextControlBlocksService;
-        Queue = queue;
-        Board = board;
         BoardPresenter = boardPresenter;
-
-        ControlBlocks = new ReactiveProperty<ControlBlocks>();
-        ControlBlocks.Value = GetNextControlBlocksService.Execute();
     }
 
-    public void Execute(float horizontal, float vertical)
+    public ControlBlocks Execute(ControlBlocks controlBlocks, float horizontal, float vertical)
     {
-        ControlBlocks.Value = MoveControlBlocksService.Execute(ControlBlocks.Value, horizontal, vertical);
-        var addBlocks = PutControlBlocksService.Execute(ControlBlocks.Value);
+        var newControlBlocks = MoveControlBlocksService.Execute(controlBlocks, horizontal, vertical);
+
+        var addBlocks = PutControlBlocksService.Execute(newControlBlocks);
         BoardPresenter.AddBlocks(addBlocks);
-        if (ControlBlocks.Value.IsPutable)
+
+        if (newControlBlocks.IsPutable)
         {
-            ControlBlocks.Value = GetNextControlBlocksService.Execute();
+            newControlBlocks = GetNextControlBlocksService.Execute();
         }
+        return newControlBlocks;
     }
 }

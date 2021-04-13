@@ -18,10 +18,6 @@ public class BoardPresenter : MonoBehaviour
     [Inject]
     private readonly FallBoardBlocksUseCase FallBoardBlocksUseCase;
 
-    void Awake()
-    {
-        Board.RxFallBlock.Where(block => block != null).Subscribe(block => BoardView.ChangeBoardBlockPosition(block));
-    }
 
     public void AddBlocks(List<BoardBlock> blocks)
     {

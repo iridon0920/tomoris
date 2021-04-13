@@ -15,26 +15,25 @@ public class ControlBlocksPresenter : MonoBehaviour
 
     [Inject]
     private readonly BlockControllUseCase BlockControllUseCase;
+    [Inject]
+    private readonly GetNextControlBlocksService GetNextControlBlocksService;
+    private ControlBlocks ControlBlocks;
     private bool IsWaitMove = false;
 
     void Awake()
     {
+        ControlBlocks = GetNextControlBlocksService.Execute();
+        ControlBlocksView.DrawControlBlocks(ControlBlocks);
+
         this.UpdateAsObservable()
             .Where(_ => (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
                          && IsWaitMove == false)
             .Subscribe(_ =>
             {
                 IsWaitMove = true;
-                BlockControllUseCase.Execute(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+                ControlBlocks = BlockControllUseCase.Execute(ControlBlocks, Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+                ControlBlocksView.DrawControlBlocks(ControlBlocks);
             });
-
-        BlockControllUseCase
-            .RxControlBlocks
-            .Where(controlBlocks => controlBlocks != null)
-            .Subscribe(
-                controlBlocks =>
-                        ControlBlocksView.DrawControlBlocks(controlBlocks)
-            );
     }
 
     void FixedUpdate()

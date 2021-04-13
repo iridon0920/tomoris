@@ -47,27 +47,27 @@ namespace Tests
         {
             var controlBlocks = new ControlBlocks(0, 1, LBlocks);
 
-            Assert.AreEqual(0, Board.RxBlocks.Count);
+            Assert.AreEqual(0, Board.Blocks.Count);
 
             Board.PutBlocks(controlBlocks);
 
-            Assert.AreEqual(4, Board.RxBlocks.Count);
+            Assert.AreEqual(4, Board.Blocks.Count);
 
-            Assert.AreEqual(1, Board.RxBlocks[0].Id);
-            Assert.AreEqual(0, Board.RxBlocks[0].GetX());
-            Assert.AreEqual(2, Board.RxBlocks[0].GetY());
+            Assert.AreEqual(1, Board.Blocks[0].Id);
+            Assert.AreEqual(0, Board.Blocks[0].GetX());
+            Assert.AreEqual(2, Board.Blocks[0].GetY());
 
-            Assert.AreEqual(2, Board.RxBlocks[1].Id);
-            Assert.AreEqual(0, Board.RxBlocks[1].GetX());
-            Assert.AreEqual(1, Board.RxBlocks[1].GetY());
+            Assert.AreEqual(2, Board.Blocks[1].Id);
+            Assert.AreEqual(0, Board.Blocks[1].GetX());
+            Assert.AreEqual(1, Board.Blocks[1].GetY());
 
-            Assert.AreEqual(3, Board.RxBlocks[2].Id);
-            Assert.AreEqual(0, Board.RxBlocks[2].GetX());
-            Assert.AreEqual(0, Board.RxBlocks[2].GetY());
+            Assert.AreEqual(3, Board.Blocks[2].Id);
+            Assert.AreEqual(0, Board.Blocks[2].GetX());
+            Assert.AreEqual(0, Board.Blocks[2].GetY());
 
-            Assert.AreEqual(4, Board.RxBlocks[3].Id);
-            Assert.AreEqual(1, Board.RxBlocks[3].GetX());
-            Assert.AreEqual(0, Board.RxBlocks[3].GetY());
+            Assert.AreEqual(4, Board.Blocks[3].Id);
+            Assert.AreEqual(1, Board.Blocks[3].GetX());
+            Assert.AreEqual(0, Board.Blocks[3].GetY());
         }
 
         [Test]
