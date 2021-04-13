@@ -25,18 +25,15 @@ public class BoardPresenter : MonoBehaviour
 
     public void AddBlocks(List<BoardBlock> blocks)
     {
-        Debug.Log(blocks.Count);
-        blocks.ForEach(block =>
-            {
-                Debug.Log(BoardView);
-                BoardView.DrawBoardBlock(block);
-            });
+        blocks.ForEach(block => BoardView.DrawBoardBlock(block));
+
         BoardBlocksLineEraseUseCase.Execute();
     }
 
     public void DeleteEraseLineBlocks(List<BoardBlock> blocks)
     {
         blocks.ForEach(block => BoardView.DeleteBoardBlock(block));
+
         FallBoardBlocksUseCase.Execute();
     }
 
