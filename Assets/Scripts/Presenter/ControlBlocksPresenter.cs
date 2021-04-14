@@ -11,35 +11,39 @@ public class ControlBlocksPresenter : MonoBehaviour
     [SerializeField]
     private ControlBlocksView ControlBlocksView;
     [SerializeField]
-    private float moveWaitSecond = 0.2f;
+    private float moveWaitSecond;
 
     [Inject]
     private readonly BlockControllUseCase BlockControllUseCase;
     [Inject]
     private readonly GetNextControlBlocksService GetNextControlBlocksService;
     private ControlBlocks ControlBlocks;
+
+    private float Horizontal;
+    private float Vertical;
     private bool IsWaitMove = false;
 
     void Awake()
     {
         ControlBlocks = GetNextControlBlocksService.Execute();
         ControlBlocksView.DrawControlBlocks(ControlBlocks);
+    }
 
-        this.UpdateAsObservable()
-            .Where(_ => (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
-                         && IsWaitMove == false)
-            .Subscribe(_ =>
-            {
-                IsWaitMove = true;
-                ControlBlocks = BlockControllUseCase.Execute(ControlBlocks, Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-                ControlBlocksView.DrawControlBlocks(ControlBlocks);
-            });
+    void Update()
+    {
+        Horizontal = Input.GetAxisRaw("Horizontal");
+        Vertical = Input.GetAxisRaw("Vertical");
     }
 
     void FixedUpdate()
     {
-        if (IsWaitMove)
+        if (!IsWaitMove && (Horizontal != 0 || Vertical != 0))
         {
+            IsWaitMove = true;
+
+            ControlBlocks = BlockControllUseCase.Execute(ControlBlocks, Horizontal, Vertical);
+            ControlBlocksView.DrawControlBlocks(ControlBlocks);
+
             StartCoroutine(WaitMove());
         }
     }
