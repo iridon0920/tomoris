@@ -59,4 +59,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControlBlocksView: {fileID: 5710612486436482215}
-  moveWaitSecond: 0.02
+  ControlWaitSecond: 0.02

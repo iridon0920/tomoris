@@ -21,9 +21,21 @@ public class BlockControllUseCase
         BoardPresenter = boardPresenter;
     }
 
-    public ControlBlocks Execute(ControlBlocks controlBlocks, float horizontal, float vertical)
+    public ControlBlocks Execute(
+        ControlBlocks controlBlocks,
+        float horizontal,
+        float vertical,
+        bool inputLeftSpin,
+        bool inputRightSpin
+    )
     {
-        var newControlBlocks = MoveControlBlocksService.Execute(controlBlocks, horizontal, vertical);
+        var newControlBlocks = MoveControlBlocksService.Execute(
+            controlBlocks,
+            horizontal,
+            vertical,
+            inputLeftSpin,
+            inputRightSpin
+        );
 
         var addBlocks = PutControlBlocksService.Execute(newControlBlocks);
         BoardPresenter.AddBlocks(addBlocks);

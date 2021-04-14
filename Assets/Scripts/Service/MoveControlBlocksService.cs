@@ -10,7 +10,13 @@ public class MoveControlBlocksService
         Adjuster = adjuster;
     }
 
-    public ControlBlocks Execute(ControlBlocks controlBlocks, float horizontal, float vertical)
+    public ControlBlocks Execute(
+        ControlBlocks controlBlocks,
+        float horizontal,
+        float vertical,
+        bool inputLeftSpin,
+        bool InputRightSpin
+    )
     {
         var newControlBlocks = controlBlocks.Clone();
 
@@ -22,12 +28,24 @@ public class MoveControlBlocksService
         else if (horizontal > 0)
         {
             newControlBlocks.MoveRight();
+            return Adjuster.AdjustBlocksForSideMove(controlBlocks, newControlBlocks);
         }
         else if (horizontal < 0)
         {
             newControlBlocks.MoveLeft();
+            return Adjuster.AdjustBlocksForSideMove(controlBlocks, newControlBlocks);
+        }
+        else if (inputLeftSpin)
+        {
+            newControlBlocks.LeftSpin();
+            return Adjuster.AdjustBlocksForSpin(controlBlocks, newControlBlocks);
+        }
+        else if (InputRightSpin)
+        {
+            newControlBlocks.RightSpin();
+            return Adjuster.AdjustBlocksForSpin(controlBlocks, newControlBlocks);
         }
 
-        return Adjuster.AdjustBlocksForSideMove(controlBlocks, newControlBlocks);
+        return controlBlocks;
     }
 }

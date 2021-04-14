@@ -17,6 +17,8 @@ namespace Tests
             mockBoard.Setup(m => m.Width).Returns(10);
 
             mockBoard.Setup(m => m.ExistPosition(9, 0)).Returns(true);
+            mockBoard.Setup(m => m.ExistPosition(7, 0)).Returns(true);
+            mockBoard.Setup(m => m.ExistPosition(0, 0)).Returns(true);
 
             var collisionDetection = new CollisionDetection(mockBoard.Object);
             var adjuster = new ControlBlocksAdjuster(collisionDetection);
@@ -35,7 +37,7 @@ namespace Tests
         public void MoveRightSuccessTest()
         {
             var controlBlocks = new ControlBlocks(5, 10, IBlocks);
-            controlBlocks = Service.Execute(controlBlocks, 1, 0);
+            controlBlocks = Service.Execute(controlBlocks, 1, 0, false, false);
             Assert.AreEqual(6, controlBlocks.X);
             Assert.AreEqual(10, controlBlocks.Y);
         }
@@ -44,7 +46,7 @@ namespace Tests
         public void MoveRightIfWallCollision()
         {
             var controlBlocks = new ControlBlocks(9, 10, IBlocks);
-            controlBlocks = Service.Execute(controlBlocks, 1, 0);
+            controlBlocks = Service.Execute(controlBlocks, 1, 0, false, false);
             Assert.AreEqual(9, controlBlocks.X);
             Assert.AreEqual(10, controlBlocks.Y);
         }
@@ -54,7 +56,7 @@ namespace Tests
         public void MoveRightIfPutBlocksCollision()
         {
             var controlBlocks = new ControlBlocks(8, 1, IBlocks);
-            controlBlocks = Service.Execute(controlBlocks, 1, 0);
+            controlBlocks = Service.Execute(controlBlocks, 1, 0, false, false);
             Assert.AreEqual(8, controlBlocks.X);
             Assert.AreEqual(1, controlBlocks.Y);
         }
@@ -63,7 +65,7 @@ namespace Tests
         public void MoveLeftSuccessTest()
         {
             var controlBlocks = new ControlBlocks(5, 10, IBlocks);
-            controlBlocks = Service.Execute(controlBlocks, -1, 0);
+            controlBlocks = Service.Execute(controlBlocks, -1, 0, false, false);
             Assert.AreEqual(4, controlBlocks.X);
             Assert.AreEqual(10, controlBlocks.Y);
         }
@@ -72,7 +74,7 @@ namespace Tests
         public void MoveLeftIfWallCollision()
         {
             var controlBlocks = new ControlBlocks(0, 10, IBlocks);
-            controlBlocks = Service.Execute(controlBlocks, -1, 0);
+            controlBlocks = Service.Execute(controlBlocks, -1, 0, false, false);
             Assert.AreEqual(0, controlBlocks.X);
             Assert.AreEqual(10, controlBlocks.Y);
         }
@@ -81,7 +83,7 @@ namespace Tests
         public void MoveDownSuccessTest()
         {
             var controlBlocks = new ControlBlocks(5, 10, IBlocks);
-            controlBlocks = Service.Execute(controlBlocks, 0, -1);
+            controlBlocks = Service.Execute(controlBlocks, 0, -1, false, false);
             Assert.AreEqual(5, controlBlocks.X);
             Assert.AreEqual(9, controlBlocks.Y);
             Assert.IsFalse(controlBlocks.IsPutable);
@@ -92,10 +94,69 @@ namespace Tests
         public void MoveDownIfGroundCollision()
         {
             var controlBlocks = new ControlBlocks(0, 1, IBlocks);
-            controlBlocks = Service.Execute(controlBlocks, 0, -1);
+            controlBlocks = Service.Execute(controlBlocks, 0, -1, false, false);
             Assert.AreEqual(0, controlBlocks.X);
             Assert.AreEqual(1, controlBlocks.Y);
             Assert.IsTrue(controlBlocks.IsPutable);
+        }
+
+        [Test]
+        public void SpinIfLeftWallCollision()
+        {
+            var controlBlocks = new ControlBlocks(0, 10, IBlocks);
+            controlBlocks = Service.Execute(controlBlocks, 0, 0, true, false);
+            Assert.AreEqual(2, controlBlocks.X);
+            Assert.AreEqual(10, controlBlocks.Y);
+
+            var controlBlocks2 = new ControlBlocks(1, 10, IBlocks);
+            controlBlocks2 = Service.Execute(controlBlocks2, 0, 0, true, false);
+            Assert.AreEqual(2, controlBlocks2.X);
+            Assert.AreEqual(10, controlBlocks2.Y);
+        }
+
+        [Test]
+        public void SpinIfRightWallCollision()
+        {
+            var controlBlocks = new ControlBlocks(9, 10, IBlocks);
+            controlBlocks = Service.Execute(controlBlocks, 0, 0, false, true);
+            Assert.AreEqual(7, controlBlocks.X);
+            Assert.AreEqual(10, controlBlocks.Y);
+
+            var controlBlocks2 = new ControlBlocks(8, 10, IBlocks);
+
+            controlBlocks2 = Service.Execute(controlBlocks2, 0, 0, false, true);
+            Assert.AreEqual(7, controlBlocks2.X);
+            Assert.AreEqual(10, controlBlocks2.Y);
+        }
+
+        [Test]
+        public void SpinIfRightPutBlockCollision()
+        {
+            var controlBlocks = new ControlBlocks(6, 0, IBlocks);
+            controlBlocks = Service.Execute(controlBlocks, 0, 0, false, true);
+            Assert.AreEqual(4, controlBlocks.X);
+            Assert.AreEqual(0, controlBlocks.Y);
+        }
+
+        [Test]
+        public void SpinIfGroundCollision()
+        {
+            var controlBlocks = new ControlBlocks(5, 0, IBlocks);
+            controlBlocks.RightSpin();
+            controlBlocks = Service.Execute(controlBlocks, 0, 0, false, true);
+            Assert.AreEqual(5, controlBlocks.X);
+            Assert.AreEqual(2, controlBlocks.Y);
+        }
+
+
+        [Test]
+        public void SpinIfSideCollision()
+        {
+            // 回転後の移動調整をしても衝突する場合、回転前のブロックが返る
+            var controlBlocks = new ControlBlocks(8, 0, IBlocks);
+            controlBlocks = Service.Execute(controlBlocks, 0, 0, false, true);
+            Assert.AreEqual(8, controlBlocks.X);
+            Assert.AreEqual(0, controlBlocks.Y);
         }
 
         // 右下入力時の動き
@@ -103,7 +164,7 @@ namespace Tests
         public void MoveRightDownSuccessTest()
         {
             var controlBlocks = new ControlBlocks(5, 10, IBlocks);
-            controlBlocks = Service.Execute(controlBlocks, 1, -1);
+            controlBlocks = Service.Execute(controlBlocks, 1, -1, false, false);
             Assert.AreEqual(5, controlBlocks.X);
             Assert.AreEqual(9, controlBlocks.Y);
         }
@@ -112,12 +173,12 @@ namespace Tests
         [Test]
         public void MoveLeftDownSuccessTest()
         {
-
             var controlBlocks = new ControlBlocks(5, 10, IBlocks);
-            controlBlocks = Service.Execute(controlBlocks, 1, -1);
+            controlBlocks = Service.Execute(controlBlocks, 1, -1, false, false);
             Assert.AreEqual(5, controlBlocks.X);
             Assert.AreEqual(9, controlBlocks.Y);
         }
+
     }
 
 }

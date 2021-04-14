@@ -11,7 +11,7 @@ public class ControlBlocksPresenter : MonoBehaviour
     [SerializeField]
     private ControlBlocksView ControlBlocksView;
     [SerializeField]
-    private float moveWaitSecond;
+    private float ControlWaitSecond;
 
     [Inject]
     private readonly BlockControllUseCase BlockControllUseCase;
@@ -33,6 +33,15 @@ public class ControlBlocksPresenter : MonoBehaviour
     {
         Horizontal = Input.GetAxisRaw("Horizontal");
         Vertical = Input.GetAxisRaw("Vertical");
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            MoveControlBlocks(true, false);
+        }
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            MoveControlBlocks(false, true);
+        }
     }
 
     void FixedUpdate()
@@ -40,17 +49,25 @@ public class ControlBlocksPresenter : MonoBehaviour
         if (!IsWaitMove && (Horizontal != 0 || Vertical != 0))
         {
             IsWaitMove = true;
-
-            ControlBlocks = BlockControllUseCase.Execute(ControlBlocks, Horizontal, Vertical);
-            ControlBlocksView.DrawControlBlocks(ControlBlocks);
-
-            StartCoroutine(WaitMove());
+            MoveControlBlocks(false, false);
+            StartCoroutine(WaitControl());
         }
     }
 
-    private IEnumerator WaitMove()
+    void MoveControlBlocks(bool inputLeftSpin, bool inputRightSpin)
     {
-        yield return new WaitForSeconds(moveWaitSecond);
+        ControlBlocks = BlockControllUseCase.Execute(
+            ControlBlocks,
+            Horizontal,
+            Vertical,
+            inputLeftSpin,
+            inputRightSpin
+        );
+        ControlBlocksView.DrawControlBlocks(ControlBlocks);
+    }
+    private IEnumerator WaitControl()
+    {
+        yield return new WaitForSeconds(ControlWaitSecond);
         IsWaitMove = false;
     }
 }

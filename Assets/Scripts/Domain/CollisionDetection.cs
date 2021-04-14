@@ -30,24 +30,37 @@ public class CollisionDetection
     {
         return controlBlocks.Blocks.BlockList.Any(block =>
         {
-            return GetBoardPositionX(controlBlocks, block) > Board.Width - 1;
+            return IsCollisionBlockForRightWall(controlBlocks, block);
         });
+    }
+    public bool IsCollisionBlockForRightWall(IControlBlocks controlBlocks, IBlock block)
+    {
+        return GetBoardPositionX(controlBlocks, block) > Board.Width - 1;
     }
 
     private bool IsCollisionLeftWall(IControlBlocks controlBlocks)
     {
         return controlBlocks.Blocks.BlockList.Any(block =>
         {
-            return GetBoardPositionX(controlBlocks, block) < 0;
+            return IsCollisionBlockForLeftWall(controlBlocks, block);
         });
+    }
+    public bool IsCollisionBlockForLeftWall(IControlBlocks controlBlocks, IBlock block)
+    {
+        return GetBoardPositionX(controlBlocks, block) < 0;
     }
 
     private bool IsCollisionGround(IControlBlocks controlBlocks)
     {
         return controlBlocks.Blocks.BlockList.Any(block =>
         {
-            return GetBoardPositionY(controlBlocks, block) < 0;
+            return IsCollisionBlockForGround(controlBlocks, block);
         });
+    }
+
+    public bool IsCollisionBlockForGround(IControlBlocks controlBlocks, IBlock block)
+    {
+        return GetBoardPositionY(controlBlocks, block) < 0;
     }
 
     // ブロックとの衝突判定
@@ -55,11 +68,15 @@ public class CollisionDetection
     {
         return controlBlocks.Blocks.BlockList.Any(block =>
         {
-            return Board.ExistPosition(
-                GetBoardPositionX(controlBlocks, block),
-                GetBoardPositionY(controlBlocks, block)
-            );
+            return IsCollisionBlockForPutBlock(controlBlocks, block);
         });
+    }
+    public bool IsCollisionBlockForPutBlock(IControlBlocks controlBlocks, IBlock block)
+    {
+        return Board.ExistPosition(
+            GetBoardPositionX(controlBlocks, block),
+            GetBoardPositionY(controlBlocks, block)
+        );
     }
 
     private int GetBoardPositionX(IControlBlocks controlBlocks, IBlock block)
