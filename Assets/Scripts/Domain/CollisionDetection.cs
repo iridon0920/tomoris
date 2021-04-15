@@ -20,6 +20,14 @@ public class CollisionDetection
             || IsCollisionPutBlock(controlBlocks);
     }
 
+    public bool IsCollisionBlock(IControlBlocks controlBlocks, IBlock block)
+    {
+        return IsCollisionBlockForRightWall(controlBlocks, block)
+            || IsCollisionBlockForLeftWall(controlBlocks, block)
+            || IsCollisionBlockForGround(controlBlocks, block)
+            || IsCollisionBlockForPutBlock(controlBlocks, block);
+    }
+
     public bool IsCollisionPutPosition(IControlBlocks controlBlocks)
     {
         return IsCollisionGround(controlBlocks)

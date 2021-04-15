@@ -1,3 +1,4 @@
+using System.Linq;
 using Zenject;
 using UnityEngine;
 public class ControlBlocksAdjuster
@@ -42,54 +43,42 @@ public class ControlBlocksAdjuster
 
     private ControlBlocks AdjustBlocksForSpinLoop(ControlBlocks controlBlocks)
     {
-        controlBlocks.Blocks.BlockList.ForEach(block =>
-          {
-              while (true)
-              {
-                  if (CollisionDetection.IsCollisionBlockForLeftWall(controlBlocks, block))
-                  {
-                      controlBlocks.MoveRight();
-                  }
-                  else if (CollisionDetection.IsCollisionBlockForRightWall(controlBlocks, block))
-                  {
-                      controlBlocks.MoveLeft();
-                  }
-                  else if (CollisionDetection.IsCollisionBlockForGround(controlBlocks, block))
-                  {
-                      controlBlocks.MoveUp();
-                  }
-                  else if (CollisionDetection.IsCollisionBlockForPutBlock(controlBlocks, block))
-                  {
-                      if (block.X > 0)
-                      {
-                          controlBlocks.MoveLeft();
-                          controlBlocks.Blocks.BlockList.ForEach(block2 =>
-                          {
-                              if (block2.X > 0 && block.Y == block2.Y && !block.Equals(block2))
-                              {
-                                  controlBlocks.MoveLeft();
-                              }
-                          });
-                      }
-                      else
-                      {
-                          controlBlocks.MoveRight();
-                          controlBlocks.Blocks.BlockList.ForEach(block2 =>
-                        {
-                            if (block2.X < 0 && block.Y == block2.Y && !block.Equals(block2))
-                            {
-                                controlBlocks.MoveRight();
-                            }
-                        });
-                      }
-                      break;
-                  }
-                  else
-                  {
-                      break;
-                  }
-              }
-          });
+        var MinY = controlBlocks.Blocks.BlockList.Select(selectBlock => selectBlock.Y).Min();
+        var MinX = controlBlocks.Blocks.BlockList.Select(selectBlock => selectBlock.X).Min();
+        var MaxX = controlBlocks.Blocks.BlockList.Select(selectBlock => selectBlock.X).Max();
+
+        for (var i = -1; i >= MinY; i--)
+        {
+            controlBlocks.Blocks.BlockList.Where(block => block.Y == i).ToList().ForEach(block =>
+            {
+                if (CollisionDetection.IsCollisionBlock(controlBlocks, block))
+                {
+                    controlBlocks.MoveUp();
+                }
+            });
+        }
+
+        for (var i = -1; i >= MinX; i--)
+        {
+            controlBlocks.Blocks.BlockList.Where(block => block.X == i).ToList().ForEach(block =>
+            {
+                if (CollisionDetection.IsCollisionBlock(controlBlocks, block))
+                {
+                    controlBlocks.MoveRight();
+                }
+            });
+        }
+
+        for (var i = 1; i <= MaxX; i++)
+        {
+            controlBlocks.Blocks.BlockList.Where(block => block.X == i).ToList().ForEach(block =>
+            {
+                if (CollisionDetection.IsCollisionBlock(controlBlocks, block))
+                {
+                    controlBlocks.MoveLeft();
+                }
+            });
+        }
         return controlBlocks;
     }
 }
