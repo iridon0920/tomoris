@@ -4,7 +4,6 @@ using UnityEngine;
 public class ControlBlocksAdjuster
 {
     private CollisionDetection CollisionDetection { get; }
-    private bool isPutBlocksCollision = false;
 
     [Inject]
     public ControlBlocksAdjuster(CollisionDetection collisionDetection)

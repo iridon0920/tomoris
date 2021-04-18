@@ -41,13 +41,6 @@ namespace Tests
             MockBoard.Verify(m => m.PutBlocks(It.IsAny<ControlBlocks>()), Times.Once());
         }
 
-        [Test]
-        public void PutGroundFailsTest()
-        {
-            var controlBlocks = new ControlBlocks(5, 1, IBlocks);
-            Service.Execute(controlBlocks);
-            MockBoard.Verify(m => m.PutBlocks(It.IsAny<ControlBlocks>()), Times.Never());
-        }
 
         // 空中であっても設置可能判定があれば設置を行う
         [Test]

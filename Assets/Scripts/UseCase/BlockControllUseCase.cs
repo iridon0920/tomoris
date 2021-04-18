@@ -37,11 +37,11 @@ public class BlockControllUseCase
             inputRightSpin
         );
 
-        var addBlocks = PutControlBlocksService.Execute(newControlBlocks);
-        BoardPresenter.AddBlocks(addBlocks);
-
         if (newControlBlocks.IsPutable)
         {
+            var addBlocks = PutControlBlocksService.Execute(newControlBlocks);
+            BoardPresenter.AddBlocks(addBlocks);
+
             newControlBlocks = GetNextControlBlocksService.Execute();
         }
         return newControlBlocks;

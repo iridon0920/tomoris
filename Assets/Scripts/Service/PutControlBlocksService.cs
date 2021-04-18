@@ -13,11 +13,6 @@ public class PutControlBlocksService
 
     public List<BoardBlock> Execute(ControlBlocks controlBlocks)
     {
-        var result = new List<BoardBlock>();
-        if (controlBlocks.IsPutable)
-        {
-            result = Board.PutBlocks(controlBlocks);
-        }
-        return result;
+        return Board.PutBlocks(controlBlocks);
     }
 }
