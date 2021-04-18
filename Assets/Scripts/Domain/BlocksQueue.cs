@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-
+using Zenject;
 public interface IBlocksQueue
 {
     Queue<IBlocks> Queue { get; }
@@ -9,52 +9,25 @@ public class BlocksQueue : IBlocksQueue
 {
     public Queue<IBlocks> Queue { get; private set; }
 
-    private int Count;
+    private BlocksFactory BlocksFactory;
 
-    public BlocksQueue(int size)
+
+    [Inject]
+    public BlocksQueue(int size, BlocksFactory blocksFactory)
     {
+        BlocksFactory = blocksFactory;
+
         Queue = new Queue<IBlocks>();
         for (var i = 0; i < size; i++)
         {
-            Queue.Enqueue(CreateBlocks(i));
+            Queue.Enqueue(BlocksFactory.Create());
         }
-
-        Count = size;
     }
 
     public IBlocks Dequeue()
     {
-        Queue.Enqueue(CreateBlocks(Count));
-        Count++;
+        Queue.Enqueue(BlocksFactory.Create());
 
         return Queue.Dequeue();
-    }
-
-    private IBlocks CreateBlocks(int i)
-    {
-        if (i % 2 == 0)
-        {
-            return new Blocks(
-                new List<IBlock>
-                {
-                        new Block(0, 2),
-                        new Block(0, 1),
-                        new Block(0, 0),
-                        new Block(0, -1)
-                }
-            );
-        }
-        else
-        {
-            return new Blocks(
-                 new List<IBlock>
-                 {
-                        new Block(0, 1),
-                        new Block(0, 0),
-                        new Block(0, -1),
-                        new Block(1, -1)
-                 }
-             );
-        }
     }
 }

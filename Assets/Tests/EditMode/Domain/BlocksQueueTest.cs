@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
@@ -10,65 +11,24 @@ namespace Tests
         [Test]
         public void CreateQueueTest()
         {
-            var Queue = new BlocksQueue(4);
+            var Queue = new BlocksQueue(4, new BlocksFactory(new System.Random()));
             var BlocksArray = Queue.Queue.ToArray();
             Assert.AreEqual(4, BlocksArray.Length);
-            Assert.IsTrue(BlocksArray[0].Equals(CreateIBlocks()));
-            Assert.IsTrue(BlocksArray[1].Equals(CreateLBlocks()));
-            Assert.IsTrue(BlocksArray[2].Equals(CreateIBlocks()));
-            Assert.IsTrue(BlocksArray[3].Equals(CreateLBlocks()));
+            Assert.IsTrue(BlocksArray[0] is Blocks);
+            Assert.IsTrue(BlocksArray[1] is Blocks);
+            Assert.IsTrue(BlocksArray[2] is Blocks);
+            Assert.IsTrue(BlocksArray[3] is Blocks);
         }
 
         [Test]
         public void DequeueTest()
         {
-            var Queue = new BlocksQueue(4);
+            var Queue = new BlocksQueue(4, new BlocksFactory(new System.Random()));
+            Assert.AreEqual(4, Queue.Queue.ToArray().Length);
+
             var DequeueBlocks = Queue.Dequeue();
-            Assert.IsTrue(DequeueBlocks.Equals(CreateIBlocks()));
-
-            var BlocksArray = Queue.Queue.ToArray();
-            Assert.AreEqual(4, BlocksArray.Length);
-            Assert.IsTrue(BlocksArray[0].Equals(CreateLBlocks()));
-            Assert.IsTrue(BlocksArray[1].Equals(CreateIBlocks()));
-            Assert.IsTrue(BlocksArray[2].Equals(CreateLBlocks()));
-            Assert.IsTrue(BlocksArray[3].Equals(CreateIBlocks()));
-
-            DequeueBlocks = Queue.Dequeue();
-            Assert.IsTrue(DequeueBlocks.Equals(CreateLBlocks()));
-
-            BlocksArray = Queue.Queue.ToArray();
-            Assert.AreEqual(4, BlocksArray.Length);
-            Assert.IsTrue(BlocksArray[0].Equals(CreateIBlocks()));
-            Assert.IsTrue(BlocksArray[1].Equals(CreateLBlocks()));
-            Assert.IsTrue(BlocksArray[2].Equals(CreateIBlocks()));
-            Assert.IsTrue(BlocksArray[3].Equals(CreateLBlocks()));
-        }
-        private Blocks CreateIBlocks()
-        {
-            return new Blocks(
-                new List<IBlock>
-                {
-                    new Block(0, 2),
-                    new Block(0, 1),
-                    new Block(0, 0),
-                    new Block(0, -1)
-                }
-            );
-        }
-
-        private Blocks CreateLBlocks()
-        {
-            return new Blocks(
-                new List<IBlock>
-                {
-                    new Block(0, 1),
-                    new Block(0, 0),
-                    new Block(0, -1),
-                    new Block(1, -1)
-                }
-            );
+            Assert.IsTrue(DequeueBlocks is Blocks);
+            Assert.AreEqual(4, Queue.Queue.ToArray().Length);
         }
     }
-
-
 }

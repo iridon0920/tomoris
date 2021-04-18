@@ -10,6 +10,9 @@ public class ControlBlocksInstaller : MonoInstaller<ControlBlocksInstaller>
         Container.Bind<PutControlBlocksService>().To<PutControlBlocksService>().AsCached();
         Container.Bind<GetNextControlBlocksService>().To<GetNextControlBlocksService>().AsCached();
 
+        Container.Bind<BlocksFactory>().AsCached();
+        Container.Bind<System.Random>().AsSingle();
+
         Container.Bind<ControlBlocksAdjuster>().To<ControlBlocksAdjuster>().AsCached();
 
         Container.Bind<CollisionDetection>().To<CollisionDetection>().AsCached();
