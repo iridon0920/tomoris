@@ -11,7 +11,9 @@ public class ControlBlocksPresenter : MonoBehaviour
     [SerializeField]
     private ControlBlocksView ControlBlocksView;
     [SerializeField]
-    private float ControlWaitSecond;
+    private float ControlWaitSeconds;
+    [SerializeField]
+    private float MoveDownBySeconds;
 
     [Inject]
     private readonly BlockControllUseCase BlockControllUseCase;
@@ -27,6 +29,8 @@ public class ControlBlocksPresenter : MonoBehaviour
     {
         ControlBlocks = GetNextControlBlocksService.Execute();
         ControlBlocksView.DrawControlBlocks(ControlBlocks);
+
+        StartCoroutine(MoveDownOverTime());
     }
 
     void Update()
@@ -36,30 +40,34 @@ public class ControlBlocksPresenter : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            MoveControlBlocks(true, false);
+            MoveControlBlocks(0, 0, true, false);
         }
         if (Input.GetKeyDown(KeyCode.X))
         {
-            MoveControlBlocks(false, true);
+            MoveControlBlocks(0, 0, false, true);
         }
     }
 
     void FixedUpdate()
     {
-        if (!IsWaitMove && (Horizontal != 0 || Vertical != 0))
+        if (!IsWaitMove)
         {
-            IsWaitMove = true;
-            MoveControlBlocks(false, false);
-            StartCoroutine(WaitControl());
+            if (Horizontal != 0 || Vertical != 0)
+            {
+                IsWaitMove = true;
+                MoveControlBlocks(Horizontal, Vertical, false, false);
+
+                StartCoroutine(WaitControl());
+            }
         }
     }
 
-    void MoveControlBlocks(bool inputLeftSpin, bool inputRightSpin)
+    void MoveControlBlocks(float horizontal, float vertical, bool inputLeftSpin, bool inputRightSpin)
     {
         ControlBlocks = BlockControllUseCase.Execute(
             ControlBlocks,
-            Horizontal,
-            Vertical,
+            horizontal,
+            vertical,
             inputLeftSpin,
             inputRightSpin
         );
@@ -67,7 +75,16 @@ public class ControlBlocksPresenter : MonoBehaviour
     }
     private IEnumerator WaitControl()
     {
-        yield return new WaitForSeconds(ControlWaitSecond);
+        yield return new WaitForSeconds(ControlWaitSeconds);
         IsWaitMove = false;
+    }
+
+    private IEnumerator MoveDownOverTime()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(MoveDownBySeconds);
+            MoveControlBlocks(0, -1, false, false);
+        }
     }
 }
