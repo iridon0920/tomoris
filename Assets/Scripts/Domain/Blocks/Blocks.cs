@@ -9,7 +9,13 @@ public interface IBlocks : IEquatable<IBlocks>
 }
 public class Blocks : IBlocks
 {
-    public List<IBlock> BlockList { get; }
+    public List<IBlock> BlockList { get; protected set; }
+
+    public Blocks()
+    {
+        BlockList = new List<IBlock>();
+    }
+
     public Blocks(List<IBlock> blockList)
     {
         BlockList = blockList;
@@ -39,11 +45,6 @@ public class Blocks : IBlocks
 
     public bool Equals(IBlocks blocks)
     {
-        if (blocks.GetType() != typeof(Blocks))
-        {
-            return false;
-        }
-
         if (BlockList.Count != blocks.BlockList.Count)
         {
             return false;

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Zenject;
 
 public class BlocksFactory
@@ -18,114 +17,22 @@ public class BlocksFactory
         switch (Random.Next(NUMBER_OF_TYPES))
         {
             case 0:
-                return CreateIShapedBlocks();
+                return new IShapedBlocks();
             case 1:
-                return CreateLShapedBlocks();
+                return new LShapedBlocks();
             case 2:
-                return CreateJShapedBlocks();
+                return new JShapedBlocks();
             case 3:
-                return CreateZShapedBlocks();
+                return new ZShapedBlocks();
             case 4:
-                return CreateSShapedBlocks();
+                return new SShapedBlocks();
             case 5:
-                return CreateTShapedBlocks();
+                return new TShapedBlocks();
             case 6:
-                return CreateOShapedBlocks();
+                return new OShapedBlocks();
             default:
-                return CreateIShapedBlocks();
+                return new IShapedBlocks();
         }
     }
-
-    private Blocks CreateIShapedBlocks()
-    {
-        return new Blocks(
-                new List<IBlock>
-                {
-                    new Block(0, 2),
-                    new Block(0, 1),
-                    new Block(0, 0),
-                    new Block(0, -1)
-                }
-        );
-    }
-
-    private Blocks CreateLShapedBlocks()
-    {
-        return new Blocks(
-                new List<IBlock>
-                {
-                    new Block(0, 1),
-                    new Block(0, 0),
-                    new Block(0, -1),
-                    new Block(1, -1)
-                }
-        );
-    }
-
-    private Blocks CreateJShapedBlocks()
-    {
-        return new Blocks(
-                new List<IBlock>
-                {
-                    new Block(0, 1),
-                    new Block(0, 0),
-                    new Block(0, -1),
-                    new Block(-1, -1)
-                }
-        );
-    }
-
-    private Blocks CreateZShapedBlocks()
-    {
-        return new Blocks(
-                new List<IBlock>
-                {
-                    new Block(-1, 1),
-                    new Block(0, 1),
-                    new Block(0, 0),
-                    new Block(1, 0)
-                }
-        );
-    }
-
-    private Blocks CreateSShapedBlocks()
-    {
-        return new Blocks(
-                new List<IBlock>
-                {
-                    new Block(1, 1),
-                    new Block(0, 1),
-                    new Block(0, 0),
-                    new Block(-1, 0)
-                }
-        );
-    }
-
-    private Blocks CreateTShapedBlocks()
-    {
-        return new Blocks(
-                new List<IBlock>
-                {
-                    new Block(0, 1),
-                    new Block(-1, 0),
-                    new Block(0, 0),
-                    new Block(1, 0)
-                }
-        );
-    }
-
-    private Blocks CreateOShapedBlocks()
-    {
-        return new Blocks(
-                new List<IBlock>
-                {
-                    new Block(0, 1),
-                    new Block(1, 1),
-                    new Block(0, 0),
-                    new Block(1, 0)
-                }
-        );
-    }
-
 
 }

@@ -27,21 +27,9 @@ namespace Tests
 
             CollisionDetection = new CollisionDetection(mockBoard.Object);
 
-            IBlocks = new Blocks(new List<IBlock>
-            {
-                new Block(0, 2),
-                new Block(0, 1),
-                new Block(0, 0),
-                new Block(0, -1)
-            });
+            IBlocks = new IShapedBlocks();
 
-            LBlocks = new Blocks(new List<IBlock>
-            {
-                new Block(0, 1),
-                new Block(0, 0),
-                new Block(0, -1),
-                new Block(1, -1)
-            });
+            LBlocks = new LShapedBlocks();
 
         }
 

@@ -22,13 +22,7 @@ namespace Tests
 
             Service = new PutControlBlocksService(MockBoard.Object);
 
-            IBlocks = new Blocks(new List<IBlock>
-            {
-                new Block(0, 2),
-                new Block(0, 1),
-                new Block(0, 0),
-                new Block(0, -1)
-            });
+            IBlocks = new IShapedBlocks();
         }
 
         [Test]

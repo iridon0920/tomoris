@@ -10,9 +10,9 @@ namespace Tests
         [Test]
         public void EqualsTest()
         {
-            var blocks1 = new Blocks(CreateIBlockList());
-            var blocks2 = new Blocks(CreateIBlockList());
-            var blocks3 = new Blocks(CreateLBlockList());
+            var blocks1 = new IShapedBlocks();
+            var blocks2 = new IShapedBlocks();
+            var blocks3 = new LShapedBlocks();
             Assert.IsTrue(blocks1.Equals(blocks2));
             Assert.IsFalse(blocks1.Equals(blocks3));
         }
@@ -20,7 +20,7 @@ namespace Tests
         [Test]
         public void IBlockSpinTest()
         {
-            IBlocks blocks = new Blocks(CreateIBlockList());
+            IBlocks blocks = new IShapedBlocks();
 
             blocks = blocks.LeftSpin();
             Assert.IsTrue(new Block(-2, 0).Equals(blocks.BlockList[0]));
@@ -32,38 +32,13 @@ namespace Tests
         [Test]
         public void LBlockSpinTest()
         {
-            IBlocks blocks = new Blocks(CreateLBlockList());
+            IBlocks blocks = new LShapedBlocks();
 
             blocks = blocks.RightSpin();
             Assert.IsTrue(new Block(1, 0).Equals(blocks.BlockList[0]));
             Assert.IsTrue(new Block(0, 0).Equals(blocks.BlockList[1]));
             Assert.IsTrue(new Block(-1, 0).Equals(blocks.BlockList[2]));
             Assert.IsTrue(new Block(-1, -1).Equals(blocks.BlockList[3]));
-        }
-
-
-        // I字ブロックのリスト作成
-        private List<IBlock> CreateIBlockList()
-        {
-            return new List<IBlock>
-            {
-                new Block(0, 2),
-                new Block(0, 1),
-                new Block(0, 0),
-                new Block(0, -1)
-            };
-        }
-
-        // L字ブロックのリスト作成
-        private List<IBlock> CreateLBlockList()
-        {
-            return new List<IBlock>
-            {
-            new Block(0, 1),
-            new Block(0, 0),
-            new Block(0, -1),
-            new Block(1, -1)
-            };
         }
     }
 }
