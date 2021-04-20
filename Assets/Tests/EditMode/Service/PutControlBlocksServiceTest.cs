@@ -26,7 +26,7 @@ namespace Tests
         }
 
         [Test]
-        public void PutGroundSuccessTest()
+        public void ボードの一番下にBlocksを設置するテスト()
         {
             var controlBlocks = new ControlBlocks(5, 0, IBlocks);
             controlBlocks.SetTruePutable();
@@ -38,7 +38,7 @@ namespace Tests
 
         // 空中であっても設置可能判定があれば設置を行う
         [Test]
-        public void PutBlocksSuccessTest()
+        public void 設置済ブロックの上にBlocksを設置するテスト()
         {
             var controlBlocks = new ControlBlocks(5, 5, IBlocks);
             controlBlocks.SetTruePutable();

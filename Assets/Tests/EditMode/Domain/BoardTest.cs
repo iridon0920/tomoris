@@ -25,13 +25,13 @@ namespace Tests
         }
 
         [Test]
-        public void CreateInstanceTest()
+        public void インスタンス生成時にブロック挿入位置が適切に設定されるかテスト()
         {
             Assert.AreEqual(4, Board.InsertPositionX);
         }
 
         [Test]
-        public void PutBlocksTest()
+        public void ブロックをボードに設置するテスト()
         {
             var controlBlocks = new ControlBlocks(0, 1, LBlocks);
 
@@ -59,7 +59,7 @@ namespace Tests
         }
 
         [Test]
-        public void AlignBlockEraseTest()
+        public void ライン揃い時の消去テスト()
         {
             var board = new Board(8, 20);
             // 1つ目のブロックを左下へ
@@ -130,7 +130,7 @@ namespace Tests
         }
 
         [Test]
-        public void FallToEmptyLineTest()
+        public void 何もブロックの存在しないラインにブロックを落下させるテスト()
         {
             var board = new Board(8, 20);
             // 1つ目のブロック設置

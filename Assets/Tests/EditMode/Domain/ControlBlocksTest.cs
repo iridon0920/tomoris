@@ -19,7 +19,7 @@ namespace Tests
         }
 
         [Test]
-        public void CreateInstanceTest()
+        public void インスタンス生成時にパラメータが適切にセットされるかのテスト()
         {
             var controlBlocks = new ControlBlocks(5, 10, IBlocks);
             Assert.AreEqual(5, controlBlocks.X);
@@ -27,7 +27,7 @@ namespace Tests
         }
 
         [Test]
-        public void CloneTest()
+        public void クローンオブジェクト生成メソッドのテスト()
         {
             var controlBlocks = new ControlBlocks(5, 10, IBlocks);
             var controlBlocks2 = controlBlocks.Clone();
@@ -44,7 +44,7 @@ namespace Tests
         }
 
         [Test]
-        public void MoveRightTest()
+        public void 右移動テスト()
         {
             var controlBlocks = new ControlBlocks(4, 14, IBlocks);
             controlBlocks.MoveRight();
@@ -52,7 +52,7 @@ namespace Tests
         }
 
         [Test]
-        public void MoveLeftTest()
+        public void 左移動テスト()
         {
             var controlBlocks = new ControlBlocks(20, 14, IBlocks);
             controlBlocks.MoveLeft();
@@ -60,7 +60,7 @@ namespace Tests
         }
 
         [Test]
-        public void MoveDownTest()
+        public void 下移動テスト()
         {
             var controlBlocks = new ControlBlocks(4, 14, IBlocks);
             controlBlocks.MoveDown();
@@ -68,7 +68,7 @@ namespace Tests
         }
 
         [Test]
-        public void SpinTest()
+        public void 左回転テストt()
         {
             var controlBlocks = new ControlBlocks(5, 15, IBlocks);
             var IBlocksLeftSpin = IBlocks.LeftSpin();
@@ -83,7 +83,7 @@ namespace Tests
         }
 
         [Test]
-        public void GetBoardPositionBlockList()
+        public void ControlBlocksの座標と保持しているブロックの座標からボードでの座標を持つブロックリストを生成するテスト()
         {
             var controlBlocks = new ControlBlocks(5, 1, IBlocks);
             var boardPositionBlockList = controlBlocks.GetBoardPositionBlockList();

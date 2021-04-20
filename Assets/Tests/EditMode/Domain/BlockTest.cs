@@ -8,14 +8,14 @@ namespace Tests
     public class BlockTest
     {
         [Test]
-        public void EqualTest()
+        public void Block同士のEqualsメソッドテスト()
         {
             var block = new Block(-1, 1);
             Assert.IsTrue(block.Equals(new Block(-1, 1)));
         }
 
         [Test]
-        public void MoveDownTest()
+        public void 下移動時のブロック位置テスト()
         {
             var block = new Block(-1, 2);
             var block2 = block.MoveDown();
@@ -25,7 +25,7 @@ namespace Tests
         }
 
         [Test]
-        public void RotateLeft90DegreeTest()
+        public void 原点に対し左90度回転時のブロック位置テスト()
         {
             var block = new Block(1, 2);
 
@@ -46,7 +46,7 @@ namespace Tests
         }
 
         [Test]
-        public void RotateRight90DegreeTest()
+        public void 原点に対し右90度回転時のブロック位置テスト()
         {
             var block = new Block(1, 2);
 

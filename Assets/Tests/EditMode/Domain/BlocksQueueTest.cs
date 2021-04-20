@@ -9,7 +9,7 @@ namespace Tests
     public class BlocksQueueTest
     {
         [Test]
-        public void CreateQueueTest()
+        public void オブジェクト作成時にBlocksオブジェクトが作成されているかのテスト()
         {
             var Queue = new BlocksQueue(4, new BlocksFactory(new System.Random()));
             var BlocksArray = Queue.Queue.ToArray();
@@ -21,7 +21,7 @@ namespace Tests
         }
 
         [Test]
-        public void DequeueTest()
+        public void キューからブロックを取り出した時に次のブロックが補充されているかのテスト()
         {
             var Queue = new BlocksQueue(4, new BlocksFactory(new System.Random()));
             Assert.AreEqual(4, Queue.Queue.ToArray().Length);

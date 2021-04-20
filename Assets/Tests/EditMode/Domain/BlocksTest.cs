@@ -8,7 +8,7 @@ namespace Tests
     public class BlocksTest
     {
         [Test]
-        public void EqualsTest()
+        public void Blocks同士のEqualsメソッドテスト()
         {
             var blocks1 = new IShapedBlocks();
             var blocks2 = new IShapedBlocks();
@@ -18,7 +18,7 @@ namespace Tests
         }
 
         [Test]
-        public void IBlockSpinTest()
+        public void I字ブロックを左回転をした際のブロック位置テスト()
         {
             IBlocks blocks = new IShapedBlocks();
 
@@ -30,7 +30,7 @@ namespace Tests
         }
 
         [Test]
-        public void LBlockSpinTest()
+        public void L字ブロックを右回転した際のブロック位置テスト()
         {
             IBlocks blocks = new LShapedBlocks();
 

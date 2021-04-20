@@ -28,7 +28,7 @@ namespace Tests
         }
 
         [Test]
-        public void MoveRightSuccessTest()
+        public void 右移動成功テスト()
         {
             var controlBlocks = new ControlBlocks(5, 10, IBlocks);
             controlBlocks = Service.Execute(controlBlocks, 1, 0, false, false);
@@ -37,7 +37,7 @@ namespace Tests
         }
 
         [Test]
-        public void MoveRightIfWallCollision()
+        public void 右移動で壁に衝突するテスト()
         {
             var controlBlocks = new ControlBlocks(9, 10, IBlocks);
             controlBlocks = Service.Execute(controlBlocks, 1, 0, false, false);
@@ -47,7 +47,7 @@ namespace Tests
 
         // ボードの9, 0座標にはブロックが存在するため、衝突判定が発生
         [Test]
-        public void MoveRightIfPutBlocksCollision()
+        public void 右移動でブロックに衝突するテスト()
         {
             var controlBlocks = new ControlBlocks(8, 1, IBlocks);
             controlBlocks = Service.Execute(controlBlocks, 1, 0, false, false);
@@ -56,7 +56,7 @@ namespace Tests
         }
 
         [Test]
-        public void MoveLeftSuccessTest()
+        public void 左移動成功テスト()
         {
             var controlBlocks = new ControlBlocks(5, 10, IBlocks);
             controlBlocks = Service.Execute(controlBlocks, -1, 0, false, false);
@@ -65,7 +65,7 @@ namespace Tests
         }
 
         [Test]
-        public void MoveLeftIfWallCollision()
+        public void 左移動でブロックに衝突するテスト()
         {
             var controlBlocks = new ControlBlocks(0, 10, IBlocks);
             controlBlocks = Service.Execute(controlBlocks, -1, 0, false, false);
@@ -74,7 +74,7 @@ namespace Tests
         }
 
         [Test]
-        public void MoveDownSuccessTest()
+        public void 下移動成功テスト()
         {
             var controlBlocks = new ControlBlocks(5, 10, IBlocks);
             controlBlocks = Service.Execute(controlBlocks, 0, -1, false, false);
@@ -85,7 +85,7 @@ namespace Tests
 
         // 下方向の衝突があったら、PuttableフラグがTrueになる
         [Test]
-        public void MoveDownIfGroundCollision()
+        public void 下移動でボードの一番下に衝突するテスト()
         {
             var controlBlocks = new ControlBlocks(0, 1, IBlocks);
             controlBlocks = Service.Execute(controlBlocks, 0, -1, false, false);
@@ -95,7 +95,7 @@ namespace Tests
         }
 
         [Test]
-        public void SpinIfLeftWallCollision()
+        public void 左回転で壁に衝突するテスト()
         {
             var controlBlocks = new ControlBlocks(0, 10, IBlocks);
             controlBlocks = Service.Execute(controlBlocks, 0, 0, true, false);
@@ -109,7 +109,7 @@ namespace Tests
         }
 
         [Test]
-        public void SpinIfRightWallCollision()
+        public void 右回転で壁に衝突するテスト()
         {
             var controlBlocks = new ControlBlocks(9, 10, IBlocks);
             controlBlocks = Service.Execute(controlBlocks, 0, 0, false, true);
@@ -124,7 +124,7 @@ namespace Tests
         }
 
         [Test]
-        public void SpinIfRightPutBlockCollision()
+        public void 右回転で設置ブロックに衝突するテスト()
         {
             var controlBlocks = new ControlBlocks(6, 0, IBlocks);
             controlBlocks = Service.Execute(controlBlocks, 0, 0, false, true);
@@ -133,7 +133,7 @@ namespace Tests
         }
 
         [Test]
-        public void SpinIfGroundCollision()
+        public void 右回転でボードの一番下に衝突するテスト()
         {
             var controlBlocks = new ControlBlocks(5, 0, IBlocks);
             controlBlocks.RightSpin();
@@ -144,7 +144,7 @@ namespace Tests
 
 
         [Test]
-        public void SpinIfSideCollision()
+        public void 回転時に両方向に衝突する際のテスト()
         {
             // 回転後の移動調整をしても衝突する場合、回転前のブロックが返る
             var controlBlocks = new ControlBlocks(8, 0, IBlocks);
@@ -153,9 +153,8 @@ namespace Tests
             Assert.AreEqual(0, controlBlocks.Y);
         }
 
-        // 右下入力時の動き
         [Test]
-        public void MoveRightDownSuccessTest()
+        public void 右下入力時の動きのテスト()
         {
             var controlBlocks = new ControlBlocks(5, 10, IBlocks);
             controlBlocks = Service.Execute(controlBlocks, 1, -1, false, false);
@@ -163,9 +162,8 @@ namespace Tests
             Assert.AreEqual(9, controlBlocks.Y);
         }
 
-        // 左下入力時の動き
         [Test]
-        public void MoveLeftDownSuccessTest()
+        public void 左下入力時の動きのテスト()
         {
             var controlBlocks = new ControlBlocks(5, 10, IBlocks);
             controlBlocks = Service.Execute(controlBlocks, 1, -1, false, false);

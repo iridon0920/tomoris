@@ -35,7 +35,7 @@ namespace Tests
 
 
         [Test]
-        public void IsCollisionRightWallTest()
+        public void 右壁への衝突判定テスト()
         {
             var controlBlocks = new ControlBlocks(10, 19, LBlocks);
             Assert.IsTrue(CollisionDetection.IsCollision(controlBlocks));
@@ -48,7 +48,7 @@ namespace Tests
         }
 
         [Test]
-        public void IsCollisionLeftWallTest()
+        public void 左壁への衝突判定テスト()
         {
             var controlBlocks = new ControlBlocks(-2, 19, LBlocks);
             Assert.IsTrue(CollisionDetection.IsCollision(controlBlocks));
@@ -58,7 +58,7 @@ namespace Tests
         }
 
         [Test]
-        public void IsCollisionGroundTest()
+        public void ボードの一番下への衝突判定テスト()
         {
             var controlBlocks = new ControlBlocks(4, -2, IBlocks);
             Assert.IsTrue(CollisionDetection.IsCollision(controlBlocks));
@@ -71,7 +71,7 @@ namespace Tests
         }
 
         [Test]
-        public void IsCollisionPutBlocksTest()
+        public void 設置してあるブロックへの衝突判定テスト()
         {
             var controlBlocks = new ControlBlocks(7, 1, LBlocks);
             Assert.IsTrue(CollisionDetection.IsCollision(controlBlocks));
