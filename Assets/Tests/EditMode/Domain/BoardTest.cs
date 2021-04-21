@@ -206,6 +206,23 @@ namespace Tests
 
 
         }
+
+        [Test]
+        public void ボードの高さを超えた位置にブロックが設置されたらゲームオーバー判定()
+        {
+            var board = new Board(10, 10);
+            var controlBlocks = new ControlBlocks(4, 1, IBlocks);
+            board.PutBlocks(controlBlocks);
+            Assert.IsFalse(board.IsGameOver());
+
+            controlBlocks = new ControlBlocks(4, 5, IBlocks);
+            board.PutBlocks(controlBlocks);
+            Assert.IsFalse(board.IsGameOver());
+
+            controlBlocks = new ControlBlocks(4, 9, IBlocks);
+            board.PutBlocks(controlBlocks);
+            Assert.IsTrue(board.IsGameOver());
+        }
     }
 
 

@@ -102,7 +102,12 @@ public class Board : IBoard
             }
             result.Add(block);
             return block;
-        }).ToReactiveCollection();
+        }).ToList();
         return result;
+    }
+
+    public bool IsGameOver()
+    {
+        return BlocksHeight > Height;
     }
 }
