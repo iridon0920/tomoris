@@ -5,6 +5,7 @@ public class BlockControllUseCase
     private readonly MoveControlBlocksService MoveControlBlocksService;
     private readonly PutControlBlocksService PutControlBlocksService;
     private readonly GetNextControlBlocksService GetNextControlBlocksService;
+    private readonly ControlBlocksPresenter ControlBlocksPresenter;
     private readonly BoardPresenter BoardPresenter;
 
     [Inject]
@@ -12,12 +13,14 @@ public class BlockControllUseCase
         MoveControlBlocksService moveControlBlocksService,
         PutControlBlocksService putControlBlocksService,
         GetNextControlBlocksService getNextControlBlocksService,
+        ControlBlocksPresenter controlBlocksPresenter,
         BoardPresenter boardPresenter
     )
     {
         MoveControlBlocksService = moveControlBlocksService;
         PutControlBlocksService = putControlBlocksService;
         GetNextControlBlocksService = getNextControlBlocksService;
+        ControlBlocksPresenter = controlBlocksPresenter;
         BoardPresenter = boardPresenter;
     }
 
@@ -44,6 +47,9 @@ public class BlockControllUseCase
 
             newControlBlocks = GetNextControlBlocksService.Execute();
         }
+
+        ControlBlocksPresenter.DrawControlBlocks(newControlBlocks);
+
         return newControlBlocks;
     }
 }
