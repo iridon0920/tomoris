@@ -10,8 +10,8 @@ public class ControlBlocksInstaller : MonoInstaller
     public override void InstallBindings()
     {
         Container.Bind<BlockController>()
-        .FromComponentInNewPrefab(BlockControllerPrefab)
-        .AsSingle();
+                .FromComponentInNewPrefab(BlockControllerPrefab)
+                .AsSingle();
         Container.Bind<ControlBlocksPresenter>()
                 .FromComponentInNewPrefab(ControlBlocksPrefab)
                 .AsSingle();

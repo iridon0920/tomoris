@@ -27,7 +27,8 @@ namespace Tests
         [Test]
         public void インスタンス生成時にブロック挿入位置が適切に設定されるかテスト()
         {
-            Assert.AreEqual(4, Board.InsertPositionX);
+            Assert.AreEqual(4, Board.GetInsertPositionX());
+            Assert.AreEqual(21, Board.GetInsertPositionY());
         }
 
         [Test]

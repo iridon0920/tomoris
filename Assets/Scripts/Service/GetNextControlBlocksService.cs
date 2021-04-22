@@ -15,8 +15,8 @@ public class GetNextControlBlocksService
     public ControlBlocks Execute()
     {
         return new ControlBlocks(
-                    Board.InsertPositionX,
-                    Board.Height - 1,
+                    Board.GetInsertPositionX(),
+                    Board.GetInsertPositionY(),
                     Queue.Dequeue()
                 );
     }

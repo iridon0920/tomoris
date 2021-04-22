@@ -17,17 +17,33 @@ public class BlockController : MonoBehaviour
     private readonly BlockControllUseCase BlockControllUseCase;
     [Inject]
     private readonly GetNextControlBlocksService GetNextControlBlocksService;
+    [Inject]
+    private readonly GameOverEvent GameOverEvent;
     private ControlBlocks ControlBlocks;
 
     private float Horizontal;
     private float Vertical;
     private bool IsWaitMove = false;
 
+    private bool IsGameOver = false;
+
     void Start()
     {
         ControlBlocks = GetNextControlBlocksService.Execute();
 
         StartCoroutine(MoveDownOverTime());
+
+        GameOverEvent
+            .GameOverObservable
+            .Subscribe(isGameOver =>
+                {
+                    if (isGameOver)
+                    {
+                        Debug.Log("GameOver!!!");
+                        IsGameOver = isGameOver;
+                    }
+                }
+            );
     }
 
     void Update()
@@ -47,7 +63,7 @@ public class BlockController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!IsWaitMove)
+        if (!IsWaitMove && !IsGameOver)
         {
             if (Horizontal != 0 || Vertical != 0)
             {
@@ -77,7 +93,7 @@ public class BlockController : MonoBehaviour
 
     private IEnumerator MoveDownOverTime()
     {
-        while (true)
+        while (!IsGameOver)
         {
             yield return new WaitForSeconds(MoveDownBySeconds);
             MoveControlBlocks(0, -1, false, false);

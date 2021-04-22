@@ -1,19 +1,20 @@
 using System;
 using System.Linq;
-using UnityEngine;
 using System.Collections.Generic;
-using UniRx;
 public interface IBoard
 {
     int Width { get; }
     int Height { get; }
-    int InsertPositionX { get; }
     List<BoardBlock> Blocks { get; }
 
+    int GetInsertPositionX();
+    int GetInsertPositionY();
     List<BoardBlock> PutBlocks(ControlBlocks controlBlocks);
     bool ExistPosition(int x, int y);
     List<BoardBlock> EraseIfAlign();
     List<BoardBlock> FallToEmptyLine();
+    bool IsGameOver();
+
 }
 public class Board : IBoard
 {
@@ -32,11 +33,18 @@ public class Board : IBoard
     {
         Width = width;
         Height = height;
-        InsertPositionX = (width - 1) / 2;
-
         Blocks = new List<BoardBlock>();
     }
 
+    public int GetInsertPositionX()
+    {
+        return (Width - 1) / 2;
+    }
+
+    public int GetInsertPositionY()
+    {
+        return Height + 1;
+    }
     public List<BoardBlock> PutBlocks(ControlBlocks controlBlocks)
     {
         var result = new List<BoardBlock>();
