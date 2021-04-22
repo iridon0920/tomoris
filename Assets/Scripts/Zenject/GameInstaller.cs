@@ -28,5 +28,7 @@ public class GameInstaller : MonoInstaller
                 .FromSubContainerResolve()
                 .ByNewContextPrefab(GameContextPrefab).AsCached();
 
+        Container.Bind<GameOverEvent>()
+                .AsSingle();
     }
 }
