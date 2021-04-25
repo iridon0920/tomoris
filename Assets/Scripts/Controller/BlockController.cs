@@ -39,7 +39,6 @@ public class BlockController : MonoBehaviour
                 {
                     if (isGameOver)
                     {
-                        Debug.Log("GameOver!!!");
                         IsGameOver = isGameOver;
                     }
                 }
