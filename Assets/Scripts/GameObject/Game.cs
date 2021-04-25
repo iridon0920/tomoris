@@ -10,7 +10,9 @@ public class Game : MonoBehaviour
     List<BlockController> BlockControllers = new List<BlockController>();
 
     [SerializeField]
-    private Canvas Canvas;
+    private Canvas GameOverText;
+    [SerializeField]
+    private GameObject GameOverController;
     [Inject]
     private readonly GameOverEvent GameOverEvent;
     void Awake()
@@ -23,7 +25,8 @@ public class Game : MonoBehaviour
                 {
                     if (isGameOver)
                     {
-                        Canvas.enabled = true;
+                        GameOverText.enabled = true;
+                        Instantiate(GameOverController);
                     }
                 }
             );
