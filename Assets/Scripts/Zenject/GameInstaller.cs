@@ -23,12 +23,16 @@ public class GameInstaller : MonoInstaller
                 .AsSingle();
         Container.Bind<FallBoardBlocksUseCase>()
                 .AsSingle();
+        Container.Bind<Score>()
+                .AsSingle();
 
         Container.BindFactory<BlockController, BlockController.Factory>()
                 .FromSubContainerResolve()
                 .ByNewContextPrefab(GameContextPrefab).AsCached();
 
         Container.Bind<GameOverEvent>()
+                .AsSingle();
+        Container.Bind<UpdateScoreEvent>()
                 .AsSingle();
     }
 }

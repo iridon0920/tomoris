@@ -7,6 +7,7 @@ public class ControlBlocksInstaller : MonoInstaller
     private GameObject BlockControllerPrefab;
     [SerializeField]
     private GameObject ControlBlocksPrefab;
+
     public override void InstallBindings()
     {
         Container.Bind<BlockController>()
