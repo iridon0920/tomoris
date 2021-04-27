@@ -5,15 +5,15 @@ public class BoardBlocksLineEraseUseCase
     private readonly IBoard Board;
     private readonly BoardPresenter BoardPresenter;
     private readonly Score Score;
-    private readonly UpdateScoreEvent UpdateScoreEvent;
+    private readonly ScorePresenter ScorePresenter;
 
     [Inject]
-    public BoardBlocksLineEraseUseCase(IBoard board, BoardPresenter boardPresenter, Score score, UpdateScoreEvent updateScoreEvent)
+    public BoardBlocksLineEraseUseCase(IBoard board, BoardPresenter boardPresenter, Score score, ScorePresenter scorePresenter)
     {
         Board = board;
         BoardPresenter = boardPresenter;
         Score = score;
-        UpdateScoreEvent = updateScoreEvent;
+        ScorePresenter = scorePresenter;
     }
 
     public void Execute()
@@ -24,8 +24,7 @@ public class BoardBlocksLineEraseUseCase
         if (eraseBlocks.Count > 0)
         {
             Score.AddPointFromErasedLines(eraseBlocks.Count / Board.Width);
-            UpdateScoreEvent.EmitPoints((int)Score.TotalPoints);
+            ScorePresenter.UpdatePoints((int)Score.TotalPoints);
         }
-
     }
 }

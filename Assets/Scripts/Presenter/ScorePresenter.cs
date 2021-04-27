@@ -5,17 +5,18 @@ using UnityEngine;
 using Zenject;
 using UniRx;
 
-public class ScorePresenter : MonoBehaviour
+public class ScorePresenter
 {
-    [SerializeField]
-    private ScoreView ScoreView;
-    [Inject]
-    UpdateScoreEvent UpdateScoreEvent;
+    private readonly ScoreView ScoreView;
 
-    void Awake()
+    [Inject]
+    public ScorePresenter(ScoreView scoreView)
     {
-        UpdateScoreEvent
-            .ScoreObservable
-            .Subscribe(points => ScoreView.UpdatePointsText(points));
+        ScoreView = scoreView;
+    }
+
+    public void UpdatePoints(int points)
+    {
+        ScoreView.UpdatePointsText(points);
     }
 }

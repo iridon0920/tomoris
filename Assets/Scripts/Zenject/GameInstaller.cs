@@ -8,10 +8,19 @@ public class GameInstaller : MonoInstaller
     private GameObject BoardPrefab;
     [SerializeField]
     private GameObject GameContextPrefab;
+    [SerializeField]
+    private GameObject ScorePrefab;
+
     public override void InstallBindings()
     {
         Container.Bind<BoardPresenter>()
                 .FromComponentInNewPrefab(BoardPrefab)
+                .AsSingle();
+
+        Container.Bind<ScorePresenter>()
+                .AsSingle();
+        Container.Bind<ScoreView>()
+                .FromComponentInNewPrefab(ScorePrefab)
                 .AsSingle();
 
         Container.Bind<IBoard>()
@@ -31,8 +40,6 @@ public class GameInstaller : MonoInstaller
                 .ByNewContextPrefab(GameContextPrefab).AsCached();
 
         Container.Bind<GameOverEvent>()
-                .AsSingle();
-        Container.Bind<UpdateScoreEvent>()
                 .AsSingle();
     }
 }
