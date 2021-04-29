@@ -47,13 +47,17 @@ public class BlockController : MonoBehaviour
 
     void Update()
     {
-        if (!IsWaitMove && !IsGameOver)
+        if (!IsGameOver)
         {
-            ReceiveInput();
+            ReceiveSpinInput();
+            if (!IsWaitMove)
+            {
+                ReceiveMoveInput();
+            }
         }
     }
 
-    private void ReceiveInput()
+    private void ReceiveMoveInput()
     {
         if (Input.GetKey(KeyCode.LeftArrow))
         {
@@ -73,19 +77,20 @@ public class BlockController : MonoBehaviour
             ControlBlocks = BlockControllUseCase.MoveDown(ControlBlocks);
             StartCoroutine(WaitControl());
         }
-        else if (Input.GetKeyDown(KeyCode.Z))
+    }
+
+    private void ReceiveSpinInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Z))
         {
-            IsWaitMove = true;
             ControlBlocks = BlockControllUseCase.SpinLeft(ControlBlocks);
-            StartCoroutine(WaitControl());
         }
         else if (Input.GetKeyDown(KeyCode.X))
         {
-            IsWaitMove = true;
             ControlBlocks = BlockControllUseCase.SpinRight(ControlBlocks);
-            StartCoroutine(WaitControl());
         }
     }
+
     private IEnumerator WaitControl()
     {
         yield return new WaitForSeconds(ControlWaitSeconds);
