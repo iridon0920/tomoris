@@ -47,42 +47,44 @@ public class BlockController : MonoBehaviour
 
     void Update()
     {
-        Horizontal = Input.GetAxisRaw("Horizontal");
-        Vertical = Input.GetAxisRaw("Vertical");
-
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            MoveControlBlocks(0, 0, true, false);
-        }
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            MoveControlBlocks(0, 0, false, true);
-        }
-    }
-
-    void FixedUpdate()
-    {
         if (!IsWaitMove && !IsGameOver)
         {
-            if (Horizontal != 0 || Vertical != 0)
-            {
-                IsWaitMove = true;
-                MoveControlBlocks(Horizontal, Vertical, false, false);
-
-                StartCoroutine(WaitControl());
-            }
+            ReceiveInput();
         }
     }
 
-    void MoveControlBlocks(float horizontal, float vertical, bool inputLeftSpin, bool inputRightSpin)
+    private void ReceiveInput()
     {
-        ControlBlocks = BlockControllUseCase.Execute(
-            ControlBlocks,
-            horizontal,
-            vertical,
-            inputLeftSpin,
-            inputRightSpin
-        );
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            IsWaitMove = true;
+            ControlBlocks = BlockControllUseCase.MoveLeft(ControlBlocks);
+            StartCoroutine(WaitControl());
+        }
+        else if (Input.GetKey(KeyCode.RightArrow))
+        {
+            IsWaitMove = true;
+            ControlBlocks = BlockControllUseCase.MoveRight(ControlBlocks);
+            StartCoroutine(WaitControl());
+        }
+        else if (Input.GetKey(KeyCode.DownArrow))
+        {
+            IsWaitMove = true;
+            ControlBlocks = BlockControllUseCase.MoveDown(ControlBlocks);
+            StartCoroutine(WaitControl());
+        }
+        else if (Input.GetKeyDown(KeyCode.Z))
+        {
+            IsWaitMove = true;
+            ControlBlocks = BlockControllUseCase.SpinLeft(ControlBlocks);
+            StartCoroutine(WaitControl());
+        }
+        else if (Input.GetKeyDown(KeyCode.X))
+        {
+            IsWaitMove = true;
+            ControlBlocks = BlockControllUseCase.SpinRight(ControlBlocks);
+            StartCoroutine(WaitControl());
+        }
     }
     private IEnumerator WaitControl()
     {
@@ -95,7 +97,7 @@ public class BlockController : MonoBehaviour
         while (!IsGameOver)
         {
             yield return new WaitForSeconds(MoveDownBySeconds);
-            MoveControlBlocks(0, -1, false, false);
+            ControlBlocks = BlockControllUseCase.MoveDown(ControlBlocks);
         }
     }
 

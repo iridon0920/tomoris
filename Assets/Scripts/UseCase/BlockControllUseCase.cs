@@ -30,28 +30,40 @@ public class BlockControllUseCase
         GameOverEvent = gameOverEvent;
     }
 
-    public ControlBlocks Execute(
-        ControlBlocks controlBlocks,
-        float horizontal,
-        float vertical,
-        bool inputLeftSpin,
-        bool inputRightSpin
-    )
+    public ControlBlocks MoveRight(ControlBlocks controlBlocks)
     {
-        var newControlBlocks = MoveControlBlocksService.Execute(
-            controlBlocks,
-            horizontal,
-            vertical,
-            inputLeftSpin,
-            inputRightSpin
-        );
+        var newControlBlocks = MoveControlBlocksService.MoveRight(controlBlocks);
+        return ProccessForAfterMove(newControlBlocks);
+    }
+    public ControlBlocks MoveLeft(ControlBlocks controlBlocks)
+    {
+        var newControlBlocks = MoveControlBlocksService.MoveLeft(controlBlocks);
+        return ProccessForAfterMove(newControlBlocks);
+    }
+    public ControlBlocks MoveDown(ControlBlocks controlBlocks)
+    {
+        var newControlBlocks = MoveControlBlocksService.MoveDown(controlBlocks);
+        return ProccessForAfterMove(newControlBlocks);
+    }
+    public ControlBlocks SpinRight(ControlBlocks controlBlocks)
+    {
+        var newControlBlocks = MoveControlBlocksService.SpinRight(controlBlocks);
+        return ProccessForAfterMove(newControlBlocks);
+    }
+    public ControlBlocks SpinLeft(ControlBlocks controlBlocks)
+    {
+        var newControlBlocks = MoveControlBlocksService.SpinLeft(controlBlocks);
+        return ProccessForAfterMove(newControlBlocks);
+    }
 
-        if (newControlBlocks.IsPutable)
+    private ControlBlocks ProccessForAfterMove(ControlBlocks controlBlocks)
+    {
+        if (controlBlocks.IsPutable)
         {
-            var addBlocks = PutControlBlocksService.Execute(newControlBlocks);
+            var addBlocks = PutControlBlocksService.Execute(controlBlocks);
             BoardPresenter.AddBlocks(addBlocks);
 
-            newControlBlocks = GetNextControlBlocksService.Execute();
+            controlBlocks = GetNextControlBlocksService.Execute();
 
             var eraseBlocks = Board.EraseIfAlign();
             BoardPresenter.DeleteEraseLineBlocks(eraseBlocks);
@@ -67,9 +79,9 @@ public class BlockControllUseCase
         }
         else
         {
-            ControlBlocksPresenter.DrawControlBlocks(newControlBlocks);
+            ControlBlocksPresenter.DrawControlBlocks(controlBlocks);
         }
 
-        return newControlBlocks;
+        return controlBlocks;
     }
 }

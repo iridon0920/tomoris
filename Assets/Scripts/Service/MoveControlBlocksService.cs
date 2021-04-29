@@ -10,42 +10,38 @@ public class MoveControlBlocksService
         Adjuster = adjuster;
     }
 
-    public ControlBlocks Execute(
-        ControlBlocks controlBlocks,
-        float horizontal,
-        float vertical,
-        bool inputLeftSpin,
-        bool InputRightSpin
-    )
+    public ControlBlocks MoveRight(ControlBlocks controlBlocks)
     {
         var newControlBlocks = controlBlocks.Clone();
+        newControlBlocks.MoveRight();
+        return Adjuster.AdjustBlocksForSideMove(controlBlocks, newControlBlocks);
+    }
 
-        if (vertical < 0)
-        {
-            newControlBlocks.MoveDown();
-            return Adjuster.AdjustBlocksForDownMove(controlBlocks, newControlBlocks);
-        }
-        else if (horizontal > 0)
-        {
-            newControlBlocks.MoveRight();
-            return Adjuster.AdjustBlocksForSideMove(controlBlocks, newControlBlocks);
-        }
-        else if (horizontal < 0)
-        {
-            newControlBlocks.MoveLeft();
-            return Adjuster.AdjustBlocksForSideMove(controlBlocks, newControlBlocks);
-        }
-        else if (inputLeftSpin)
-        {
-            newControlBlocks.LeftSpin();
-            return Adjuster.AdjustBlocksForSpin(controlBlocks, newControlBlocks);
-        }
-        else if (InputRightSpin)
-        {
-            newControlBlocks.RightSpin();
-            return Adjuster.AdjustBlocksForSpin(controlBlocks, newControlBlocks);
-        }
+    public ControlBlocks MoveLeft(ControlBlocks controlBlocks)
+    {
+        var newControlBlocks = controlBlocks.Clone();
+        newControlBlocks.MoveLeft();
+        return Adjuster.AdjustBlocksForSideMove(controlBlocks, newControlBlocks);
+    }
 
-        return controlBlocks;
+    public ControlBlocks MoveDown(ControlBlocks controlBlocks)
+    {
+        var newControlBlocks = controlBlocks.Clone();
+        newControlBlocks.MoveDown();
+        return Adjuster.AdjustBlocksForDownMove(controlBlocks, newControlBlocks);
+    }
+
+    public ControlBlocks SpinRight(ControlBlocks controlBlocks)
+    {
+        var newControlBlocks = controlBlocks.Clone();
+        newControlBlocks.RightSpin();
+        return Adjuster.AdjustBlocksForSpin(controlBlocks, newControlBlocks);
+    }
+
+    public ControlBlocks SpinLeft(ControlBlocks controlBlocks)
+    {
+        var newControlBlocks = controlBlocks.Clone();
+        newControlBlocks.LeftSpin();
+        return Adjuster.AdjustBlocksForSpin(controlBlocks, newControlBlocks);
     }
 }
