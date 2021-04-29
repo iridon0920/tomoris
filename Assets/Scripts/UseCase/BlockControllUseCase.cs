@@ -10,6 +10,8 @@ public class BlockControllUseCase
     private readonly ControlBlocksPresenter ControlBlocksPresenter;
     private readonly BoardPresenter BoardPresenter;
     private readonly GameOverEvent GameOverEvent;
+    private readonly Score Score;
+    private readonly ScorePresenter ScorePresenter;
 
     [Inject]
     public BlockControllUseCase(
@@ -18,9 +20,11 @@ public class BlockControllUseCase
         GetNextControlBlocksService getNextControlBlocksService,
         IBoard board,
         CollisionDetection collisionDetection,
-    ControlBlocksPresenter controlBlocksPresenter,
+        ControlBlocksPresenter controlBlocksPresenter,
         BoardPresenter boardPresenter,
-        GameOverEvent gameOverEvent
+        GameOverEvent gameOverEvent,
+        Score score,
+        ScorePresenter scorePresenter
     )
     {
         MoveControlBlocksService = moveControlBlocksService;
@@ -31,6 +35,8 @@ public class BlockControllUseCase
         ControlBlocksPresenter = controlBlocksPresenter;
         BoardPresenter = boardPresenter;
         GameOverEvent = gameOverEvent;
+        Score = score;
+        ScorePresenter = scorePresenter;
     }
 
     public ControlBlocks MoveRight(ControlBlocks controlBlocks)
@@ -57,6 +63,11 @@ public class BlockControllUseCase
 
             var eraseBlocks = Board.EraseIfAlign();
             BoardPresenter.DeleteEraseLineBlocks(eraseBlocks);
+            if (eraseBlocks.Count > 0)
+            {
+                Score.AddPointFromErasedLines(eraseBlocks.Count / Board.Width);
+                ScorePresenter.UpdatePoints((int)Score.TotalPoints);
+            }
 
             var fallBlocks = Board.FallToEmptyLine();
             BoardPresenter.FallBlocks(fallBlocks);

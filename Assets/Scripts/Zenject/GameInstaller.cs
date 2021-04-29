@@ -28,10 +28,6 @@ public class GameInstaller : MonoInstaller
                 .AsSingle()
                 .WithArguments(10, 20);
 
-        Container.Bind<BoardBlocksLineEraseUseCase>()
-                .AsSingle();
-        Container.Bind<FallBoardBlocksUseCase>()
-                .AsSingle();
         Container.Bind<Score>()
                 .AsSingle();
 

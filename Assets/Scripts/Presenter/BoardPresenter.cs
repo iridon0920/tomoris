@@ -13,24 +13,16 @@ public class BoardPresenter : MonoBehaviour
 
     [Inject]
     private readonly IBoard Board;
-    [Inject]
-    private readonly BoardBlocksLineEraseUseCase BoardBlocksLineEraseUseCase;
-    [Inject]
-    private readonly FallBoardBlocksUseCase FallBoardBlocksUseCase;
-
 
     public void AddBlocks(List<BoardBlock> blocks)
     {
         blocks.ForEach(block => BoardView.DrawBoardBlock(block));
 
-        BoardBlocksLineEraseUseCase.Execute();
     }
 
     public void DeleteEraseLineBlocks(List<BoardBlock> blocks)
     {
         blocks.ForEach(block => BoardView.DeleteBoardBlock(block));
-
-        FallBoardBlocksUseCase.Execute();
     }
 
     public void FallBlocks(List<BoardBlock> blocks)
