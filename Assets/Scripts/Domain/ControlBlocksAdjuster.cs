@@ -11,23 +11,6 @@ public class ControlBlocksAdjuster
         CollisionDetection = collisionDetection;
     }
 
-    public ControlBlocks AdjustBlocksForSideMove(ControlBlocks currentControlBlocks, ControlBlocks newControlBlocks)
-    {
-        if (CollisionDetection.IsCollision(newControlBlocks))
-        {
-            return currentControlBlocks;
-        }
-        return newControlBlocks;
-    }
-    public ControlBlocks AdjustBlocksForDownMove(ControlBlocks currentControlBlocks, ControlBlocks newControlBlocks)
-    {
-        if (CollisionDetection.IsCollisionPutPosition(newControlBlocks))
-        {
-            return currentControlBlocks;
-        }
-        return newControlBlocks;
-    }
-
     public ControlBlocks AdjustBlocksForSpin(ControlBlocks currentControlBlocks, ControlBlocks newControlBlocks)
     {
         newControlBlocks = AdjustBlocksForSpinLoop(newControlBlocks);
