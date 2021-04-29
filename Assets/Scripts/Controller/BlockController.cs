@@ -94,10 +94,17 @@ public class BlockController : MonoBehaviour
 
     private IEnumerator MoveDownOverTime()
     {
-        while (!IsGameOver)
+        while (true)
         {
             yield return new WaitForSeconds(MoveDownBySeconds);
-            ControlBlocks = BlockControllUseCase.MoveDown(ControlBlocks);
+            if (!IsGameOver)
+            {
+                ControlBlocks = BlockControllUseCase.MoveDown(ControlBlocks);
+            }
+            else
+            {
+                break;
+            }
         }
     }
 

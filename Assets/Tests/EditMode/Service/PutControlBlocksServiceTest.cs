@@ -29,7 +29,6 @@ namespace Tests
         public void ボードの一番下にBlocksを設置するテスト()
         {
             var controlBlocks = new ControlBlocks(5, 0, IBlocks);
-            controlBlocks.SetTruePutable();
 
             Service.Execute(controlBlocks);
             MockBoard.Verify(m => m.PutBlocks(It.IsAny<ControlBlocks>()), Times.Once());
@@ -41,7 +40,6 @@ namespace Tests
         public void 設置済ブロックの上にBlocksを設置するテスト()
         {
             var controlBlocks = new ControlBlocks(5, 5, IBlocks);
-            controlBlocks.SetTruePutable();
             Service.Execute(controlBlocks);
             MockBoard.Verify(m => m.PutBlocks(It.IsAny<ControlBlocks>()), Times.Once());
         }

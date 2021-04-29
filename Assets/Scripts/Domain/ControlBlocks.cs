@@ -25,8 +25,6 @@ public class ControlBlocks : IControlBlocks
     public int X { get; private set; }
     public int Y { get; private set; }
 
-    public bool IsPutable { get; private set; } = false;
-
     public IBlocks Blocks { get; private set; }
 
     public ControlBlocks(int x, int y, IBlocks blocks)
@@ -83,10 +81,4 @@ public class ControlBlocks : IControlBlocks
         }
         return boardPositionBlockList;
     }
-
-    public void SetTruePutable()
-    {
-        IsPutable = true;
-    }
-
 }

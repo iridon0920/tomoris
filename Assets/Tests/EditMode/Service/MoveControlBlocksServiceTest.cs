@@ -91,7 +91,6 @@ namespace Tests
             controlBlocks = Service.MoveDown(controlBlocks);
             Assert.AreEqual(5, controlBlocks.X);
             Assert.AreEqual(9, controlBlocks.Y);
-            Assert.IsFalse(controlBlocks.IsPutable);
         }
 
         // 下方向の衝突があったら、PuttableフラグがTrueになる
@@ -102,7 +101,6 @@ namespace Tests
             controlBlocks = Service.MoveDown(controlBlocks);
             Assert.AreEqual(0, controlBlocks.X);
             Assert.AreEqual(1, controlBlocks.Y);
-            Assert.IsTrue(controlBlocks.IsPutable);
         }
 
         [Test]

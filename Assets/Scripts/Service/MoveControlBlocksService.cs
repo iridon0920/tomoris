@@ -28,7 +28,7 @@ public class MoveControlBlocksService
     {
         var newControlBlocks = controlBlocks.Clone();
         newControlBlocks.MoveDown();
-        return Adjuster.AdjustBlocksForDownMove(controlBlocks, newControlBlocks);
+        return newControlBlocks;
     }
 
     public ControlBlocks SpinRight(ControlBlocks controlBlocks)

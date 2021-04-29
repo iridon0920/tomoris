@@ -23,7 +23,6 @@ public class ControlBlocksAdjuster
     {
         if (CollisionDetection.IsCollisionPutPosition(newControlBlocks))
         {
-            currentControlBlocks.SetTruePutable();
             return currentControlBlocks;
         }
         return newControlBlocks;
