@@ -17,12 +17,24 @@ public class BlockController : MonoBehaviour
     private readonly BlockControllUseCase BlockControllUseCase;
     [Inject]
     private readonly GetNextControlBlocksService GetNextControlBlocksService;
+
+    [Inject]
+    private readonly NotMoveControlBlocksService NotMoveControlBlocksService;
+    [Inject]
+    private readonly MoveLeftControlBlocksService MoveLeftControlBlocksService;
+    [Inject]
+    private readonly MoveRightControlBlocksService MoveRightControlBlocksService;
+    [Inject]
+    private readonly MoveDownControlBlocksService MoveDownControlBlocksService;
+    [Inject]
+    private readonly SpinLeftControlBlocksService SpinLeftControlBlocksService;
+    [Inject]
+    private readonly SpinRightControlBlocksService SpinRightControlBlocksService;
+
     [Inject]
     private readonly GameOverEvent GameOverEvent;
     private ControlBlocks ControlBlocks;
 
-    private float Horizontal;
-    private float Vertical;
     private bool IsWaitMove = false;
 
     private bool IsGameOver = false;
@@ -49,46 +61,56 @@ public class BlockController : MonoBehaviour
     {
         if (!IsGameOver)
         {
-            ReceiveSpinInput();
+            ExecuteMoveService(ReceiveSpinInput());
             if (!IsWaitMove)
             {
-                ReceiveMoveInput();
+                ExecuteMoveServiceAfterWait(ReceiveMoveInput());
             }
         }
     }
 
-    private void ReceiveMoveInput()
+    private void ExecuteMoveService(IMoveControlBlocksService moveService)
+    {
+        ControlBlocks = BlockControllUseCase.Execute(moveService, ControlBlocks);
+    }
+
+    private void ExecuteMoveServiceAfterWait(IMoveControlBlocksService moveService)
+    {
+        ExecuteMoveService(moveService);
+        IsWaitMove = true;
+        StartCoroutine(WaitControl());
+    }
+
+    private IMoveControlBlocksService ReceiveMoveInput()
     {
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            IsWaitMove = true;
-            ControlBlocks = BlockControllUseCase.MoveLeft(ControlBlocks);
-            StartCoroutine(WaitControl());
+            return MoveLeftControlBlocksService;
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
-            IsWaitMove = true;
-            ControlBlocks = BlockControllUseCase.MoveRight(ControlBlocks);
-            StartCoroutine(WaitControl());
+            return MoveRightControlBlocksService;
         }
         else if (Input.GetKey(KeyCode.DownArrow))
         {
-            IsWaitMove = true;
-            ControlBlocks = BlockControllUseCase.MoveDown(ControlBlocks);
-            StartCoroutine(WaitControl());
+            return MoveDownControlBlocksService;
         }
+
+        return NotMoveControlBlocksService;
     }
 
-    private void ReceiveSpinInput()
+    private IMoveControlBlocksService ReceiveSpinInput()
     {
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            ControlBlocks = BlockControllUseCase.SpinLeft(ControlBlocks);
+            return SpinLeftControlBlocksService;
         }
         else if (Input.GetKeyDown(KeyCode.X))
         {
-            ControlBlocks = BlockControllUseCase.SpinRight(ControlBlocks);
+            return SpinRightControlBlocksService;
         }
+
+        return NotMoveControlBlocksService;
     }
 
     private IEnumerator WaitControl()
@@ -104,7 +126,7 @@ public class BlockController : MonoBehaviour
             yield return new WaitForSeconds(MoveDownBySeconds);
             if (!IsGameOver)
             {
-                ControlBlocks = BlockControllUseCase.MoveDown(ControlBlocks);
+                ExecuteMoveService(MoveDownControlBlocksService);
             }
             else
             {

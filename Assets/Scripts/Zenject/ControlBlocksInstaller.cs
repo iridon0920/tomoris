@@ -21,6 +21,21 @@ public class ControlBlocksInstaller : MonoInstaller
                 .AsSingle();
         Container.Bind<MoveControlBlocksService>()
                 .AsSingle();
+
+        Container.Bind<NotMoveControlBlocksService>()
+                .AsSingle();
+        Container.Bind<MoveLeftControlBlocksService>()
+                .AsSingle();
+        Container.Bind<MoveRightControlBlocksService>()
+                .AsSingle();
+        Container.Bind<MoveDownControlBlocksService>()
+                .AsSingle();
+        Container.Bind<SpinLeftControlBlocksService>()
+                .AsSingle();
+        Container.Bind<SpinRightControlBlocksService>()
+                .AsSingle();
+
+
         Container.Bind<PutControlBlocksService>()
                 .AsSingle();
         Container.Bind<GetNextControlBlocksService>()
