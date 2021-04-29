@@ -19,8 +19,6 @@ public class ControlBlocksInstaller : MonoInstaller
 
         Container.Bind<BlockControllUseCase>()
                 .AsSingle();
-        Container.Bind<MoveControlBlocksService>()
-                .AsSingle();
 
         Container.Bind<NotMoveControlBlocksService>()
                 .AsSingle();

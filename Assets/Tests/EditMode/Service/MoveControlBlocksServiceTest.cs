@@ -8,7 +8,6 @@ namespace Tests
 {
     public class MoveControlBlocksServiceTest
     {
-        private MoveControlBlocksService Service;
         private MoveLeftControlBlocksService MoveLeftService;
         private MoveRightControlBlocksService MoveRightService;
         private SpinRightControlBlocksService SpinRightService;
@@ -27,7 +26,6 @@ namespace Tests
             var collisionDetection = new CollisionDetection(mockBoard.Object);
             var adjuster = new ControlBlocksAdjuster(collisionDetection);
 
-            Service = new MoveControlBlocksService(adjuster);
             MoveLeftService = new MoveLeftControlBlocksService(collisionDetection);
             MoveRightService = new MoveRightControlBlocksService(collisionDetection);
             SpinRightService = new SpinRightControlBlocksService(adjuster);
@@ -125,7 +123,7 @@ namespace Tests
         public void 右回転で設置ブロックに衝突するテスト()
         {
             var controlBlocks = new ControlBlocks(6, 0, IBlocks);
-            controlBlocks = Service.SpinRight(controlBlocks);
+            controlBlocks = SpinRightService.Execute(controlBlocks);
             Assert.AreEqual(4, controlBlocks.X);
             Assert.AreEqual(0, controlBlocks.Y);
         }
