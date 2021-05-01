@@ -14,10 +14,18 @@ public class CollisionDetection
 
     public bool IsCollision(IControlBlocks controlBlocks)
     {
-        return IsCollisionRightWall(controlBlocks)
-            || IsCollisionLeftWall(controlBlocks)
-            || IsCollisionGround(controlBlocks)
-            || IsCollisionPutBlock(controlBlocks);
+        bool result = false;
+
+        controlBlocks.Blocks.BlockList.ToList().ForEach(block =>
+        {
+            if (IsCollisionBlock(controlBlocks, block))
+            {
+                result = true;
+                return;
+            }
+        });
+
+        return result;
     }
 
     public bool IsCollisionBlock(IControlBlocks controlBlocks, IBlock block)
@@ -34,26 +42,12 @@ public class CollisionDetection
             || IsCollisionPutBlock(controlBlocks);
     }
 
-    private bool IsCollisionRightWall(IControlBlocks controlBlocks)
-    {
-        return controlBlocks.Blocks.BlockList.Any(block =>
-        {
-            return IsCollisionBlockForRightWall(controlBlocks, block);
-        });
-    }
-    public bool IsCollisionBlockForRightWall(IControlBlocks controlBlocks, IBlock block)
+    private bool IsCollisionBlockForRightWall(IControlBlocks controlBlocks, IBlock block)
     {
         return GetBoardPositionX(controlBlocks, block) > Board.Width - 1;
     }
 
-    private bool IsCollisionLeftWall(IControlBlocks controlBlocks)
-    {
-        return controlBlocks.Blocks.BlockList.Any(block =>
-        {
-            return IsCollisionBlockForLeftWall(controlBlocks, block);
-        });
-    }
-    public bool IsCollisionBlockForLeftWall(IControlBlocks controlBlocks, IBlock block)
+    private bool IsCollisionBlockForLeftWall(IControlBlocks controlBlocks, IBlock block)
     {
         return GetBoardPositionX(controlBlocks, block) < 0;
     }
@@ -66,7 +60,8 @@ public class CollisionDetection
         });
     }
 
-    public bool IsCollisionBlockForGround(IControlBlocks controlBlocks, IBlock block)
+
+    private bool IsCollisionBlockForGround(IControlBlocks controlBlocks, IBlock block)
     {
         return GetBoardPositionY(controlBlocks, block) < 0;
     }
@@ -79,7 +74,8 @@ public class CollisionDetection
             return IsCollisionBlockForPutBlock(controlBlocks, block);
         });
     }
-    public bool IsCollisionBlockForPutBlock(IControlBlocks controlBlocks, IBlock block)
+
+    private bool IsCollisionBlockForPutBlock(IControlBlocks controlBlocks, IBlock block)
     {
         return Board.ExistPosition(
             GetBoardPositionX(controlBlocks, block),
@@ -91,6 +87,7 @@ public class CollisionDetection
     {
         return controlBlocks.X + block.X;
     }
+
     private int GetBoardPositionY(IControlBlocks controlBlocks, IBlock block)
     {
         return controlBlocks.Y + block.Y;
