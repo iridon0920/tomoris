@@ -7,7 +7,7 @@ public class BoardView : MonoBehaviour
     [SerializeField]
     private GameObject BlockPrefab;
     private List<GameObject> Blocks = new List<GameObject>();
-    public void DrawBoardBlock(BoardBlock block)
+    public void DrawBoardPutBlock(BoardPutBlock block)
     {
         var newPosition = transform.position;
         newPosition.x += block.GetX();
@@ -17,13 +17,13 @@ public class BoardView : MonoBehaviour
         Blocks.Add(newBlock);
     }
 
-    public void DeleteBoardBlock(BoardBlock block)
+    public void DeleteBoardPutBlock(BoardPutBlock block)
     {
         var deleteTargetBlock = transform.Find(PREFIX + block.Id);
         Destroy(deleteTargetBlock.gameObject);
     }
 
-    public void ChangeBoardBlockPosition(BoardBlock block)
+    public void ChangeBoardPutBlockPosition(BoardPutBlock block)
     {
         var changeTargetBlock = transform.Find(PREFIX + block.Id);
 

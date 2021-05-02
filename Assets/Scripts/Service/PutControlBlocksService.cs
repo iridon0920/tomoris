@@ -11,7 +11,7 @@ public class PutControlBlocksService
         Board = board;
     }
 
-    public List<BoardBlock> Execute(ControlBlocks controlBlocks)
+    public List<BoardPutBlock> Execute(ControlBlocks controlBlocks)
     {
         return Board.PutBlocks(controlBlocks);
     }

@@ -14,19 +14,19 @@ public class BoardPresenter : MonoBehaviour
     [Inject]
     private readonly IBoard Board;
 
-    public void AddBlocks(List<BoardBlock> blocks)
+    public void AddBlocks(List<BoardPutBlock> blocks)
     {
-        blocks.ForEach(block => BoardView.DrawBoardBlock(block));
+        blocks.ForEach(block => BoardView.DrawBoardPutBlock(block));
 
     }
 
-    public void DeleteEraseLineBlocks(List<BoardBlock> blocks)
+    public void DeleteEraseLineBlocks(List<BoardPutBlock> blocks)
     {
-        blocks.ForEach(block => BoardView.DeleteBoardBlock(block));
+        blocks.ForEach(block => BoardView.DeleteBoardPutBlock(block));
     }
 
-    public void FallBlocks(List<BoardBlock> blocks)
+    public void FallBlocks(List<BoardPutBlock> blocks)
     {
-        blocks.ForEach(block => BoardView.ChangeBoardBlockPosition(block));
+        blocks.ForEach(block => BoardView.ChangeBoardPutBlockPosition(block));
     }
 }

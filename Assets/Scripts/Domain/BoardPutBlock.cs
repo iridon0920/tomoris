@@ -1,9 +1,9 @@
-public class BoardBlock
+public class BoardPutBlock
 {
     public int Id { get; }
     private IBlock Block;
 
-    public BoardBlock(int id, IBlock block)
+    public BoardPutBlock(int id, IBlock block)
     {
         Id = id;
         Block = block;

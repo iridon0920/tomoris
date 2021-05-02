@@ -5,14 +5,14 @@ public interface IBoard
 {
     int Width { get; }
     int Height { get; }
-    List<BoardBlock> Blocks { get; }
+    List<BoardPutBlock> Blocks { get; }
 
     int GetInsertPositionX();
     int GetInsertPositionY();
-    List<BoardBlock> PutBlocks(ControlBlocks controlBlocks);
+    List<BoardPutBlock> PutBlocks(ControlBlocks controlBlocks);
     bool ExistPosition(int x, int y);
-    List<BoardBlock> EraseIfAlign();
-    List<BoardBlock> FallToEmptyLine();
+    List<BoardPutBlock> EraseIfAlign();
+    List<BoardPutBlock> FallToEmptyLine();
     bool IsGameOver();
 
 }
@@ -25,7 +25,7 @@ public class Board : IBoard
 
     // 二次元配列を使って各座標のブロックの存在を管理
     private int NextBlockId = 1;
-    public List<BoardBlock> Blocks { get; }
+    public List<BoardPutBlock> Blocks { get; }
 
     private int BlocksHeight = 0;
 
@@ -33,7 +33,7 @@ public class Board : IBoard
     {
         Width = width;
         Height = height;
-        Blocks = new List<BoardBlock>();
+        Blocks = new List<BoardPutBlock>();
     }
 
     public int GetInsertPositionX()
@@ -45,17 +45,17 @@ public class Board : IBoard
     {
         return Height + 1;
     }
-    public List<BoardBlock> PutBlocks(ControlBlocks controlBlocks)
+    public List<BoardPutBlock> PutBlocks(ControlBlocks controlBlocks)
     {
-        var result = new List<BoardBlock>();
+        var result = new List<BoardPutBlock>();
         foreach (var block in controlBlocks.GetBoardPositionBlockList())
         {
-            var newBoardBlock = new BoardBlock(NextBlockId, block);
+            var newBoardPutBlock = new BoardPutBlock(NextBlockId, block);
             NextBlockId++;
-            Blocks.Add(newBoardBlock);
+            Blocks.Add(newBoardPutBlock);
             BlocksHeight = Blocks.Select(boardblock => boardblock.GetY()).Max() + 1;
 
-            result.Add(newBoardBlock);
+            result.Add(newBoardPutBlock);
         }
         return result;
     }
@@ -65,9 +65,9 @@ public class Board : IBoard
         return Blocks.Any(block => block.GetX() == x && block.GetY() == y);
     }
 
-    public List<BoardBlock> EraseIfAlign()
+    public List<BoardPutBlock> EraseIfAlign()
     {
-        var result = new List<BoardBlock>();
+        var result = new List<BoardPutBlock>();
         for (var y = 0; y < Height; y++)
         {
             var aligenLineBlocks = Blocks.Where(block => block.GetY() == y).ToList();
@@ -83,9 +83,9 @@ public class Board : IBoard
         return result;
     }
 
-    public List<BoardBlock> FallToEmptyLine()
+    public List<BoardPutBlock> FallToEmptyLine()
     {
-        var result = new List<BoardBlock>();
+        var result = new List<BoardPutBlock>();
         int emptyMinLine = -1;
         int emptyLineCount = 0;
 
