@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 public interface IControlBlocks
@@ -15,6 +16,9 @@ public interface IControlBlocks
     void RightSpin();
     ControlBlocks Clone();
     List<IBlock> GetBoardPositionBlockList();
+    List<IBlock> GetBoardPositionBlockListByLower(int minY);
+    List<IBlock> GetBoardPositionBlockListByLeftSide(int minX);
+    List<IBlock> GetBoardPositionBlockListByRightSide(int maxX);
 }
 
 /**
@@ -71,11 +75,47 @@ public class ControlBlocks : IControlBlocks
 
     public List<IBlock> GetBoardPositionBlockList()
     {
+        return CreateBoardPositionBlockList(Blocks.BlockList);
+    }
+
+    public List<IBlock> GetBoardPositionBlockListByLower(int minY)
+    {
+        return CreateBoardPositionBlockList(
+            Blocks
+                .BlockList
+                .Where(block => block.Y < 0 && block.Y >= minY)
+                .ToList()
+        );
+    }
+
+    public List<IBlock> GetBoardPositionBlockListByLeftSide(int minX)
+    {
+        return CreateBoardPositionBlockList(
+            Blocks
+                .BlockList
+                .Where(block => block.X < 0 && block.X >= minX)
+                .ToList()
+        );
+    }
+
+    public List<IBlock> GetBoardPositionBlockListByRightSide(int maxX)
+    {
+        return CreateBoardPositionBlockList(
+            Blocks
+                .BlockList
+                .Where(block => block.X > 0 && block.X <= maxX)
+                .ToList()
+        );
+    }
+
+
+    private List<IBlock> CreateBoardPositionBlockList(List<IBlock> blockList)
+    {
         var boardPositionBlockList = new List<IBlock>();
-        foreach (var Block in Blocks.BlockList)
+        foreach (var block in blockList)
         {
-            var boardPositionX = X + Block.X;
-            var boardPositionY = Y + Block.Y;
+            var boardPositionX = X + block.X;
+            var boardPositionY = Y + block.Y;
             var boardPositionBlock = new Block(boardPositionX, boardPositionY);
             boardPositionBlockList.Add(boardPositionBlock);
         }

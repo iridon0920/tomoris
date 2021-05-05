@@ -30,36 +30,28 @@ public class ControlBlocksAdjuster
 
         for (var i = -1; i >= MinY; i--)
         {
-            controlBlocks.Blocks.BlockList.Where(block => block.Y == i).ToList().ForEach(block =>
+            if (CollisionDetection.IsCollisionControlBlocksLower(controlBlocks, MinY))
             {
-                if (CollisionDetection.IsCollisionBlock(controlBlocks, block))
-                {
-                    controlBlocks.MoveUp();
-                }
-            });
+                controlBlocks.MoveUp();
+            }
         }
 
         for (var i = -1; i >= MinX; i--)
         {
-            controlBlocks.Blocks.BlockList.Where(block => block.X == i).ToList().ForEach(block =>
+            if (CollisionDetection.IsCollisionControlBlocksLeftSide(controlBlocks, MinX))
             {
-                if (CollisionDetection.IsCollisionBlock(controlBlocks, block))
-                {
-                    controlBlocks.MoveRight();
-                }
-            });
+                controlBlocks.MoveRight();
+            }
         }
 
         for (var i = 1; i <= MaxX; i++)
         {
-            controlBlocks.Blocks.BlockList.Where(block => block.X == i).ToList().ForEach(block =>
+            if (CollisionDetection.IsCollisionControlBlocksRightSide(controlBlocks, MaxX))
             {
-                if (CollisionDetection.IsCollisionBlock(controlBlocks, block))
-                {
-                    controlBlocks.MoveLeft();
-                }
-            });
+                controlBlocks.MoveLeft();
+            }
         }
+
         return controlBlocks;
     }
 }
