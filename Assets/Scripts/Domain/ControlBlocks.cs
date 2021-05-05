@@ -16,9 +16,10 @@ public interface IControlBlocks
     void RightSpin();
     ControlBlocks Clone();
     List<IBlock> GetBoardPositionBlockList();
-    List<IBlock> GetBoardPositionBlockListByLower(int minY);
-    List<IBlock> GetBoardPositionBlockListByLeftSide(int minX);
-    List<IBlock> GetBoardPositionBlockListByRightSide(int maxX);
+    List<IBlock> GetBoardPositionBlockListByUpper();
+    List<IBlock> GetBoardPositionBlockListByLower();
+    List<IBlock> GetBoardPositionBlockListByLeftSide();
+    List<IBlock> GetBoardPositionBlockListByRightSide();
 }
 
 /**
@@ -78,36 +79,25 @@ public class ControlBlocks : IControlBlocks
         return CreateBoardPositionBlockList(Blocks.BlockList);
     }
 
-    public List<IBlock> GetBoardPositionBlockListByLower(int minY)
+    public List<IBlock> GetBoardPositionBlockListByUpper()
     {
-        return CreateBoardPositionBlockList(
-            Blocks
-                .BlockList
-                .Where(block => block.Y < 0 && block.Y >= minY)
-                .ToList()
-        );
+        return CreateBoardPositionBlockList(Blocks.GetUpperBlocks());
     }
 
-    public List<IBlock> GetBoardPositionBlockListByLeftSide(int minX)
+    public List<IBlock> GetBoardPositionBlockListByLower()
     {
-        return CreateBoardPositionBlockList(
-            Blocks
-                .BlockList
-                .Where(block => block.X < 0 && block.X >= minX)
-                .ToList()
-        );
+        return CreateBoardPositionBlockList(Blocks.GetLowerBlocks());
     }
 
-    public List<IBlock> GetBoardPositionBlockListByRightSide(int maxX)
+    public List<IBlock> GetBoardPositionBlockListByLeftSide()
     {
-        return CreateBoardPositionBlockList(
-            Blocks
-                .BlockList
-                .Where(block => block.X > 0 && block.X <= maxX)
-                .ToList()
-        );
+        return CreateBoardPositionBlockList(Blocks.GetLeftSideBlocks());
     }
 
+    public List<IBlock> GetBoardPositionBlockListByRightSide()
+    {
+        return CreateBoardPositionBlockList(Blocks.GetRightSideBlocks());
+    }
 
     private List<IBlock> CreateBoardPositionBlockList(List<IBlock> blockList)
     {

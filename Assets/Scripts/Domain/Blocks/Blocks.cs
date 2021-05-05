@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 public interface IBlocks : IEquatable<IBlocks>
@@ -6,6 +7,10 @@ public interface IBlocks : IEquatable<IBlocks>
     List<IBlock> BlockList { get; }
     IBlocks LeftSpin();
     IBlocks RightSpin();
+    List<IBlock> GetUpperBlocks();
+    List<IBlock> GetLowerBlocks();
+    List<IBlock> GetLeftSideBlocks();
+    List<IBlock> GetRightSideBlocks();
 }
 public class Blocks : IBlocks
 {
@@ -59,5 +64,53 @@ public class Blocks : IBlocks
             }
         }
         return result;
+    }
+
+    public List<IBlock> GetUpperBlocks()
+    {
+        return BlockList
+                    .Where(block => block.Y < 0 && block.Y >= GetMaxYPosition())
+                    .ToList();
+    }
+
+    public List<IBlock> GetLowerBlocks()
+    {
+        return BlockList
+                    .Where(block => block.Y < 0 && block.Y >= GetMinYPosition())
+                    .ToList();
+    }
+
+    public List<IBlock> GetLeftSideBlocks()
+    {
+        return BlockList
+                    .Where(block => block.X < 0 && block.X >= GetMinXPosition())
+                    .ToList();
+    }
+
+    public List<IBlock> GetRightSideBlocks()
+    {
+        return BlockList
+                    .Where(block => block.X > 0 && block.X <= GetMaxXPosition())
+                    .ToList();
+    }
+
+    private int GetMinYPosition()
+    {
+        return BlockList.Select(selectBlock => selectBlock.Y).Min();
+    }
+
+    private int GetMaxYPosition()
+    {
+        return BlockList.Select(selectBlock => selectBlock.Y).Max();
+    }
+
+    private int GetMinXPosition()
+    {
+        return BlockList.Select(selectBlock => selectBlock.X).Min();
+    }
+
+    private int GetMaxXPosition()
+    {
+        return BlockList.Select(selectBlock => selectBlock.X).Max(); ;
     }
 }

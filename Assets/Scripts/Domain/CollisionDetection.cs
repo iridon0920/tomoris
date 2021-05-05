@@ -23,19 +23,24 @@ public class CollisionDetection
         return IsCollisionPutPositionByBlockList(controlBlocks.GetBoardPositionBlockList());
     }
 
-    public bool IsCollisionControlBlocksLower(IControlBlocks controlBlocks, int minY)
+    public bool IsCollisionControlBlocksUpper(IControlBlocks controlBlocks)
     {
-        return IsCollisionByBlockList(controlBlocks.GetBoardPositionBlockListByLower(minY));
+        return IsCollisionByBlockList(controlBlocks.GetBoardPositionBlockListByUpper());
     }
 
-    public bool IsCollisionControlBlocksLeftSide(IControlBlocks controlBlocks, int minX)
+    public bool IsCollisionControlBlocksLower(IControlBlocks controlBlocks)
     {
-        return IsCollisionByBlockList(controlBlocks.GetBoardPositionBlockListByLeftSide(minX));
+        return IsCollisionByBlockList(controlBlocks.GetBoardPositionBlockListByLower());
     }
 
-    public bool IsCollisionControlBlocksRightSide(IControlBlocks controlBlocks, int maxX)
+    public bool IsCollisionControlBlocksLeftSide(IControlBlocks controlBlocks)
     {
-        return IsCollisionByBlockList(controlBlocks.GetBoardPositionBlockListByRightSide(maxX));
+        return IsCollisionByBlockList(controlBlocks.GetBoardPositionBlockListByLeftSide());
+    }
+
+    public bool IsCollisionControlBlocksRightSide(IControlBlocks controlBlocks)
+    {
+        return IsCollisionByBlockList(controlBlocks.GetBoardPositionBlockListByRightSide());
     }
 
     private bool IsCollisionByBlockList(List<IBlock> blockList)

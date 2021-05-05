@@ -13,43 +13,46 @@ public class ControlBlocksAdjuster
 
     public ControlBlocks AdjustBlocksForSpin(ControlBlocks currentControlBlocks, ControlBlocks newControlBlocks)
     {
-        newControlBlocks = AdjustBlocksForSpinLoop(newControlBlocks);
-
-        if (CollisionDetection.IsCollision(newControlBlocks))
+        if (CollisionDetection.IsCollisionControlBlocksLower(newControlBlocks)
+            && CollisionDetection.IsCollisionControlBlocksUpper(newControlBlocks)
+        )
         {
             return currentControlBlocks;
         }
-        return newControlBlocks;
+
+        if (CollisionDetection.IsCollisionControlBlocksLeftSide(newControlBlocks)
+            && CollisionDetection.IsCollisionControlBlocksRightSide(newControlBlocks)
+        )
+        {
+            return currentControlBlocks;
+        }
+
+        return AdjustBlocksForSpinLoop(newControlBlocks);
     }
 
     private ControlBlocks AdjustBlocksForSpinLoop(ControlBlocks controlBlocks)
     {
-        var MinY = controlBlocks.Blocks.BlockList.Select(selectBlock => selectBlock.Y).Min();
-        var MinX = controlBlocks.Blocks.BlockList.Select(selectBlock => selectBlock.X).Min();
-        var MaxX = controlBlocks.Blocks.BlockList.Select(selectBlock => selectBlock.X).Max();
-
-        for (var i = -1; i >= MinY; i--)
+        while (true)
         {
-            if (CollisionDetection.IsCollisionControlBlocksLower(controlBlocks, MinY))
+            if (CollisionDetection.IsCollisionControlBlocksLower(controlBlocks))
             {
                 controlBlocks.MoveUp();
+                continue;
             }
-        }
 
-        for (var i = -1; i >= MinX; i--)
-        {
-            if (CollisionDetection.IsCollisionControlBlocksLeftSide(controlBlocks, MinX))
+            if (CollisionDetection.IsCollisionControlBlocksLeftSide(controlBlocks))
             {
                 controlBlocks.MoveRight();
+                continue;
             }
-        }
 
-        for (var i = 1; i <= MaxX; i++)
-        {
-            if (CollisionDetection.IsCollisionControlBlocksRightSide(controlBlocks, MaxX))
+            if (CollisionDetection.IsCollisionControlBlocksRightSide(controlBlocks))
             {
                 controlBlocks.MoveLeft();
+                continue;
             }
+
+            break;
         }
 
         return controlBlocks;
