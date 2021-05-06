@@ -397,6 +397,7 @@ GameObject:
   - component: {fileID: 914347571}
   - component: {fileID: 914347570}
   - component: {fileID: 914347569}
+  - component: {fileID: 914347572}
   m_Layer: 5
   m_Name: GameOverText
   m_TagString: Untagged
@@ -485,6 +486,21 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &914347572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 914347567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88058770295b88e4a9747e4c30a7748d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameOverText: {fileID: 914347571}
+  GameOverController: {fileID: 6016832316274244074, guid: 0d6f9c06b965c9143bc588a3a6014232,
+    type: 3}
 --- !u!1 &1075564910
 GameObject:
   m_ObjectHideFlags: 0
@@ -592,9 +608,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a37bc789febe07f4b99b8ee9f69ad71e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameOverText: {fileID: 914347571}
-  GameOverController: {fileID: 6016832316274244074, guid: 0d6f9c06b965c9143bc588a3a6014232,
-    type: 3}
 --- !u!4 &1276463191
 Transform:
   m_ObjectHideFlags: 0
