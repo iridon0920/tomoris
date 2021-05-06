@@ -33,7 +33,12 @@ public class BlockController : MonoBehaviour
 
     [Inject]
     private readonly GameOverEvent GameOverEvent;
+
+    [Inject]
+    private readonly ScorePresenter ScorePresenter;
     private ControlBlocks ControlBlocks;
+
+    public int PlayerId;
 
     private bool IsWaitMove = false;
 
@@ -41,6 +46,8 @@ public class BlockController : MonoBehaviour
 
     void Start()
     {
+        ScorePresenter.ChangeScorePositionByPlayerId(PlayerId);
+
         ControlBlocks = GetNextControlBlocksService.Execute();
 
         StartCoroutine(MoveDownOverTime());
@@ -134,7 +141,4 @@ public class BlockController : MonoBehaviour
             }
         }
     }
-
-    public class Factory : PlaceholderFactory<BlockController>
-    { }
 }

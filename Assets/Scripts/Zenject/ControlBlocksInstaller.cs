@@ -7,9 +7,14 @@ public class ControlBlocksInstaller : MonoInstaller
     private GameObject BlockControllerPrefab;
     [SerializeField]
     private GameObject ControlBlocksPrefab;
+    [SerializeField]
+    private GameObject ScorePrefab;
 
     public override void InstallBindings()
     {
+        Container.Bind<Player>()
+                .AsSingle();
+
         Container.Bind<BlockController>()
                 .FromComponentInNewPrefab(BlockControllerPrefab)
                 .AsSingle();
@@ -38,6 +43,16 @@ public class ControlBlocksInstaller : MonoInstaller
                 .AsSingle();
         Container.Bind<GetNextControlBlocksService>()
                 .AsSingle();
+
+        Container.Bind<Score>()
+                .AsSingle();
+        Container.Bind<ScorePresenter>()
+                .AsSingle();
+        Container.Bind<ScoreView>()
+                .FromComponentInNewPrefab(ScorePrefab)
+                .AsSingle();
+
+
 
         Container.Bind<BlocksFactory>()
                 .AsSingle();

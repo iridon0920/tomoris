@@ -5,11 +5,12 @@ using Zenject;
 public class Game : MonoBehaviour
 {
     [Inject]
-    BlockController.Factory BlockControllerFactory;
-    List<BlockController> BlockControllers = new List<BlockController>();
+    Player.Factory PlayerFactory;
+    List<Player> Players = new List<Player>();
 
     void Awake()
     {
-        BlockControllers.Add(BlockControllerFactory.Create());
+        Players.Add(PlayerFactory.Create(1));
+        // Players.Add(PlayerFactory.Create(2));
     }
 }

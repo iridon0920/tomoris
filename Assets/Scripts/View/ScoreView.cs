@@ -5,6 +5,12 @@ public class ScoreView : MonoBehaviour
 {
     [SerializeField]
     private Text Points;
+
+    public void ChangePointsPosition(int x, int y)
+    {
+        Points.rectTransform.anchoredPosition = new Vector3(x, y, 0);
+    }
+
     public void UpdatePointsText(int points)
     {
         Points.text = points.ToString();

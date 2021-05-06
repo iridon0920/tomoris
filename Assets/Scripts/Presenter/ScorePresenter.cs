@@ -19,4 +19,16 @@ public class ScorePresenter
     {
         ScoreView.UpdatePointsText(points);
     }
+
+    public void ChangeScorePositionByPlayerId(int playerId)
+    {
+        if (playerId == 1)
+        {
+            ScoreView.ChangePointsPosition(-124, 82);
+        }
+        else if (playerId == 2)
+        {
+            ScoreView.ChangePointsPosition(180, 82);
+        }
+    }
 }
