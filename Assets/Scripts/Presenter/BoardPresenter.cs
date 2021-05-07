@@ -1,18 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using Zenject;
-using UniRx;
-using UniRx.Triggers;
 
-public class BoardPresenter : MonoBehaviour
+public class BoardPresenter
 {
-    [SerializeField]
-    private BoardView BoardView;
+    private readonly BoardView BoardView;
 
     [Inject]
-    private readonly IBoard Board;
+    public BoardPresenter(BoardView boardView)
+    {
+        BoardView = boardView;
+    }
 
     public void AddBlocks(List<BoardPutBlock> blocks)
     {

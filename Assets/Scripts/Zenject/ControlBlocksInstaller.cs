@@ -18,7 +18,11 @@ public class ControlBlocksInstaller : MonoInstaller
         Container.Bind<BlockController>()
                 .FromComponentInNewPrefab(BlockControllerPrefab)
                 .AsSingle();
+
         Container.Bind<ControlBlocksPresenter>()
+                .AsSingle();
+
+        Container.Bind<ControlBlocksView>()
                 .FromComponentInNewPrefab(ControlBlocksPrefab)
                 .AsSingle();
 

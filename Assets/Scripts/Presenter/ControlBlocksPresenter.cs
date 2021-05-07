@@ -1,15 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using Zenject;
-using UniRx;
-using UniRx.Triggers;
 
-public class ControlBlocksPresenter : MonoBehaviour
+public class ControlBlocksPresenter
 {
-    [SerializeField]
-    private ControlBlocksView ControlBlocksView;
+    private readonly ControlBlocksView ControlBlocksView;
+
+    [Inject]
+    public ControlBlocksPresenter(ControlBlocksView controlBlocksView)
+    {
+        ControlBlocksView = controlBlocksView;
+    }
 
     public void DrawControlBlocks(IControlBlocks controlBlocks)
     {

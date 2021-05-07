@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5710612486436482208}
   - component: {fileID: 5710612486436482215}
-  - component: {fileID: 5710612486436482209}
   m_Layer: 0
   m_Name: ControlBlocks
   m_TagString: Untagged
@@ -46,18 +45,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BlockPrefab: {fileID: 6720731205376493405, guid: 71cce0ed38f6d4845a64139645630fcc,
     type: 3}
---- !u!114 &5710612486436482209
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5710612486436482214}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1b493b5ce7ddbb4795eebb957f7e2e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ControlBlocksView: {fileID: 5710612486436482215}
-  ControlWaitSeconds: 0.02
-  MoveDownBySeconds: 1
