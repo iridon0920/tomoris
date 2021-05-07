@@ -19,6 +19,11 @@ public class ControlBlocksInstaller : MonoInstaller
                 .FromComponentInNewPrefab(BlockControllerPrefab)
                 .AsSingle();
 
+        Container.Bind<InitializeUiUseCase>()
+                .AsSingle();
+        Container.Bind<BlockControllUseCase>()
+                .AsSingle();
+
         Container.Bind<ControlBlocksPresenter>()
                 .AsSingle();
 
@@ -26,8 +31,7 @@ public class ControlBlocksInstaller : MonoInstaller
                 .FromComponentInNewPrefab(ControlBlocksPrefab)
                 .AsSingle();
 
-        Container.Bind<BlockControllUseCase>()
-                .AsSingle();
+
 
         Container.Bind<NotMoveControlBlocksService>()
                 .AsSingle();

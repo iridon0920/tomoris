@@ -35,7 +35,7 @@ public class BlockController : MonoBehaviour
     private readonly GameOverEvent GameOverEvent;
 
     [Inject]
-    private readonly ScorePresenter ScorePresenter;
+    private readonly InitializeUiUseCase InitializeUiUseCase;
     private ControlBlocks ControlBlocks;
 
     public int PlayerId;
@@ -46,7 +46,7 @@ public class BlockController : MonoBehaviour
 
     void Start()
     {
-        ScorePresenter.ChangeScorePositionByPlayerId(PlayerId);
+        InitializeUiUseCase.Execute(PlayerId);
 
         ControlBlocks = GetNextControlBlocksService.Execute();
 
