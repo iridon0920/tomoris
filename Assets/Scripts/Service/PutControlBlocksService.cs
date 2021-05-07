@@ -4,15 +4,36 @@ using System.Collections.Generic;
 public class PutControlBlocksService
 {
     private readonly IBoard Board;
+    private readonly CollisionDetection CollisionDetection;
+    private readonly BoardPresenter BoardPresenter;
+    private readonly GetNextControlBlocksService GetNextControlBlocksService;
+
+
 
     [Inject]
-    public PutControlBlocksService(IBoard board)
+    public PutControlBlocksService(
+        IBoard board,
+        CollisionDetection collisionDetection,
+        BoardPresenter boardPresenter,
+        GetNextControlBlocksService getNextControlBlocksService
+    )
     {
         Board = board;
+        CollisionDetection = collisionDetection;
+        BoardPresenter = boardPresenter;
+        GetNextControlBlocksService = getNextControlBlocksService;
     }
 
-    public List<BoardPutBlock> Execute(ControlBlocks controlBlocks)
+    public ControlBlocks Execute(ControlBlocks controlBlocks)
     {
-        return Board.PutBlocks(controlBlocks);
+        if (CollisionDetection.IsCollisionPutPosition(controlBlocks))
+        {
+            controlBlocks.MoveUp();
+            var addBlocks = Board.PutBlocks(controlBlocks);
+            BoardPresenter.AddBlocks(addBlocks);
+            return GetNextControlBlocksService.Execute();
+        }
+
+        return controlBlocks;
     }
 }

@@ -78,7 +78,7 @@ public class BlockController : MonoBehaviour
 
     private void ExecuteMoveService(IMoveControlBlocksService moveService)
     {
-        ControlBlocks = BlockControllUseCase.Execute(moveService, ControlBlocks);
+        ControlBlocks = BlockControllUseCase.Execute(moveService, PlayerId, ControlBlocks);
     }
 
     private void ExecuteMoveServiceAfterWait(IMoveControlBlocksService moveService)

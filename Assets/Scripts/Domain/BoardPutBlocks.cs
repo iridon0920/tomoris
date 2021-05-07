@@ -80,7 +80,11 @@ public class BoardPutBlocks
 
     public int GetMaxYPosition()
     {
-        return Blocks.Select(boardblock => boardblock.GetY()).Max();
+        if (Blocks.Count > 0)
+        {
+            return Blocks.Select(boardblock => boardblock.GetY()).Max();
+        }
+        return 0;
     }
 
 

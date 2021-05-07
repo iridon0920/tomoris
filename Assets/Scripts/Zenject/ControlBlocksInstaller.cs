@@ -47,6 +47,8 @@ public class ControlBlocksInstaller : MonoInstaller
                 .AsSingle();
         Container.Bind<GetNextControlBlocksService>()
                 .AsSingle();
+        Container.Bind<EraseLineService>()
+                .AsSingle();
 
         Container.Bind<Score>()
                 .AsSingle();
