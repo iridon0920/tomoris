@@ -6,10 +6,10 @@ public class OShapedBlocks : Blocks
     {
         BlockList = new List<IBlock>
             {
-                new Block(0, 0),
-                new Block(1, 0),
-                new Block(0, -1),
-                new Block(1, -1)
+                new Block(0, 0, BlockColor.Yellow),
+                new Block(1, 0, BlockColor.Yellow),
+                new Block(0, -1, BlockColor.Yellow),
+                new Block(1, -1, BlockColor.Yellow)
             };
     }
 }

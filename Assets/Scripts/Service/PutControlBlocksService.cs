@@ -6,34 +6,29 @@ public class PutControlBlocksService
     private readonly IBoard Board;
     private readonly CollisionDetection CollisionDetection;
     private readonly BoardPresenter BoardPresenter;
-    private readonly GetNextControlBlocksService GetNextControlBlocksService;
-
-
 
     [Inject]
     public PutControlBlocksService(
         IBoard board,
         CollisionDetection collisionDetection,
-        BoardPresenter boardPresenter,
-        GetNextControlBlocksService getNextControlBlocksService
+        BoardPresenter boardPresenter
     )
     {
         Board = board;
         CollisionDetection = collisionDetection;
         BoardPresenter = boardPresenter;
-        GetNextControlBlocksService = getNextControlBlocksService;
     }
 
-    public ControlBlocks Execute(ControlBlocks controlBlocks)
+    public bool Execute(ControlBlocks controlBlocks)
     {
         if (CollisionDetection.IsCollisionPutPosition(controlBlocks))
         {
             controlBlocks.MoveUp();
             var addBlocks = Board.PutBlocks(controlBlocks);
             BoardPresenter.AddBlocks(addBlocks);
-            return GetNextControlBlocksService.Execute();
+            return true;
         }
 
-        return controlBlocks;
+        return false;
     }
 }

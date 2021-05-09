@@ -7,11 +7,14 @@ public class BlockControllUseCase
     private readonly IBoard Board;
     private readonly GameOverEvent GameOverEvent;
     private readonly ControlBlocksPresenter ControlBlocksPresenter;
+    private readonly GetNextControlBlocksService GetNextControlBlocksService;
+
 
 
     [Inject]
     public BlockControllUseCase(
         PutControlBlocksService putControlBlocksService,
+        GetNextControlBlocksService getNextControlBlocksService,
         EraseLineService eraseLineService,
         IBoard board,
         GameOverEvent gameOverEvent,
@@ -19,6 +22,7 @@ public class BlockControllUseCase
     )
     {
         PutControlBlocksService = putControlBlocksService;
+        GetNextControlBlocksService = getNextControlBlocksService;
         EraseLineService = eraseLineService;
         Board = board;
         GameOverEvent = gameOverEvent;
@@ -29,19 +33,21 @@ public class BlockControllUseCase
     {
         var movedControlBlocks = moveService.Execute(controlBlocks);
 
-        var newControlBlocks = PutControlBlocksService.Execute(movedControlBlocks);
-
-        EraseLineService.Execute();
-
-        if (Board.IsGameOver())
+        if (PutControlBlocksService.Execute(movedControlBlocks))
         {
-            GameOverEvent.EmitGameOver();
-        }
-        else
-        {
-            ControlBlocksPresenter.DrawControlBlocks(newControlBlocks);
+            EraseLineService.Execute();
+            if (Board.IsGameOver())
+            {
+                GameOverEvent.EmitGameOver();
+            }
+            else
+            {
+                var newControlBlocks = GetNextControlBlocksService.Execute();
+                return newControlBlocks;
+            }
         }
 
-        return newControlBlocks;
+        ControlBlocksPresenter.ChangeControlBlocks(movedControlBlocks);
+        return movedControlBlocks;
     }
 }

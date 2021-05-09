@@ -337,8 +337,6 @@ MonoBehaviour:
     type: 3}
   GameContextPrefab: {fileID: 7393974562362972461, guid: e7efd25e8759270438e0149bbb792419,
     type: 3}
-  ScorePrefab: {fileID: 5575818426505076956, guid: 6314eef45659415429f91db25628742f,
-    type: 3}
 --- !u!114 &559609612
 MonoBehaviour:
   m_ObjectHideFlags: 0

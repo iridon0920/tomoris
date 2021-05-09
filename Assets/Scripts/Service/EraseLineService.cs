@@ -24,14 +24,15 @@ public class EraseLineService
     public void Execute()
     {
         var eraseBlocks = Board.EraseIfAlign();
-        BoardPresenter.DeleteEraseLineBlocks(eraseBlocks);
         if (eraseBlocks.Count > 0)
         {
+            BoardPresenter.DeleteEraseLineBlocks(eraseBlocks);
+
             Score.AddPointFromErasedLines(eraseBlocks.Count / Board.Width);
             ScorePresenter.UpdatePoints((int)Score.TotalPoints);
-        }
 
-        var fallBlocks = Board.FallToEmptyLine();
-        BoardPresenter.FallBlocks(fallBlocks);
+            var fallBlocks = Board.FallToEmptyLine();
+            BoardPresenter.FallBlocks(fallBlocks);
+        }
     }
 }

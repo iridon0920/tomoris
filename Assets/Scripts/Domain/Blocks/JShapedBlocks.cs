@@ -6,10 +6,10 @@ public class JShapedBlocks : Blocks
     {
         BlockList = new List<IBlock>
             {
-                new Block(0, 1),
-                new Block(0, 0),
-                new Block(0, -1),
-                new Block(-1, -1)
+                new Block(0, 1, BlockColor.Blue),
+                new Block(0, 0, BlockColor.Blue),
+                new Block(0, -1, BlockColor.Blue),
+                new Block(-1, -1, BlockColor.Blue)
             };
     }
 }

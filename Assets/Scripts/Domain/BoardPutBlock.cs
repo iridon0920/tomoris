@@ -19,6 +19,11 @@ public class BoardPutBlock
         return Block.Y;
     }
 
+    public BlockColor GetBlockColor()
+    {
+        return Block.BlockColor;
+    }
+
     public void MoveDown()
     {
         Block = Block.MoveDown();

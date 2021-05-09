@@ -15,6 +15,12 @@ public class ControlBlocksPresenter
 
     public void DrawControlBlocks(IControlBlocks controlBlocks)
     {
+        ControlBlocksView.DeleteControlBlocks();
         ControlBlocksView.DrawControlBlocks(controlBlocks);
+    }
+
+    public void ChangeControlBlocks(IControlBlocks controlBlocks)
+    {
+        ControlBlocksView.ChangeControlBlocksPosition(controlBlocks);
     }
 }

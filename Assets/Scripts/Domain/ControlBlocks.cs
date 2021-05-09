@@ -106,7 +106,7 @@ public class ControlBlocks : IControlBlocks
         {
             var boardPositionX = X + block.X;
             var boardPositionY = Y + block.Y;
-            var boardPositionBlock = new Block(boardPositionX, boardPositionY);
+            var boardPositionBlock = new Block(boardPositionX, boardPositionY, block.BlockColor);
             boardPositionBlockList.Add(boardPositionBlock);
         }
         return boardPositionBlockList;
