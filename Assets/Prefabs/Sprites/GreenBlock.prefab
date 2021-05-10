@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5070126930190068915}
   - component: {fileID: 9112776173829146144}
+  - component: {fileID: 4795348117057871686}
   m_Layer: 0
   m_Name: GreenBlock
   m_TagString: Untagged
@@ -81,3 +82,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &4795348117057871686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8061510378434621873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35692514697d95543a651717f26fbed5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

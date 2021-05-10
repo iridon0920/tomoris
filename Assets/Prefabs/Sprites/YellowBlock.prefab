@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8395527686770187490}
   - component: {fileID: 7666794320128167541}
+  - component: {fileID: -2474532416058526556}
   m_Layer: 0
   m_Name: YellowBlock
   m_TagString: Untagged
@@ -81,3 +82,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-2474532416058526556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3821321368149907760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35692514697d95543a651717f26fbed5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -5,16 +5,16 @@ public class BoardView : MonoBehaviour
     const string PREFIX = "Board Block ";
 
     [SerializeField]
-    private BlockView BlockView;
+    private BlockViewFactory BlockViewFactory;
 
-    private List<GameObject> Blocks = new List<GameObject>();
+    private List<BlockView> Blocks = new List<BlockView>();
     public async void DrawBoardPutBlock(BoardPutBlock block)
     {
         var newPosition = transform.position;
         newPosition.x += block.GetX();
         newPosition.y += block.GetY();
 
-        var blockObject = await BlockView.InstantiateBlock(
+        var blockObject = await BlockViewFactory.InstantiateBlock(
             block.GetBlockColor(),
             newPosition,
             transform
@@ -32,11 +32,11 @@ public class BoardView : MonoBehaviour
 
     public void ChangeBoardPutBlockPosition(BoardPutBlock block)
     {
-        var changeTargetBlock = transform.Find(PREFIX + block.Id.ToString());
+        var changeTargetBlock = transform.Find(PREFIX + block.Id.ToString()).GetComponent<BlockView>();
 
         var newPosition = transform.position;
         newPosition.x += block.GetX();
         newPosition.y += block.GetY();
-        changeTargetBlock.position = newPosition;
+        changeTargetBlock.MoveToTargetPosition(newPosition);
     }
 }

@@ -2,21 +2,21 @@ using System.Collections.Generic;
 using UnityEngine;
 public class ControlBlocksView : MonoBehaviour
 {
-    private List<GameObject> Blocks = new List<GameObject>();
+    private List<BlockView> Blocks = new List<BlockView>();
 
     [SerializeField]
-    private BlockView BlockView;
+    private BlockViewFactory BlockViewFactory;
 
     public async void DrawControlBlocks(IControlBlocks controlBlocks)
     {
-        Blocks = new List<GameObject>();
+        Blocks = new List<BlockView>();
         foreach (var block in controlBlocks.Blocks.BlockList)
         {
             var newPosition = transform.position;
             newPosition.x += controlBlocks.X + block.X;
             newPosition.y += controlBlocks.Y + block.Y;
 
-            var blockObject = await BlockView.InstantiateBlock(
+            var blockObject = await BlockViewFactory.InstantiateBlock(
                 block.BlockColor,
                 newPosition,
                 transform
@@ -30,7 +30,7 @@ public class ControlBlocksView : MonoBehaviour
     {
         foreach (var block in Blocks)
         {
-            Destroy(block);
+            Destroy(block.gameObject);
         }
     }
 
@@ -46,7 +46,7 @@ public class ControlBlocksView : MonoBehaviour
                 newPosition.x += controlBlocks.X + block.X;
                 newPosition.y += controlBlocks.Y + block.Y;
 
-                Blocks[i].transform.position = newPosition;
+                Blocks[i].MoveToTargetPosition(newPosition);
                 i++;
             }
         }

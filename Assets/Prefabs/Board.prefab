@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5205522995684552158}
   - component: {fileID: 5205522995684552129}
-  - component: {fileID: 8085486755791386912}
+  - component: {fileID: -5147601042007780112}
   m_Layer: 0
   m_Name: Board
   m_TagString: Untagged
@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 948560e91a9d5104c8eee91306b06eff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BlockView: {fileID: 8085486755791386912}
---- !u!114 &8085486755791386912
+  BlockViewFactory: {fileID: -5147601042007780112}
+--- !u!114 &-5147601042007780112
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -54,6 +54,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 5205522995684552128}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35692514697d95543a651717f26fbed5, type: 3}
+  m_Script: {fileID: 11500000, guid: bfb5d6116237b5849ae1d0020a1f97a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
