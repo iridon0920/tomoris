@@ -15,4 +15,12 @@ public class BlockView : MonoBehaviour
         this.transform.DOMove(targetPosition, 0.3f)
             .SetEase(Ease.InQuad);
     }
+
+    public void Erase()
+    {
+        this.GetComponent<SpriteRenderer>().DOFade(0f, 0.5f).OnComplete(() =>
+        {
+            Destroy(gameObject);
+        });
+    }
 }

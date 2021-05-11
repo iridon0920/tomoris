@@ -26,8 +26,8 @@ public class BoardView : MonoBehaviour
 
     public void DeleteBoardPutBlock(BoardPutBlock block)
     {
-        var deleteTargetBlock = transform.Find(PREFIX + block.Id.ToString());
-        Destroy(deleteTargetBlock.gameObject);
+        var deleteTargetBlock = transform.Find(PREFIX + block.Id.ToString()).GetComponent<BlockView>();
+        deleteTargetBlock.Erase();
     }
 
     public void ChangeBoardPutBlockPosition(BoardPutBlock block)
