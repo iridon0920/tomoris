@@ -1,21 +1,18 @@
 using UnityEngine;
+using DG.Tweening;
+
 public class BlockView : MonoBehaviour
 {
-    private Vector3 TargetPosition;
-
-    void Awake()
-    {
-        TargetPosition = transform.position;
-    }
-
-    void Update()
-    {
-        var t = 1 - Mathf.Pow(0.1f, Time.deltaTime / 0.1f);
-        transform.position = Vector3.Lerp(transform.position, TargetPosition, t);
-    }
-
     public void MoveToTargetPosition(Vector3 targetPosition)
     {
-        TargetPosition = targetPosition;
+        this.transform.DOMove(targetPosition, 0.05f)
+            .SetEase(Ease.OutCubic)
+            .SetLink(gameObject);
+    }
+
+    public void FallToTargetPosition(Vector3 targetPosition)
+    {
+        this.transform.DOMove(targetPosition, 0.3f)
+            .SetEase(Ease.InQuad);
     }
 }

@@ -37,6 +37,6 @@ public class BoardView : MonoBehaviour
         var newPosition = transform.position;
         newPosition.x += block.GetX();
         newPosition.y += block.GetY();
-        changeTargetBlock.MoveToTargetPosition(newPosition);
+        changeTargetBlock.FallToTargetPosition(newPosition);
     }
 }
