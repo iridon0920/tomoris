@@ -32,14 +32,8 @@ public class ControlBlocksAdjuster
 
     private ControlBlocks AdjustBlocksForSpinLoop(ControlBlocks controlBlocks)
     {
-        while (true)
+        for (var i = 0; i <= controlBlocks.Blocks.BlockList.Count; i++)
         {
-            if (CollisionDetection.IsCollisionControlBlocksLower(controlBlocks))
-            {
-                controlBlocks.MoveUp();
-                continue;
-            }
-
             if (CollisionDetection.IsCollisionControlBlocksLeftSide(controlBlocks))
             {
                 controlBlocks.MoveRight();
@@ -49,6 +43,12 @@ public class ControlBlocksAdjuster
             if (CollisionDetection.IsCollisionControlBlocksRightSide(controlBlocks))
             {
                 controlBlocks.MoveLeft();
+                continue;
+            }
+
+            if (CollisionDetection.IsCollisionControlBlocksLower(controlBlocks))
+            {
+                controlBlocks.MoveUp();
                 continue;
             }
 
