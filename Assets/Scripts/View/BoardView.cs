@@ -31,6 +31,7 @@ public class BoardView : MonoBehaviour
     {
         var deleteTargetBlock = Blocks.Find(block => block.name == PREFIX + boardBlock.Id.ToString());
         deleteTargetBlock.Erase();
+        Blocks.Remove(deleteTargetBlock);
     }
 
     public void PlayEraseSound()
