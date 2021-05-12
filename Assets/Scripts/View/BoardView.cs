@@ -24,19 +24,19 @@ public class BoardView : MonoBehaviour
         Blocks.Add(blockObject);
     }
 
-    public void DeleteBoardPutBlock(BoardPutBlock block)
+    public void DeleteBoardPutBlock(BoardPutBlock boardBlock)
     {
-        var deleteTargetBlock = transform.Find(PREFIX + block.Id.ToString()).GetComponent<BlockView>();
+        var deleteTargetBlock = Blocks.Find(block => block.name == PREFIX + boardBlock.Id.ToString());
         deleteTargetBlock.Erase();
     }
 
-    public void ChangeBoardPutBlockPosition(BoardPutBlock block)
+    public void ChangeBoardPutBlockPosition(BoardPutBlock boardBlock)
     {
-        var changeTargetBlock = transform.Find(PREFIX + block.Id.ToString()).GetComponent<BlockView>();
-
         var newPosition = transform.position;
-        newPosition.x += block.GetX();
-        newPosition.y += block.GetY();
+        newPosition.x += boardBlock.GetX();
+        newPosition.y += boardBlock.GetY();
+
+        var changeTargetBlock = Blocks.Find(block => block.name == PREFIX + boardBlock.Id.ToString());
         changeTargetBlock.FallToTargetPosition(newPosition);
     }
 }
