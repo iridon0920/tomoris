@@ -6,7 +6,7 @@ public class BlockControllUseCase
     private readonly EraseLineService EraseLineService;
     private readonly IBoard Board;
     private readonly GameOverEvent GameOverEvent;
-    private readonly ControlBlocksPresenter ControlBlocksPresenter;
+    private readonly IControlBlocksPresenter ControlBlocksPresenter;
     private readonly GetNextControlBlocksService GetNextControlBlocksService;
 
 
@@ -18,7 +18,7 @@ public class BlockControllUseCase
         EraseLineService eraseLineService,
         IBoard board,
         GameOverEvent gameOverEvent,
-        ControlBlocksPresenter controlBlocksPresenter
+        IControlBlocksPresenter controlBlocksPresenter
     )
     {
         PutControlBlocksService = putControlBlocksService;

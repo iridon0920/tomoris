@@ -5,13 +5,13 @@ public class GetNextControlBlocksService
     private readonly IBoard Board;
     private readonly IBlocksQueue Queue;
 
-    private readonly ControlBlocksPresenter ControlBlocksPresenter;
+    private readonly IControlBlocksPresenter ControlBlocksPresenter;
 
     [Inject]
     public GetNextControlBlocksService(
         IBoard board,
         IBlocksQueue queue,
-        ControlBlocksPresenter controlBlocksPresenter
+        IControlBlocksPresenter controlBlocksPresenter
     )
     {
         Board = board;

@@ -24,7 +24,8 @@ public class ControlBlocksInstaller : MonoInstaller
         Container.Bind<BlockControllUseCase>()
                 .AsSingle();
 
-        Container.Bind<ControlBlocksPresenter>()
+        Container.Bind<IControlBlocksPresenter>()
+                .To<ControlBlocksPresenter>()
                 .AsSingle();
 
         Container.Bind<ControlBlocksView>()

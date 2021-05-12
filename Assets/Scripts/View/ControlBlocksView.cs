@@ -7,6 +7,9 @@ public class ControlBlocksView : MonoBehaviour
     [SerializeField]
     private BlockViewFactory BlockViewFactory;
 
+    [SerializeField]
+    private AudioSource CollisionSound;
+
     public async void DrawControlBlocks(IControlBlocks controlBlocks)
     {
         Blocks = new List<BlockView>();
@@ -50,6 +53,10 @@ public class ControlBlocksView : MonoBehaviour
                 i++;
             }
         }
+    }
 
+    public void PlayCollisionSound()
+    {
+        CollisionSound.PlayOneShot(CollisionSound.clip);
     }
 }

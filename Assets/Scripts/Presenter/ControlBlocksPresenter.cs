@@ -3,7 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Zenject;
 
-public class ControlBlocksPresenter
+public interface IControlBlocksPresenter
+{
+    void DrawControlBlocks(IControlBlocks controlBlocks);
+    void ChangeControlBlocks(IControlBlocks controlBlocks);
+    void PlayCollisionSound();
+}
+public class ControlBlocksPresenter : IControlBlocksPresenter
 {
     private readonly ControlBlocksView ControlBlocksView;
 
@@ -22,5 +28,10 @@ public class ControlBlocksPresenter
     public void ChangeControlBlocks(IControlBlocks controlBlocks)
     {
         ControlBlocksView.ChangeControlBlocksPosition(controlBlocks);
+    }
+
+    public void PlayCollisionSound()
+    {
+        ControlBlocksView.PlayCollisionSound();
     }
 }
