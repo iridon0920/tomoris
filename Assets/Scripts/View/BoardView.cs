@@ -7,6 +7,9 @@ public class BoardView : MonoBehaviour
     [SerializeField]
     private BlockViewFactory BlockViewFactory;
 
+    [SerializeField]
+    private AudioSource EraseSound;
+
     private List<BlockView> Blocks = new List<BlockView>();
     public async void DrawBoardPutBlock(BoardPutBlock block)
     {
@@ -28,6 +31,11 @@ public class BoardView : MonoBehaviour
     {
         var deleteTargetBlock = Blocks.Find(block => block.name == PREFIX + boardBlock.Id.ToString());
         deleteTargetBlock.Erase();
+    }
+
+    public void PlayEraseSound()
+    {
+        EraseSound.PlayOneShot(EraseSound.clip);
     }
 
     public void ChangeBoardPutBlockPosition(BoardPutBlock boardBlock)

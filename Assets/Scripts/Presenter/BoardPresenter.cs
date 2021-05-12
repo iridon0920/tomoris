@@ -21,6 +21,7 @@ public class BoardPresenter
 
     public void DeleteEraseLineBlocks(List<BoardPutBlock> blocks)
     {
+        BoardView.PlayEraseSound();
         blocks.ForEach(block => BoardView.DeleteBoardPutBlock(block));
     }
 
