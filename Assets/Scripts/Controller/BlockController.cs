@@ -9,12 +9,16 @@ using UniRx.Triggers;
 public class BlockController : MonoBehaviour
 {
     [SerializeField]
+    private int QueueSize = 4;
+    [SerializeField]
     private float ControlWaitSeconds;
     [SerializeField]
     private float MoveDownBySeconds;
 
     [Inject]
     private readonly BlockControllUseCase BlockControllUseCase;
+    [Inject]
+    private readonly InitializeBlocksQueueService InitializeBlocksQueueService;
     [Inject]
     private readonly GetNextControlBlocksService GetNextControlBlocksService;
 
@@ -44,10 +48,14 @@ public class BlockController : MonoBehaviour
 
     private bool IsGameOver = false;
 
-    void Start()
+    void Awake()
     {
         InitializeUiUseCase.Execute(PlayerId);
+        InitializeBlocksQueueService.Execute(QueueSize);
+    }
 
+    void Start()
+    {
         ControlBlocks = GetNextControlBlocksService.Execute();
 
         StartCoroutine(MoveDownOverTime());

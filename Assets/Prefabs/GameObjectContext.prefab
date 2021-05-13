@@ -68,3 +68,5 @@ MonoBehaviour:
     type: 3}
   ScorePrefab: {fileID: 5575818426505076956, guid: 6314eef45659415429f91db25628742f,
     type: 3}
+  BlocksQueue: {fileID: 5616440785849523154, guid: b72b1dba2ba0eee46bf25ddcd8d16fa7,
+    type: 3}

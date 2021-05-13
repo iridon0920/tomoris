@@ -9,6 +9,8 @@ public class ControlBlocksInstaller : MonoInstaller
     private GameObject ControlBlocksPrefab;
     [SerializeField]
     private GameObject ScorePrefab;
+    [SerializeField]
+    private GameObject BlocksQueue;
 
     public override void InstallBindings()
     {
@@ -19,6 +21,8 @@ public class ControlBlocksInstaller : MonoInstaller
                 .FromComponentInNewPrefab(BlockControllerPrefab)
                 .AsSingle();
 
+        Container.Bind<InitializeBlocksQueueService>()
+                .AsSingle();
         Container.Bind<InitializeUiUseCase>()
                 .AsSingle();
         Container.Bind<BlockControllUseCase>()
@@ -32,7 +36,12 @@ public class ControlBlocksInstaller : MonoInstaller
                 .FromComponentInNewPrefab(ControlBlocksPrefab)
                 .AsSingle();
 
+        Container.Bind<BlocksQueuePresenter>()
+                 .AsSingle();
 
+        Container.Bind<BlocksQueueView>()
+                .FromComponentInNewPrefab(BlocksQueue)
+                .AsSingle();
 
         Container.Bind<NotMoveControlBlocksService>()
                 .AsSingle();
@@ -46,7 +55,6 @@ public class ControlBlocksInstaller : MonoInstaller
                 .AsSingle();
         Container.Bind<SpinRightControlBlocksService>()
                 .AsSingle();
-
 
         Container.Bind<PutControlBlocksService>()
                 .AsSingle();
@@ -63,8 +71,6 @@ public class ControlBlocksInstaller : MonoInstaller
                 .FromComponentInNewPrefab(ScorePrefab)
                 .AsSingle();
 
-
-
         Container.Bind<BlocksFactory>()
                 .AsSingle();
         Container.Bind<ControlBlocksAdjuster>()
@@ -73,8 +79,7 @@ public class ControlBlocksInstaller : MonoInstaller
                 .AsSingle();
         Container.Bind<IBlocksQueue>()
                 .To<BlocksQueue>()
-                .AsSingle()
-                .WithArguments(4);
+                .AsSingle();
 
         Container.Bind<System.Random>().AsSingle();
     }
