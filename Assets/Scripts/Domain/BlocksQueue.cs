@@ -1,16 +1,20 @@
 using System.Collections.Generic;
 using Zenject;
+
 public interface IBlocksQueue
 {
     Queue<IBlocks> Queue { get; }
     void InitializeQueue(int size);
     IBlocks Dequeue();
+    IBlocks LastBlock { get; }
 }
 public class BlocksQueue : IBlocksQueue
 {
     public Queue<IBlocks> Queue { get; private set; }
 
     private BlocksFactory BlocksFactory;
+
+    public IBlocks LastBlock { get; private set; }
 
 
     [Inject]
@@ -30,7 +34,8 @@ public class BlocksQueue : IBlocksQueue
 
     public IBlocks Dequeue()
     {
-        Queue.Enqueue(BlocksFactory.Create());
+        LastBlock = BlocksFactory.Create();
+        Queue.Enqueue(LastBlock);
 
         return Queue.Dequeue();
     }

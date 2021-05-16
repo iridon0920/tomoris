@@ -1,5 +1,4 @@
 using Zenject;
-
 public class GetNextControlBlocksService
 {
     private readonly IBoard Board;
@@ -29,8 +28,10 @@ public class GetNextControlBlocksService
                     Board.GetInsertPositionY(),
                     BlocksQueue.Dequeue()
                 );
+
         ControlBlocksPresenter.DrawControlBlocks(controlBlocks);
-        BlocksQueuePresenter.DrawQueueBlocksDequeue(controlBlocks.Blocks);
+
+        BlocksQueuePresenter.DrawQueueBlocksDequeue(BlocksQueue.LastBlock);
 
         return controlBlocks;
     }

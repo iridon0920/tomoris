@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using System.Threading.Tasks;
 public class BlocksQueueView : MonoBehaviour
 {
     private readonly Queue<List<BlockView>> QueueBlocks = new Queue<List<BlockView>>();
@@ -8,9 +9,9 @@ public class BlocksQueueView : MonoBehaviour
     [SerializeField]
     private BlockViewFactory BlockViewFactory;
 
-    private int IntervalY = 5;
+    private int IntervalY = 2;
 
-    public async void DrawQueueBlocks(IBlocks blocks)
+    public async Task DrawQueueBlocks(IBlocks blocks)
     {
         var index = QueueBlocks.Count;
 
@@ -19,7 +20,7 @@ public class BlocksQueueView : MonoBehaviour
         {
             var newPosition = transform.position;
             newPosition.x += block.X;
-            newPosition.y += 10 - (index * IntervalY + block.Y);
+            newPosition.y += index * IntervalY + block.Y;
 
             var blockObject = await BlockViewFactory.InstantiateBlock(
                 block.BlockColor,
@@ -52,7 +53,7 @@ public class BlocksQueueView : MonoBehaviour
             foreach (var blockView in blockViews)
             {
                 var newPosition = blockView.transform.position;
-                newPosition.y += 10 - (index * IntervalY);
+                newPosition.y += index * IntervalY;
 
                 blockView.MoveToTargetPosition(newPosition);
             }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Zenject;
+using System.Threading.Tasks;
 
 public class BlocksQueuePresenter
 {
@@ -13,11 +14,11 @@ public class BlocksQueuePresenter
         BlocksQueueView = blocksQueueView;
     }
 
-    public void DrawAllQueueBlocks(IBlocks[] allQueueBlocks)
+    public async Task DrawAllQueueBlocks(IBlocks[] allQueueBlocks)
     {
         foreach (var queueBlocks in allQueueBlocks)
         {
-            BlocksQueueView.DrawQueueBlocks(queueBlocks);
+            await BlocksQueueView.DrawQueueBlocks(queueBlocks);
         }
     }
 

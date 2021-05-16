@@ -48,15 +48,16 @@ public class BlockController : MonoBehaviour
 
     private bool IsGameOver = false;
 
-    void Awake()
+    async void Awake()
     {
         InitializeUiUseCase.Execute(PlayerId);
-        InitializeBlocksQueueService.Execute(QueueSize);
+
+        await InitializeBlocksQueueService.Execute(QueueSize);
+        ControlBlocks = GetNextControlBlocksService.Execute();
     }
 
     void Start()
     {
-        ControlBlocks = GetNextControlBlocksService.Execute();
 
         StartCoroutine(MoveDownOverTime());
 
@@ -86,6 +87,10 @@ public class BlockController : MonoBehaviour
 
     private void ExecuteMoveService(IMoveControlBlocksService moveService)
     {
+        if (ControlBlocks is null)
+        {
+            return;
+        }
         ControlBlocks = BlockControllUseCase.Execute(moveService, PlayerId, ControlBlocks);
     }
 

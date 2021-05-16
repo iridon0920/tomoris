@@ -1,4 +1,5 @@
 using Zenject;
+using System.Threading.Tasks;
 
 public class InitializeBlocksQueueService
 {
@@ -15,9 +16,9 @@ public class InitializeBlocksQueueService
         BlocksQueuePresenter = blocksQueuePresenter;
     }
 
-    public void Execute(int queueSize)
+    public async Task Execute(int queueSize)
     {
         BlocksQueue.InitializeQueue(queueSize);
-        BlocksQueuePresenter.DrawAllQueueBlocks(BlocksQueue.Queue.ToArray());
+        await BlocksQueuePresenter.DrawAllQueueBlocks(BlocksQueue.Queue.ToArray());
     }
 }
