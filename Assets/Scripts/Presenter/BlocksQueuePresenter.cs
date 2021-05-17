@@ -22,10 +22,10 @@ public class BlocksQueuePresenter
         }
     }
 
-    public void DrawQueueBlocksDequeue(IBlocks nextBlocks)
+    public async void DrawQueueBlocksDequeue(IBlocks nextBlocks)
     {
         BlocksQueueView.DeleteTopBlocks();
         BlocksQueueView.SqueezeEmptyPosition();
-        BlocksQueueView.DrawQueueBlocks(nextBlocks);
+        await BlocksQueueView.DrawQueueBlocks(nextBlocks);
     }
 }

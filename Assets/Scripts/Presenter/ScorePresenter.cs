@@ -22,11 +22,11 @@ public class ScorePresenter
     {
         if (playerId == 1)
         {
-            ScoreView.ChangePointsPosition(-124, 82);
+            ScoreView.ChangePointsPosition(-124, 225);
         }
         else if (playerId == 2)
         {
-            ScoreView.ChangePointsPosition(180, 82);
+            ScoreView.ChangePointsPosition(180, 225);
         }
     }
 }

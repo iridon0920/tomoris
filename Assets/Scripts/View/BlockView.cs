@@ -24,6 +24,6 @@ public class BlockView : MonoBehaviour
         SpriteRenderer.DOFade(0f, 0.5f).OnComplete(() =>
         {
             Destroy(gameObject);
-        });
+        }).SetLink(gameObject);
     }
 }

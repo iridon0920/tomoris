@@ -9,7 +9,7 @@ public class BlocksQueueView : MonoBehaviour
     [SerializeField]
     private BlockViewFactory BlockViewFactory;
 
-    private int IntervalY = 2;
+    private int IntervalY = 5;
 
     public async Task DrawQueueBlocks(IBlocks blocks)
     {
@@ -20,7 +20,7 @@ public class BlocksQueueView : MonoBehaviour
         {
             var newPosition = transform.position;
             newPosition.x += block.X;
-            newPosition.y += index * IntervalY + block.Y;
+            newPosition.y -= index * IntervalY - block.Y;
 
             var blockObject = await BlockViewFactory.InstantiateBlock(
                 block.BlockColor,
@@ -53,7 +53,7 @@ public class BlocksQueueView : MonoBehaviour
             foreach (var blockView in blockViews)
             {
                 var newPosition = blockView.transform.position;
-                newPosition.y += index * IntervalY;
+                newPosition.y += IntervalY;
 
                 blockView.MoveToTargetPosition(newPosition);
             }
