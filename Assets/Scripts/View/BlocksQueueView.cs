@@ -11,6 +11,11 @@ public class BlocksQueueView : MonoBehaviour
 
     private int IntervalY = 5;
 
+    public void ChangePosition(float x, float y)
+    {
+        transform.position = new Vector3(x, y, 0);
+    }
+
     public async Task DrawQueueBlocks(IBlocks blocks)
     {
         var index = QueueBlocks.Count;

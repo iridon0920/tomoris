@@ -8,7 +8,7 @@ public class InitializeBlocksQueueService
 
     [Inject]
     public InitializeBlocksQueueService(
-         IBlocksQueue blocksQueue,
+        IBlocksQueue blocksQueue,
         BlocksQueuePresenter blocksQueuePresenter
     )
     {

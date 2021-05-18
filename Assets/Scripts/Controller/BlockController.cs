@@ -50,7 +50,6 @@ public class BlockController : MonoBehaviour
 
     async void Awake()
     {
-        InitializeUiUseCase.Execute(PlayerId);
 
         await InitializeBlocksQueueService.Execute(QueueSize);
         ControlBlocks = GetNextControlBlocksService.Execute();
@@ -58,6 +57,7 @@ public class BlockController : MonoBehaviour
 
     void Start()
     {
+        InitializeUiUseCase.Execute(PlayerId);
 
         StartCoroutine(MoveDownOverTime());
 
