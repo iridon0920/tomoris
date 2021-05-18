@@ -52,7 +52,7 @@ public class BlockController : MonoBehaviour
     {
 
         await InitializeBlocksQueueService.Execute(QueueSize);
-        ControlBlocks = GetNextControlBlocksService.Execute();
+        ControlBlocks = GetNextControlBlocksService.Execute(PlayerId);
     }
 
     void Start()

@@ -42,7 +42,7 @@ public class BlockControllUseCase
             }
             else
             {
-                var newControlBlocks = GetNextControlBlocksService.Execute();
+                var newControlBlocks = GetNextControlBlocksService.Execute(playerId);
                 return newControlBlocks;
             }
         }

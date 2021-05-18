@@ -18,6 +18,7 @@ namespace Tests
         public void SetUp()
         {
             Board = new Board(10, 20);
+            Board.AddPlayerCount();
 
             IBlocks = new IShapedBlocks();
 
@@ -27,7 +28,12 @@ namespace Tests
         [Test]
         public void インスタンス生成時にブロック挿入位置が適切に設定されるかテスト()
         {
-            Assert.AreEqual(4, Board.GetInsertPositionX());
+            Assert.AreEqual(4, Board.GetInsertPositionX(1));
+            Assert.AreEqual(21, Board.GetInsertPositionY());
+
+            Board.AddPlayerCount();
+            Assert.AreEqual(3, Board.GetInsertPositionX(1));
+            Assert.AreEqual(6, Board.GetInsertPositionX(2));
             Assert.AreEqual(21, Board.GetInsertPositionY());
         }
 

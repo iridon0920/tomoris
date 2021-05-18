@@ -21,10 +21,10 @@ public class GetNextControlBlocksService
         BlocksQueuePresenter = blocksQueuePresenter;
     }
 
-    public ControlBlocks Execute()
+    public ControlBlocks Execute(int playerId)
     {
         var controlBlocks = new ControlBlocks(
-                    Board.GetInsertPositionX(),
+                    Board.GetInsertPositionX(playerId),
                     Board.GetInsertPositionY(),
                     BlocksQueue.Dequeue()
                 );

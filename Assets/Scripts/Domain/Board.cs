@@ -1,13 +1,14 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using Zenject;
 public interface IBoard
 {
     int Width { get; }
     int Height { get; }
     BoardPutBlocks BoardPutBlocks { get; }
-
-    int GetInsertPositionX();
+    void AddPlayerCount();
+    int GetInsertPositionX(int playerId);
     int GetInsertPositionY();
     List<BoardPutBlock> PutBlocks(ControlBlocks controlBlocks);
     bool ExistPosition(int x, int y);
@@ -16,15 +17,15 @@ public interface IBoard
     bool IsGameOver();
 
 }
+
 public class Board : IBoard
 {
     public int Width { get; }
     public int Height { get; }
-    public int InsertPositionX { get; }
-
+    private int PlayerCount = 0;
 
     // 二次元配列を使って各座標のブロックの存在を管理
-    public BoardPutBlocks BoardPutBlocks { get; }
+    public BoardPutBlocks BoardPutBlocks { get; } = new BoardPutBlocks(new List<BoardPutBlock>());
 
     private int NextBlockId = 1;
 
@@ -32,12 +33,19 @@ public class Board : IBoard
     {
         Width = width;
         Height = height;
-        BoardPutBlocks = new BoardPutBlocks(new List<BoardPutBlock>());
     }
 
-    public int GetInsertPositionX()
+    public void AddPlayerCount()
     {
-        return (Width - 1) / 2;
+        PlayerCount++;
+    }
+
+    public int GetInsertPositionX(int playerId)
+    {
+        double interval = (Width - 1) / (PlayerCount + 1);
+        double result = interval * playerId;
+        return (int)Math.Round(result);
+
     }
 
     public int GetInsertPositionY()
