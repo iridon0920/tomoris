@@ -40,6 +40,7 @@ public class BlockController : MonoBehaviour
 
     [Inject]
     private readonly InitializeUiUseCase InitializeUiUseCase;
+    private IInputEventProvider InputEventProvider;
     private ControlBlocks ControlBlocks;
 
     public int PlayerId;
@@ -53,6 +54,19 @@ public class BlockController : MonoBehaviour
 
         await InitializeBlocksQueueService.Execute(QueueSize);
         ControlBlocks = GetNextControlBlocksService.Execute(PlayerId);
+        InputEventProvider = GetInputEventProvider();
+    }
+
+    private IInputEventProvider GetInputEventProvider()
+    {
+        if (PlayerId == 1)
+        {
+            return new Player1KeyBoardEventProvider();
+        }
+        else
+        {
+            return new Player2KeyBoardEventProvider();
+        }
     }
 
     void Start()
@@ -75,7 +89,7 @@ public class BlockController : MonoBehaviour
 
     void Update()
     {
-        if (!IsGameOver)
+        if (!IsGameOver && InputEventProvider != null)
         {
             ExecuteMoveService(ReceiveSpinInput());
             if (!IsWaitMove)
@@ -103,15 +117,15 @@ public class BlockController : MonoBehaviour
 
     private IMoveControlBlocksService ReceiveMoveInput()
     {
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (InputEventProvider.LeftInput())
         {
             return MoveLeftControlBlocksService;
         }
-        else if (Input.GetKey(KeyCode.RightArrow))
+        else if (InputEventProvider.RightInput())
         {
             return MoveRightControlBlocksService;
         }
-        else if (Input.GetKey(KeyCode.DownArrow))
+        else if (InputEventProvider.DownInput())
         {
             return MoveDownControlBlocksService;
         }
@@ -121,11 +135,11 @@ public class BlockController : MonoBehaviour
 
     private IMoveControlBlocksService ReceiveSpinInput()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (InputEventProvider.LeftSpinInput())
         {
             return SpinLeftControlBlocksService;
         }
-        else if (Input.GetKeyDown(KeyCode.X))
+        else if (InputEventProvider.RightSpinInput())
         {
             return SpinRightControlBlocksService;
         }
