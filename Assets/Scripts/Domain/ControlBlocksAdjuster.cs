@@ -57,4 +57,19 @@ public class ControlBlocksAdjuster
 
         return controlBlocks;
     }
+
+    public ControlBlocks AdjustBlocksByPutBlocks(ControlBlocks controlBlocks)
+    {
+        for (var i = 0; i <= controlBlocks.Blocks.BlockList.Count; i++)
+        {
+            if (CollisionDetection.IsCollisionPutPosition(controlBlocks))
+            {
+                controlBlocks.MoveUp();
+                continue;
+            }
+
+            break;
+        }
+        return controlBlocks;
+    }
 }

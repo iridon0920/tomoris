@@ -8,7 +8,7 @@ public class BlockControllUseCase
     private readonly GameOverEvent GameOverEvent;
     private readonly IControlBlocksPresenter ControlBlocksPresenter;
     private readonly GetNextControlBlocksService GetNextControlBlocksService;
-
+    private readonly ControlBlocksAdjuster Adjuster;
 
 
     [Inject]
@@ -18,7 +18,8 @@ public class BlockControllUseCase
         EraseLineService eraseLineService,
         IBoard board,
         GameOverEvent gameOverEvent,
-        IControlBlocksPresenter controlBlocksPresenter
+        IControlBlocksPresenter controlBlocksPresenter,
+        ControlBlocksAdjuster adjuster
     )
     {
         PutControlBlocksService = putControlBlocksService;
@@ -27,6 +28,7 @@ public class BlockControllUseCase
         Board = board;
         GameOverEvent = gameOverEvent;
         ControlBlocksPresenter = controlBlocksPresenter;
+        Adjuster = adjuster;
     }
 
     public ControlBlocks Execute(IMoveControlBlocksService moveService, int playerId, ControlBlocks controlBlocks)
@@ -46,8 +48,8 @@ public class BlockControllUseCase
                 return newControlBlocks;
             }
         }
-
-        ControlBlocksPresenter.ChangeControlBlocks(movedControlBlocks);
-        return movedControlBlocks;
+        var adjustedControlBlocks = Adjuster.AdjustBlocksByPutBlocks(movedControlBlocks);
+        ControlBlocksPresenter.ChangeControlBlocks(adjustedControlBlocks);
+        return adjustedControlBlocks;
     }
 }

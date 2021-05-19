@@ -11,6 +11,6 @@ public class Game : MonoBehaviour
     void Awake()
     {
         Players.Add(PlayerFactory.Create(1));
-        // Players.Add(PlayerFactory.Create(2));
+        Players.Add(PlayerFactory.Create(2));
     }
 }
