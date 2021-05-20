@@ -80,7 +80,5 @@ public class ControlBlocksInstaller : MonoInstaller
         Container.Bind<IBlocksQueue>()
                 .To<BlocksQueue>()
                 .AsSingle();
-
-        Container.Bind<System.Random>().AsSingle();
     }
 }

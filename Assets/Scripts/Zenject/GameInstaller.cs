@@ -32,5 +32,9 @@ public class GameInstaller : MonoInstaller
 
         Container.Bind<GameOverEvent>()
                 .AsSingle();
+
+
+        Container.Bind<System.Random>()
+                .AsSingle();
     }
 }
