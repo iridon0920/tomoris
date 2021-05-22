@@ -1,12 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
+
+[RequireComponent(typeof(BlockViewFactory))]
+[RequireComponent(typeof(CursorViewFactory))]
+[RequireComponent(typeof(AudioSource))]
 public class ControlBlocksView : MonoBehaviour
 {
     private int PlayerId;
     private List<BlockView> Blocks = new List<BlockView>();
 
     private CursorView Cursor;
-    const int CURSOR_POSITION_Y = 3;
 
     [SerializeField]
     private BlockViewFactory BlockViewFactory;
@@ -23,11 +26,8 @@ public class ControlBlocksView : MonoBehaviour
 
     public async void DrawControlBlocks(IControlBlocks controlBlocks)
     {
-        var cursorPosition = transform.position;
-        cursorPosition.x += controlBlocks.X;
-        cursorPosition.y += controlBlocks.Y + CURSOR_POSITION_Y;
+        Cursor = await CursorViewFactory.Instantiate(PlayerId, controlBlocks, transform);
 
-        Cursor = await CursorViewFactory.Instantiate(PlayerId, cursorPosition, transform);
         Blocks = new List<BlockView>();
         foreach (var block in controlBlocks.Blocks.BlockList)
         {
@@ -49,7 +49,7 @@ public class ControlBlocksView : MonoBehaviour
     {
         if (Blocks.Count > 0)
         {
-            Destroy(Cursor.gameObject);
+            Cursor.Remove();
 
             foreach (var block in Blocks)
             {
@@ -62,11 +62,7 @@ public class ControlBlocksView : MonoBehaviour
     {
         if (Cursor)
         {
-            var newCursorPosition = transform.position;
-            newCursorPosition.x += controlBlocks.X;
-            newCursorPosition.y += controlBlocks.Y + CURSOR_POSITION_Y;
-
-            Cursor.MoveToTargetPosition(newCursorPosition);
+            Cursor.MoveToTargetPosition(controlBlocks, transform);
         }
         if (Blocks.Count > 0)
         {

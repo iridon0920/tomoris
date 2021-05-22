@@ -1,19 +1,22 @@
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using System.Threading.Tasks;
+
+[RequireComponent(typeof(CursorViewPosition))]
 public class CursorViewFactory : MonoBehaviour
 {
-    public async Task<CursorView> Instantiate(int playerId, Vector3 position, Transform transform)
+    [SerializeField]
+    private CursorViewPosition CursorViewPosition;
+    public async Task<CursorView> Instantiate(int playerId, IControlBlocks controlBlocks, Transform transform)
     {
         var handle = Addressables.InstantiateAsync(
             GetAddressByPlayerId(playerId),
-            position,
+            CursorViewPosition.GetPositionByControlBlocks(controlBlocks, transform),
             Quaternion.identity,
             transform
         );
 
         await handle.Task;
-        Debug.Log(handle.Result);
         return handle.Result.GetComponent<CursorView>();
     }
 
@@ -28,4 +31,5 @@ public class CursorViewFactory : MonoBehaviour
             return "Sprites/Cursor/2p";
         }
     }
+
 }
