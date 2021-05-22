@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3326651913499356953}
   - component: {fileID: 8002834318060175977}
   - component: {fileID: 3439541058688335575}
-  - component: {fileID: 60964750453229158}
+  - component: {fileID: 7476219146145520001}
   m_Layer: 0
   m_Name: BlueBlock
   m_TagString: Untagged
@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpriteRenderer: {fileID: 8686641524634237810}
---- !u!114 &60964750453229158
+--- !u!114 &7476219146145520001
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -131,7 +131,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3819111872943542976}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35692514697d95543a651717f26fbed5, type: 3}
+  m_Script: {fileID: 11500000, guid: 49dcdfece7a359b46a39772805e35d68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MoveTweening: {fileID: 3326651913499356953}

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8613397187352214117}
   - component: {fileID: 1980393179753584204}
   - component: {fileID: 761467031064476703}
-  - component: {fileID: 3734228222184204040}
+  - component: {fileID: 8035594837335545778}
   m_Layer: 0
   m_Name: YellowBlock
   m_TagString: Untagged
@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpriteRenderer: {fileID: 7666794320128167541}
---- !u!114 &3734228222184204040
+--- !u!114 &8035594837335545778
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -131,7 +131,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3821321368149907760}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35692514697d95543a651717f26fbed5, type: 3}
+  m_Script: {fileID: 11500000, guid: 49dcdfece7a359b46a39772805e35d68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MoveTweening: {fileID: 8613397187352214117}

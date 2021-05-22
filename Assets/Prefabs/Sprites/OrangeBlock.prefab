@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8178026435077351694}
   - component: {fileID: 278331589935364792}
   - component: {fileID: 4277964355183570390}
-  - component: {fileID: 4462679993942719216}
+  - component: {fileID: 4348736109694005160}
   m_Layer: 0
   m_Name: OrangeBlock
   m_TagString: Untagged
@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpriteRenderer: {fileID: 5186087129914155631}
---- !u!114 &4462679993942719216
+--- !u!114 &4348736109694005160
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -131,7 +131,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8748319918026658093}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35692514697d95543a651717f26fbed5, type: 3}
+  m_Script: {fileID: 11500000, guid: 49dcdfece7a359b46a39772805e35d68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MoveTweening: {fileID: 8178026435077351694}

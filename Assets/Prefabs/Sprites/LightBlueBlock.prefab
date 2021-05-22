@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2934084202808332314}
   - component: {fileID: 3447183593735859760}
   - component: {fileID: 8916716056873041007}
-  - component: {fileID: 6153607782460619422}
+  - component: {fileID: 4909691814745400995}
   m_Layer: 0
   m_Name: LightBlueBlock
   m_TagString: Untagged
@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpriteRenderer: {fileID: 405183813747996087}
---- !u!114 &6153607782460619422
+--- !u!114 &4909691814745400995
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -131,7 +131,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4978192059453783915}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35692514697d95543a651717f26fbed5, type: 3}
+  m_Script: {fileID: 11500000, guid: 49dcdfece7a359b46a39772805e35d68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MoveTweening: {fileID: 2934084202808332314}

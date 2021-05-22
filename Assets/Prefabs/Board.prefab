@@ -10,8 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5205522995684552158}
   - component: {fileID: 5205522995684552129}
-  - component: {fileID: -5147601042007780112}
   - component: {fileID: -1681617380834145198}
+  - component: {fileID: -8006924078472801197}
+  - component: {fileID: 7021906047140828350}
+  - component: {fileID: 3521670638012802251}
   m_Layer: 0
   m_Name: Board
   m_TagString: Untagged
@@ -45,20 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 948560e91a9d5104c8eee91306b06eff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BlockViewFactory: {fileID: -5147601042007780112}
+  BlockList: {fileID: 3521670638012802251}
   EraseSound: {fileID: -1681617380834145198}
---- !u!114 &-5147601042007780112
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5205522995684552128}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfb5d6116237b5849ae1d0020a1f97a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &-1681617380834145198
 AudioSource:
   m_ObjectHideFlags: 0
@@ -155,3 +145,41 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-8006924078472801197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5205522995684552128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f3b158fae5b31546b521228458eec89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7021906047140828350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5205522995684552128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d989974c91cb29a40a291f910e1ffca6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3521670638012802251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5205522995684552128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb6f578ca8a4b684cad4c4f5383463d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BlockViewFactory: {fileID: -8006924078472801197}
+  BoardBlockViewPosition: {fileID: 7021906047140828350}

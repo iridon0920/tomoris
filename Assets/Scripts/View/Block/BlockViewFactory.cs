@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using System.Threading.Tasks;
+
 public class BlockViewFactory : MonoBehaviour
 {
     public async Task<BlockView> InstantiateBlock(BlockColor blockColor, Vector3 position, Transform transform)

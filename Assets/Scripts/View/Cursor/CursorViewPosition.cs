@@ -6,7 +6,6 @@ public class CursorViewPosition : MonoBehaviour
 
     public Vector3 GetPositionByControlBlocks(IControlBlocks controlBlocks, Transform transform)
     {
-        Debug.Log(transform.position);
         var cursorPosition = transform.position;
         cursorPosition.x += controlBlocks.X;
         cursorPosition.y += controlBlocks.Y + CURSOR_POSITION_Y;

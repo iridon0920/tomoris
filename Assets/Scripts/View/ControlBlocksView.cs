@@ -1,21 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(BlockViewFactory))]
+[RequireComponent(typeof(ControlBlockViewList))]
 [RequireComponent(typeof(CursorViewFactory))]
 [RequireComponent(typeof(AudioSource))]
 public class ControlBlocksView : MonoBehaviour
 {
     private int PlayerId;
-    private List<BlockView> Blocks = new List<BlockView>();
-
     private CursorView Cursor;
-
     [SerializeField]
-    private BlockViewFactory BlockViewFactory;
+    private ControlBlockViewList BlockList;
     [SerializeField]
     private CursorViewFactory CursorViewFactory;
-
     [SerializeField]
     private AudioSource CollisionSound;
 
@@ -28,34 +24,17 @@ public class ControlBlocksView : MonoBehaviour
     {
         Cursor = await CursorViewFactory.Instantiate(PlayerId, controlBlocks, transform);
 
-        Blocks = new List<BlockView>();
-        foreach (var block in controlBlocks.Blocks.BlockList)
-        {
-            var newPosition = transform.position;
-            newPosition.x += controlBlocks.X + block.X;
-            newPosition.y += controlBlocks.Y + block.Y;
-
-            var blockObject = await BlockViewFactory.InstantiateBlock(
-                block.BlockColor,
-                newPosition,
-                transform
-            );
-
-            Blocks.Add(blockObject);
-        }
+        BlockList.InstantiateBlocks(controlBlocks, transform);
     }
 
     public void DeleteControlBlocks()
     {
-        if (Blocks.Count > 0)
+        if (Cursor)
         {
             Cursor.Remove();
-
-            foreach (var block in Blocks)
-            {
-                Destroy(block.gameObject);
-            }
         }
+
+        BlockList.RemoveAll();
     }
 
     public void ChangeControlBlocksPosition(IControlBlocks controlBlocks)
@@ -64,20 +43,8 @@ public class ControlBlocksView : MonoBehaviour
         {
             Cursor.MoveToTargetPosition(controlBlocks, transform);
         }
-        if (Blocks.Count > 0)
-        {
-            int i = 0;
-            foreach (var block in controlBlocks.Blocks.BlockList)
-            {
 
-                var newPosition = transform.position;
-                newPosition.x += controlBlocks.X + block.X;
-                newPosition.y += controlBlocks.Y + block.Y;
-
-                Blocks[i].MoveToTargetPosition(newPosition);
-                i++;
-            }
-        }
+        BlockList.MoveToTargetPosition(controlBlocks, transform);
     }
 
     public void PlayCollisionSound()

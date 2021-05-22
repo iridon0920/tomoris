@@ -11,9 +11,11 @@ GameObject:
   - component: {fileID: 5710612486436482208}
   - component: {fileID: 5710612486436482215}
   - component: {fileID: 2900237307150436239}
-  - component: {fileID: -6178224220801653964}
   - component: {fileID: -8338260343180587606}
   - component: {fileID: 3428416420182331695}
+  - component: {fileID: 5994475504489430198}
+  - component: {fileID: 943155093001671665}
+  - component: {fileID: 588848532681586145}
   m_Layer: 0
   m_Name: ControlBlocks
   m_TagString: Untagged
@@ -47,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0e52f3476a80f8499272a5a4bb35e15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BlockViewFactory: {fileID: -6178224220801653964}
+  BlockList: {fileID: 588848532681586145}
   CursorViewFactory: {fileID: 2900237307150436239}
   CollisionSound: {fileID: -8338260343180587606}
 --- !u!114 &2900237307150436239
@@ -63,18 +65,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CursorViewPosition: {fileID: 3428416420182331695}
---- !u!114 &-6178224220801653964
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5710612486436482214}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfb5d6116237b5849ae1d0020a1f97a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &-8338260343180587606
 AudioSource:
   m_ObjectHideFlags: 0
@@ -183,3 +173,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45eba259dc291b744b5846f4dbc66189, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5994475504489430198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5710612486436482214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f3b158fae5b31546b521228458eec89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &943155093001671665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5710612486436482214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e27229304e41c164a9a443d05e790876, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &588848532681586145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5710612486436482214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adff8b24c01d3684e815d145a5ee17f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BlockViewFactory: {fileID: 5994475504489430198}
+  ControlBlockViewPosition: {fileID: 943155093001671665}

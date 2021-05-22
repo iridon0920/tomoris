@@ -1,37 +1,24 @@
-using System.Collections.Generic;
 using UnityEngine;
+
+[RequireComponent(typeof(BoardBlockViewList))]
+[RequireComponent(typeof(AudioSource))]
 public class BoardView : MonoBehaviour
 {
-    const string PREFIX = "Board Block ";
 
     [SerializeField]
-    private BlockViewFactory BlockViewFactory;
+    private BoardBlockViewList BlockList;
 
     [SerializeField]
     private AudioSource EraseSound;
 
-    private List<BlockView> Blocks = new List<BlockView>();
-    public async void DrawBoardPutBlock(BoardPutBlock block)
+    public void DrawBoardPutBlock(BoardPutBlock boardPutBlock)
     {
-        var newPosition = transform.position;
-        newPosition.x += block.GetX();
-        newPosition.y += block.GetY();
-
-        var blockObject = await BlockViewFactory.InstantiateBlock(
-            block.GetBlockColor(),
-            newPosition,
-            transform
-        );
-
-        blockObject.name = PREFIX + block.Id.ToString();
-        Blocks.Add(blockObject);
+        BlockList.InstantiateBlock(boardPutBlock, transform);
     }
 
-    public void DeleteBoardPutBlock(BoardPutBlock boardBlock)
+    public void DeleteBoardPutBlock(BoardPutBlock boardPutBlock)
     {
-        var deleteTargetBlock = Blocks.Find(block => block.name == PREFIX + boardBlock.Id.ToString());
-        deleteTargetBlock.Erase();
-        Blocks.Remove(deleteTargetBlock);
+        BlockList.RemoveBlock(boardPutBlock);
     }
 
     public void PlayEraseSound()
@@ -39,13 +26,8 @@ public class BoardView : MonoBehaviour
         EraseSound.PlayOneShot(EraseSound.clip);
     }
 
-    public void ChangeBoardPutBlockPosition(BoardPutBlock boardBlock)
+    public void ChangeBoardPutBlockPosition(BoardPutBlock boardPutBlock)
     {
-        var newPosition = transform.position;
-        newPosition.x += boardBlock.GetX();
-        newPosition.y += boardBlock.GetY();
-
-        var changeTargetBlock = Blocks.Find(block => block.name == PREFIX + boardBlock.Id.ToString());
-        changeTargetBlock.FallToTargetPosition(newPosition);
+        BlockList.MoveToTargetPosition(boardPutBlock, transform);
     }
 }
