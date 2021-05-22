@@ -1,15 +1,15 @@
 using UnityEngine;
-using DG.Tweening;
 
+[RequireComponent(typeof(MoveTweening))]
 public class CursorView : MonoBehaviour
 {
     [SerializeField]
-    private SpriteRenderer SpriteRenderer;
+    private MoveTweening MoveTweening;
+
+    const float MOVE_DURATION = 0.05f;
 
     public void MoveToTargetPosition(Vector3 targetPosition)
     {
-        transform.DOMove(targetPosition, 0.05f)
-            .SetEase(Ease.OutCubic)
-            .SetLink(gameObject);
+        MoveTweening.MoveToTargetPosition(targetPosition, MOVE_DURATION);
     }
 }

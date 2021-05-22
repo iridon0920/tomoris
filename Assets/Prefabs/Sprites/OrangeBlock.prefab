@@ -10,7 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 814098874659455860}
   - component: {fileID: 5186087129914155631}
-  - component: {fileID: -559074502292473915}
+  - component: {fileID: 8178026435077351694}
+  - component: {fileID: 278331589935364792}
+  - component: {fileID: 4277964355183570390}
+  - component: {fileID: 4462679993942719216}
   m_Layer: 0
   m_Name: OrangeBlock
   m_TagString: Untagged
@@ -82,7 +85,44 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-559074502292473915
+--- !u!114 &8178026435077351694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8748319918026658093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7299d6537f853e44ea8bd004d6eed2ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &278331589935364792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8748319918026658093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3eaf806027cec6e4bacae4ecbf7f4384, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4277964355183570390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8748319918026658093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfb8cd22a029f8240a10052f6803cd04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpriteRenderer: {fileID: 5186087129914155631}
+--- !u!114 &4462679993942719216
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,4 +134,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35692514697d95543a651717f26fbed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpriteRenderer: {fileID: 5186087129914155631}
+  MoveTweening: {fileID: 8178026435077351694}
+  FallTweening: {fileID: 278331589935364792}
+  EraseTweening: {fileID: 4277964355183570390}

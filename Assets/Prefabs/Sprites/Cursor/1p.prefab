@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 789163852707758954}
   - component: {fileID: 6030070614529447761}
-  - component: {fileID: 1389732291115238848}
+  - component: {fileID: -8136063767372206448}
+  - component: {fileID: -18682728814491560}
   m_Layer: 0
   m_Name: 1p
   m_TagString: Untagged
@@ -82,7 +83,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1389732291115238848
+--- !u!114 &-8136063767372206448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8515310664069066103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7299d6537f853e44ea8bd004d6eed2ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-18682728814491560
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,4 +107,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46933c10460647a44a6258e5c04e7b27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpriteRenderer: {fileID: 6030070614529447761}
+  MoveTweening: {fileID: -8136063767372206448}

@@ -10,7 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 7803656429348958669}
   - component: {fileID: 8686641524634237810}
-  - component: {fileID: -1918632117624937602}
+  - component: {fileID: 3326651913499356953}
+  - component: {fileID: 8002834318060175977}
+  - component: {fileID: 3439541058688335575}
+  - component: {fileID: 60964750453229158}
   m_Layer: 0
   m_Name: BlueBlock
   m_TagString: Untagged
@@ -82,7 +85,44 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-1918632117624937602
+--- !u!114 &3326651913499356953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3819111872943542976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7299d6537f853e44ea8bd004d6eed2ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8002834318060175977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3819111872943542976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3eaf806027cec6e4bacae4ecbf7f4384, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3439541058688335575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3819111872943542976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfb8cd22a029f8240a10052f6803cd04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpriteRenderer: {fileID: 8686641524634237810}
+--- !u!114 &60964750453229158
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,4 +134,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35692514697d95543a651717f26fbed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpriteRenderer: {fileID: 8686641524634237810}
+  MoveTweening: {fileID: 3326651913499356953}
+  FallTweening: {fileID: 8002834318060175977}
+  EraseTweening: {fileID: 3439541058688335575}

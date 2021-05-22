@@ -1,29 +1,33 @@
 using UnityEngine;
-using DG.Tweening;
 
+[RequireComponent(typeof(MoveTweening))]
+[RequireComponent(typeof(FallTweening))]
+[RequireComponent(typeof(EraseTweening))]
 public class BlockView : MonoBehaviour
 {
     [SerializeField]
-    private SpriteRenderer SpriteRenderer;
+    private MoveTweening MoveTweening;
+    [SerializeField]
+    private FallTweening FallTweening;
+    [SerializeField]
+    private EraseTweening EraseTweening;
+
+    const float MOVE_DURATION = 0.05f;
+    const float FALL_DURATION = 0.3f;
+    const float ERASE_DURATION = 0.5f;
 
     public void MoveToTargetPosition(Vector3 targetPosition)
     {
-        transform.DOMove(targetPosition, 0.05f)
-            .SetEase(Ease.OutCubic)
-            .SetLink(gameObject);
+        MoveTweening.MoveToTargetPosition(targetPosition, MOVE_DURATION);
     }
 
     public void FallToTargetPosition(Vector3 targetPosition)
     {
-        transform.DOMove(targetPosition, 0.3f)
-            .SetEase(Ease.InQuad);
+        FallTweening.FallToTargetPosition(targetPosition, FALL_DURATION);
     }
 
     public void Erase()
     {
-        SpriteRenderer.DOFade(0f, 0.5f).OnComplete(() =>
-        {
-            Destroy(gameObject);
-        }).SetLink(gameObject);
+        EraseTweening.Erase(ERASE_DURATION);
     }
 }

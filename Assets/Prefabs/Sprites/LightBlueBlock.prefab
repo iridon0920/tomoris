@@ -10,7 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6433629229086563762}
   - component: {fileID: 405183813747996087}
-  - component: {fileID: -544021347318624449}
+  - component: {fileID: 2934084202808332314}
+  - component: {fileID: 3447183593735859760}
+  - component: {fileID: 8916716056873041007}
+  - component: {fileID: 6153607782460619422}
   m_Layer: 0
   m_Name: LightBlueBlock
   m_TagString: Untagged
@@ -82,7 +85,44 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-544021347318624449
+--- !u!114 &2934084202808332314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4978192059453783915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7299d6537f853e44ea8bd004d6eed2ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3447183593735859760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4978192059453783915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3eaf806027cec6e4bacae4ecbf7f4384, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8916716056873041007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4978192059453783915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfb8cd22a029f8240a10052f6803cd04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpriteRenderer: {fileID: 405183813747996087}
+--- !u!114 &6153607782460619422
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,4 +134,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35692514697d95543a651717f26fbed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpriteRenderer: {fileID: 405183813747996087}
+  MoveTweening: {fileID: 2934084202808332314}
+  FallTweening: {fileID: 3447183593735859760}
+  EraseTweening: {fileID: 8916716056873041007}
