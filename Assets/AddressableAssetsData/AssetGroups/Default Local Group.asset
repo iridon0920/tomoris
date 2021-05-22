@@ -21,57 +21,59 @@ MonoBehaviour:
     m_Address: Sprites/BlueBlock
     m_ReadOnly: 0
     m_SerializedLabels: []
-    m_MainAsset: {fileID: 3819111872943542976, guid: bbde21c433bcf424ca3b350feb6cf2b9,
-      type: 3}
-    m_TargetAsset: {fileID: 3819111872943542976, guid: bbde21c433bcf424ca3b350feb6cf2b9,
-      type: 3}
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
   - m_GUID: 8f8d2ef5126225147a52a7d1c34b98c6
     m_Address: Sprites/GreenBlock
     m_ReadOnly: 0
     m_SerializedLabels: []
-    m_MainAsset: {fileID: 8061510378434621873, guid: 8f8d2ef5126225147a52a7d1c34b98c6,
-      type: 3}
-    m_TargetAsset: {fileID: 8061510378434621873, guid: 8f8d2ef5126225147a52a7d1c34b98c6,
-      type: 3}
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
   - m_GUID: aa37a3018d3513d478355084c6d6d05c
     m_Address: Sprites/LightBlueBlock
     m_ReadOnly: 0
     m_SerializedLabels: []
-    m_MainAsset: {fileID: 4978192059453783915, guid: aa37a3018d3513d478355084c6d6d05c,
-      type: 3}
-    m_TargetAsset: {fileID: 4978192059453783915, guid: aa37a3018d3513d478355084c6d6d05c,
-      type: 3}
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
   - m_GUID: e937d448cda815148920f1f1d1909166
     m_Address: Sprites/OrangeBlock
     m_ReadOnly: 0
     m_SerializedLabels: []
-    m_MainAsset: {fileID: 8748319918026658093, guid: e937d448cda815148920f1f1d1909166,
-      type: 3}
-    m_TargetAsset: {fileID: 8748319918026658093, guid: e937d448cda815148920f1f1d1909166,
-      type: 3}
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
   - m_GUID: d415e37b4dd1a3b41919a12c85eb33e5
     m_Address: Sprites/PurpleBlock
     m_ReadOnly: 0
     m_SerializedLabels: []
-    m_MainAsset: {fileID: 8585938393116782992, guid: d415e37b4dd1a3b41919a12c85eb33e5,
-      type: 3}
-    m_TargetAsset: {fileID: 8585938393116782992, guid: d415e37b4dd1a3b41919a12c85eb33e5,
-      type: 3}
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
   - m_GUID: 2462e4e5d0fd2174ebc834555bbcd43d
     m_Address: Sprites/RedBlock
     m_ReadOnly: 0
     m_SerializedLabels: []
-    m_MainAsset: {fileID: 6277164999310217791, guid: 2462e4e5d0fd2174ebc834555bbcd43d,
-      type: 3}
-    m_TargetAsset: {fileID: 6277164999310217791, guid: 2462e4e5d0fd2174ebc834555bbcd43d,
-      type: 3}
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
   - m_GUID: 80cc2c9826e1d624484f6fb910040c7a
     m_Address: Sprites/YellowBlock
     m_ReadOnly: 0
     m_SerializedLabels: []
-    m_MainAsset: {fileID: 3821321368149907760, guid: 80cc2c9826e1d624484f6fb910040c7a,
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 9e226f0e51bd87242ba417e187e4dc6e
+    m_Address: Sprites/Cursor/1p
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 8515310664069066103, guid: 9e226f0e51bd87242ba417e187e4dc6e,
       type: 3}
-    m_TargetAsset: {fileID: 3821321368149907760, guid: 80cc2c9826e1d624484f6fb910040c7a,
+    m_TargetAsset: {fileID: 8515310664069066103, guid: 9e226f0e51bd87242ba417e187e4dc6e,
+      type: 3}
+  - m_GUID: 254d14e65becf14469bf268a8fe777ac
+    m_Address: Sprites/Cursor/2p
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 2627498601971123685, guid: 254d14e65becf14469bf268a8fe777ac,
+      type: 3}
+    m_TargetAsset: {fileID: 2627498601971123685, guid: 254d14e65becf14469bf268a8fe777ac,
       type: 3}
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 9f26555974b278347b0bb43d74ac8cf0, type: 2}

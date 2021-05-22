@@ -5,6 +5,7 @@ using Zenject;
 
 public interface IControlBlocksPresenter
 {
+    void SetPlayerId(int playerId);
     void DrawControlBlocks(IControlBlocks controlBlocks);
     void ChangeControlBlocks(IControlBlocks controlBlocks);
     void PlayCollisionSound();
@@ -17,6 +18,11 @@ public class ControlBlocksPresenter : IControlBlocksPresenter
     public ControlBlocksPresenter(ControlBlocksView controlBlocksView)
     {
         ControlBlocksView = controlBlocksView;
+    }
+
+    public void SetPlayerId(int playerId)
+    {
+        ControlBlocksView.SetPlayerId(playerId);
     }
 
     public void DrawControlBlocks(IControlBlocks controlBlocks)

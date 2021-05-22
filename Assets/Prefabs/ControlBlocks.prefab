@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5710612486436482208}
   - component: {fileID: 5710612486436482215}
   - component: {fileID: -6178224220801653964}
+  - component: {fileID: -1532782373487309256}
   - component: {fileID: -8338260343180587606}
   m_Layer: 0
   m_Name: ControlBlocks
@@ -46,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BlockViewFactory: {fileID: -6178224220801653964}
+  CursorViewFactory: {fileID: -1532782373487309256}
   CollisionSound: {fileID: -8338260343180587606}
 --- !u!114 &-6178224220801653964
 MonoBehaviour:
@@ -57,6 +59,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bfb5d6116237b5849ae1d0020a1f97a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-1532782373487309256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5710612486436482214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5861baa51fb2a6141a909e20684394b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!82 &-8338260343180587606
