@@ -14,7 +14,10 @@ public class Game : MonoBehaviour
         DOTween.
             SetTweensCapacity(tweenersCapacity: 500, sequencesCapacity: 50);
 
-        Players.Add(PlayerFactory.Create(1));
-        Players.Add(PlayerFactory.Create(2));
+        var PlayerCount = TitleToGameDataSender.PlayerCount;
+        for (var i = 1; i <= PlayerCount; i++)
+        {
+            Players.Add(PlayerFactory.Create(i));
+        }
     }
 }
