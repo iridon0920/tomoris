@@ -40,6 +40,10 @@ public class BlockController : MonoBehaviour
 
     [Inject]
     private readonly InitializeUiUseCase InitializeUiUseCase;
+
+    [Inject]
+    public Score Score { get; }
+
     private IInputEventProvider InputEventProvider;
     private ControlBlocks ControlBlocks;
 

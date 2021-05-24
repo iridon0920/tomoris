@@ -1,7 +1,7 @@
 using Zenject;
 public class Player
 {
-    private readonly int PlayerId;
+    public int PlayerId { get; }
     private readonly BlockController BlockController;
 
     [Inject]
@@ -11,6 +11,11 @@ public class Player
         BlockController = blockController;
 
         BlockController.PlayerId = PlayerId;
+    }
+
+    public double GetScoreTotalPoints()
+    {
+        return BlockController.Score.TotalPoints;
     }
 
     public class Factory : PlaceholderFactory<int, Player>
