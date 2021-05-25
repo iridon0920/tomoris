@@ -12,7 +12,13 @@ public class GameOverView : MonoBehaviour
     [SerializeField]
     private Canvas GameOverText;
     [SerializeField]
-    private Text WinnerText;
+    private Image Winner1P;
+    [SerializeField]
+    private Image Winner2P;
+    [SerializeField]
+    private Image Win;
+    [SerializeField]
+    private Image Draw;
     [SerializeField]
     private GameObject GameOverController;
 
@@ -33,11 +39,19 @@ public class GameOverView : MonoBehaviour
                     {
                         if (Game.GetWinnerPlayerId() == -1)
                         {
-                            WinnerText.text = "引き分け";
+                            Draw.enabled = true;
                         }
                         else
                         {
-                            WinnerText.text = "プレイヤー" + Game.GetWinnerPlayerId() + "の勝利！";
+                            Win.enabled = true;
+                            if (Game.GetWinnerPlayerId() == 1)
+                            {
+                                Winner1P.enabled = true;
+                            }
+                            else if (Game.GetWinnerPlayerId() == 2)
+                            {
+                                Winner2P.enabled = true;
+                            }
                         }
                     }
 
