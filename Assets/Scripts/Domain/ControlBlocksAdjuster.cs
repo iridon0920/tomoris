@@ -4,29 +4,27 @@ using UnityEngine;
 public class ControlBlocksAdjuster
 {
     private CollisionDetection CollisionDetection { get; }
+    private IControlBlocksPresenter ControlBlocksPresenter;
 
     [Inject]
-    public ControlBlocksAdjuster(CollisionDetection collisionDetection)
+    public ControlBlocksAdjuster(CollisionDetection collisionDetection, IControlBlocksPresenter controlBlocksPresenter)
     {
         CollisionDetection = collisionDetection;
+        ControlBlocksPresenter = controlBlocksPresenter;
     }
 
     public ControlBlocks AdjustBlocksForSpin(ControlBlocks currentControlBlocks, ControlBlocks newControlBlocks)
     {
-        if (CollisionDetection.IsCollisionControlBlocksLower(newControlBlocks)
-            && CollisionDetection.IsCollisionControlBlocksUpper(newControlBlocks)
-        )
+        if ((CollisionDetection.IsCollisionControlBlocksLower(newControlBlocks)
+                && CollisionDetection.IsCollisionControlBlocksUpper(newControlBlocks))
+            || (CollisionDetection.IsCollisionControlBlocksLeftSide(newControlBlocks)
+                && CollisionDetection.IsCollisionControlBlocksRightSide(newControlBlocks)))
         {
+            ControlBlocksPresenter.PlayCollisionSound();
             return currentControlBlocks;
         }
 
-        if (CollisionDetection.IsCollisionControlBlocksLeftSide(newControlBlocks)
-            && CollisionDetection.IsCollisionControlBlocksRightSide(newControlBlocks)
-        )
-        {
-            return currentControlBlocks;
-        }
-
+        ControlBlocksPresenter.PlaySpinSound();
         return AdjustBlocksForSpinLoop(newControlBlocks);
     }
 

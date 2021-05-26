@@ -14,6 +14,8 @@ public class ControlBlocksView : MonoBehaviour
     private CursorViewFactory CursorViewFactory;
     [SerializeField]
     private AudioSource CollisionSound;
+    [SerializeField]
+    private AudioSource SpinSound;
 
     public void SetPlayerId(int playerId)
     {
@@ -50,5 +52,10 @@ public class ControlBlocksView : MonoBehaviour
     public void PlayCollisionSound()
     {
         CollisionSound.PlayOneShot(CollisionSound.clip);
+    }
+
+    public void PlaySpinSound()
+    {
+        SpinSound.PlayOneShot(SpinSound.clip);
     }
 }

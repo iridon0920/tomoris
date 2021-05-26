@@ -9,6 +9,7 @@ public interface IControlBlocksPresenter
     void DrawControlBlocks(IControlBlocks controlBlocks);
     void ChangeControlBlocks(IControlBlocks controlBlocks);
     void PlayCollisionSound();
+    void PlaySpinSound();
 }
 public class ControlBlocksPresenter : IControlBlocksPresenter
 {
@@ -39,5 +40,10 @@ public class ControlBlocksPresenter : IControlBlocksPresenter
     public void PlayCollisionSound()
     {
         ControlBlocksView.PlayCollisionSound();
+    }
+
+    public void PlaySpinSound()
+    {
+        ControlBlocksView.PlaySpinSound();
     }
 }

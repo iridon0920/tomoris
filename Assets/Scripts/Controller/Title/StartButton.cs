@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class StartButton : MonoBehaviour
 {
+    [SerializeField]
+    private AudioSource StartSound;
+
     public void Start1PlayerMode()
     {
         TitleToGameDataSender.PlayerCount = 1;
@@ -19,6 +22,7 @@ public class StartButton : MonoBehaviour
 
     private void LoadGameScene()
     {
+        StartSound.PlayOneShot(StartSound.clip);
         SceneManager.LoadScene("GameScene");
     }
 }

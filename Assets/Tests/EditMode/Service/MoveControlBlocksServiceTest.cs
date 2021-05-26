@@ -24,9 +24,8 @@ namespace Tests
             mockBoard.Setup(m => m.ExistPosition(0, 0)).Returns(true);
 
             var collisionDetection = new CollisionDetection(mockBoard.Object);
-            var adjuster = new ControlBlocksAdjuster(collisionDetection);
             var mockControlBlocksPresenter = new Mock<IControlBlocksPresenter>();
-
+            var adjuster = new ControlBlocksAdjuster(collisionDetection, mockControlBlocksPresenter.Object);
             MoveLeftService = new MoveLeftControlBlocksService(collisionDetection, mockControlBlocksPresenter.Object);
             MoveRightService = new MoveRightControlBlocksService(collisionDetection, mockControlBlocksPresenter.Object);
             SpinRightService = new SpinRightControlBlocksService(adjuster);
