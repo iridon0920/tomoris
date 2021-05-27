@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 public class BlocksQueueView : MonoBehaviour
 {
     private readonly Queue<List<BlockView>> QueueBlocks = new Queue<List<BlockView>>();
@@ -16,7 +15,7 @@ public class BlocksQueueView : MonoBehaviour
         transform.position = new Vector3(x, y, 0);
     }
 
-    public async Task DrawQueueBlocks(IBlocks blocks)
+    public async UniTask DrawQueueBlocks(IBlocks blocks)
     {
         var index = QueueBlocks.Count;
 

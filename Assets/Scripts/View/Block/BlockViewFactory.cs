@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 using UnityEngine.AddressableAssets;
-using System.Threading.Tasks;
 
 public class BlockViewFactory : MonoBehaviour
 {
-    public async Task<BlockView> InstantiateBlock(BlockColor blockColor, Vector3 position, Transform transform)
+    public async UniTask<BlockView> InstantiateBlock(BlockColor blockColor, Vector3 position, Transform transform)
     {
         var handle = Addressables.InstantiateAsync(
             GetAddressByBlockColor(blockColor),
@@ -14,7 +14,7 @@ public class BlockViewFactory : MonoBehaviour
             transform
         );
 
-        await handle.Task;
+        await handle.ToUniTask();
         return handle.Result.GetComponent<BlockView>();
     }
 

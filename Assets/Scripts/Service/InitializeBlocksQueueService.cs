@@ -1,5 +1,5 @@
 using Zenject;
-using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 
 public class InitializeBlocksQueueService
 {
@@ -16,7 +16,7 @@ public class InitializeBlocksQueueService
         BlocksQueuePresenter = blocksQueuePresenter;
     }
 
-    public async Task Execute(int queueSize)
+    public async UniTask Execute(int queueSize)
     {
         BlocksQueue.InitializeQueue(queueSize);
         await BlocksQueuePresenter.DrawAllQueueBlocks(BlocksQueue.Queue.ToArray());

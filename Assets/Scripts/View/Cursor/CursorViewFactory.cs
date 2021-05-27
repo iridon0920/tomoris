@@ -1,13 +1,13 @@
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 
 [RequireComponent(typeof(CursorViewPosition))]
 public class CursorViewFactory : MonoBehaviour
 {
     [SerializeField]
     private CursorViewPosition CursorViewPosition;
-    public async Task<CursorView> Instantiate(int playerId, IControlBlocks controlBlocks, Transform transform)
+    public async UniTask<CursorView> Instantiate(int playerId, IControlBlocks controlBlocks, Transform transform)
     {
         var handle = Addressables.InstantiateAsync(
             GetAddressByPlayerId(playerId),
@@ -16,7 +16,7 @@ public class CursorViewFactory : MonoBehaviour
             transform
         );
 
-        await handle.Task;
+        await handle.ToUniTask();
         return handle.Result.GetComponent<CursorView>();
     }
 
