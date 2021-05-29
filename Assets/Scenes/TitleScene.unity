@@ -190,7 +190,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "1\u4EBA\u3067\u30D7\u30EC\u30A4"
+  m_Text: 1Player Mode
 --- !u!222 &8876677
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -509,7 +509,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "2\u4EBA\u3067\u30D7\u30EC\u30A4"
+  m_Text: 2Player Mode
 --- !u!222 &436439721
 CanvasRenderer:
   m_ObjectHideFlags: 0
