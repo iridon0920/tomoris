@@ -1,3 +1,6 @@
+<p align="center">
+    <img src="https://media.githubusercontent.com/media/iridon0920/tomoris/master/Assets/Art/Sprites/TitleLogo.png">
+</p>
 ![logo](Assets/Art/Sprites/TitleLogo.png "Tomoris")
 
 ## ゲーム概要
