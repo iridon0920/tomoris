@@ -1,4 +1,4 @@
-![logo](Assets\Art\Sprites\TitleLogo.png "Tomoris")
+![logo](Assets/Art/Sprites/TitleLogo.png "Tomoris")
 
 ## ゲーム概要
 
