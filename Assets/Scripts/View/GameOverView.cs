@@ -10,7 +10,9 @@ public class GameOverView : MonoBehaviour
     [SerializeField]
     private Game Game;
     [SerializeField]
-    private Canvas GameOverText;
+    private Image GameOverText;
+    [SerializeField]
+    private Image GameRestartText;
     [SerializeField]
     private Image Winner1P;
     [SerializeField]
@@ -34,6 +36,7 @@ public class GameOverView : MonoBehaviour
                 if (isGameOver)
                 {
                     GameOverText.enabled = true;
+                    GameRestartText.enabled = true;
 
                     if (Game.PlayerCount > 1)
                     {
