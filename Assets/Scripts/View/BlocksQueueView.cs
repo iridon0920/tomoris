@@ -15,7 +15,7 @@ public class BlocksQueueView : MonoBehaviour
         transform.position = new Vector3(x, y, 0);
     }
 
-    public async UniTask DrawQueueBlocks(IBlocks blocks)
+    public void DrawQueueBlocks(IBlocks blocks)
     {
         var index = QueueBlocks.Count;
 
@@ -26,7 +26,7 @@ public class BlocksQueueView : MonoBehaviour
             newPosition.x += block.X;
             newPosition.y -= index * IntervalY - block.Y;
 
-            var blockObject = await BlockViewFactory.InstantiateBlock(
+            var blockObject = BlockViewFactory.InstantiateBlock(
                 block.BlockColor,
                 newPosition,
                 transform

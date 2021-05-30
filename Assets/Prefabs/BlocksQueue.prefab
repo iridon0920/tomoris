@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7415779576968739627}
   - component: {fileID: -8658219932381449651}
-  - component: {fileID: 3508019321145338213}
   m_Layer: 0
   m_Name: BlocksQueue
   m_TagString: Untagged
@@ -44,16 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a21477b9319d4544684e3d01571e4e8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BlockViewFactory: {fileID: 3508019321145338213}
---- !u!114 &3508019321145338213
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5616440785849523154}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f3b158fae5b31546b521228458eec89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  BlockViewFactory: {fileID: 9065577393305327342, guid: e6dcde833b4074d429708d7bf7488801,
+    type: 3}

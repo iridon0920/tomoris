@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-[RequireComponent(typeof(BlockViewFactory))]
 [RequireComponent(typeof(BoardBlockViewPosition))]
 public class BoardBlockViewList : MonoBehaviour
 {
@@ -14,9 +13,9 @@ public class BoardBlockViewList : MonoBehaviour
     [SerializeField]
     private BoardBlockViewPosition BoardBlockViewPosition;
 
-    public async void InstantiateBlock(BoardPutBlock boardPutBlock, Transform transform)
+    public void InstantiateBlock(BoardPutBlock boardPutBlock, Transform transform)
     {
-        var blockObject = await BlockViewFactory.InstantiateBlock(
+        var blockObject = BlockViewFactory.InstantiateBlock(
             boardPutBlock.GetBlockColor(),
             BoardBlockViewPosition.GetPositionByBoardPutBlock(boardPutBlock, transform),
             transform

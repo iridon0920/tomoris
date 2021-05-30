@@ -10,7 +10,7 @@ public class Player
         PlayerId = playerId;
         BlockController = blockController;
 
-        BlockController.PlayerId = PlayerId;
+        BlockController.Initialize(PlayerId);
     }
 
     public double GetScoreTotalPoints()

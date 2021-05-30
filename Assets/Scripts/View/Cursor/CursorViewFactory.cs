@@ -1,34 +1,34 @@
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using Cysharp.Threading.Tasks;
 
 [RequireComponent(typeof(CursorViewPosition))]
 public class CursorViewFactory : MonoBehaviour
 {
     [SerializeField]
     private CursorViewPosition CursorViewPosition;
-    public async UniTask<CursorView> Instantiate(int playerId, IControlBlocks controlBlocks, Transform transform)
+    [SerializeField]
+    private CursorView Cursor1P;
+    [SerializeField]
+    private CursorView Cursor2P;
+
+    public CursorView InstantiateCursor(int playerId, IControlBlocks controlBlocks, Transform transform)
     {
-        var handle = Addressables.InstantiateAsync(
-            GetAddressByPlayerId(playerId),
+        return Instantiate(
+            GetCursorViewByPlayerId(playerId),
             CursorViewPosition.GetPositionByControlBlocks(controlBlocks, transform),
             Quaternion.identity,
             transform
         );
-
-        await handle.ToUniTask();
-        return handle.Result.GetComponent<CursorView>();
     }
 
-    private string GetAddressByPlayerId(int playerId)
+    private CursorView GetCursorViewByPlayerId(int playerId)
     {
         if (playerId == 1)
         {
-            return "Sprites/Cursor/1p";
+            return Cursor1P;
         }
         else
         {
-            return "Sprites/Cursor/2p";
+            return Cursor2P;
         }
     }
 

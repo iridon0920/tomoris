@@ -1,42 +1,51 @@
-using System.Collections.Generic;
 using UnityEngine;
-using Cysharp.Threading.Tasks;
-using UnityEngine.AddressableAssets;
 
 public class BlockViewFactory : MonoBehaviour
 {
-    public async UniTask<BlockView> InstantiateBlock(BlockColor blockColor, Vector3 position, Transform transform)
+    [SerializeField]
+    private BlockView RedBlock;
+    [SerializeField]
+    private BlockView BlueBlock;
+    [SerializeField]
+    private BlockView GreenBlock;
+    [SerializeField]
+    private BlockView LightBlueBlock;
+    [SerializeField]
+    private BlockView OrangeBlock;
+    [SerializeField]
+    private BlockView PurpleBlock;
+    [SerializeField]
+    private BlockView YellowBlock;
+
+    public BlockView InstantiateBlock(BlockColor blockColor, Vector3 position, Transform transform)
     {
-        var handle = Addressables.InstantiateAsync(
-            GetAddressByBlockColor(blockColor),
+        return Instantiate(
+            GetBlockViewByBlockColor(blockColor),
             position,
             Quaternion.identity,
             transform
         );
-
-        await handle.ToUniTask();
-        return handle.Result.GetComponent<BlockView>();
     }
 
-    private string GetAddressByBlockColor(BlockColor blockColor)
+    private BlockView GetBlockViewByBlockColor(BlockColor blockColor)
     {
         switch (blockColor)
         {
             case BlockColor.Red:
-                return "Sprites/RedBlock";
+                return RedBlock;
             case BlockColor.Blue:
-                return "Sprites/BlueBlock";
+                return BlueBlock;
             case BlockColor.Green:
-                return "Sprites/GreenBlock";
+                return GreenBlock;
             case BlockColor.LightBlue:
-                return "Sprites/LightBlueBlock";
+                return LightBlueBlock;
             case BlockColor.Orange:
-                return "Sprites/OrangeBlock";
+                return OrangeBlock;
             case BlockColor.Purple:
-                return "Sprites/PurpleBlock";
+                return PurpleBlock;
             case BlockColor.Yellow:
-                return "Sprites/YellowBlock";
+                return YellowBlock;
         }
-        return "";
+        return null;
     }
 }

@@ -22,9 +22,9 @@ public class ControlBlocksView : MonoBehaviour
         PlayerId = playerId;
     }
 
-    public async void DrawControlBlocks(IControlBlocks controlBlocks)
+    public void DrawControlBlocks(IControlBlocks controlBlocks)
     {
-        Cursor = await CursorViewFactory.Instantiate(PlayerId, controlBlocks, transform);
+        Cursor = CursorViewFactory.InstantiateCursor(PlayerId, controlBlocks, transform);
 
         BlockList.InstantiateBlocks(controlBlocks, transform);
     }

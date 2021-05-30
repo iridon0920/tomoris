@@ -1,5 +1,4 @@
 using Zenject;
-using Cysharp.Threading.Tasks;
 
 public class BlocksQueuePresenter
 {
@@ -15,19 +14,19 @@ public class BlocksQueuePresenter
         BlocksQueueView = blocksQueueView;
     }
 
-    public async UniTask DrawAllQueueBlocks(IBlocks[] allQueueBlocks)
+    public void DrawAllQueueBlocks(IBlocks[] allQueueBlocks)
     {
         foreach (var queueBlocks in allQueueBlocks)
         {
-            await BlocksQueueView.DrawQueueBlocks(queueBlocks);
+            BlocksQueueView.DrawQueueBlocks(queueBlocks);
         }
     }
 
-    public async void DrawQueueBlocksDequeue(IBlocks nextBlocks)
+    public void DrawQueueBlocksDequeue(IBlocks nextBlocks)
     {
         BlocksQueueView.DeleteTopBlocks();
         BlocksQueueView.SqueezeEmptyPosition();
-        await BlocksQueueView.DrawQueueBlocks(nextBlocks);
+        BlocksQueueView.DrawQueueBlocks(nextBlocks);
     }
 
     public void ChangePositionByPlayerId(int playerId)

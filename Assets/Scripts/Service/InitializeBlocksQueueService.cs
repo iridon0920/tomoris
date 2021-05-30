@@ -16,9 +16,9 @@ public class InitializeBlocksQueueService
         BlocksQueuePresenter = blocksQueuePresenter;
     }
 
-    public async UniTask Execute(int queueSize)
+    public void Execute(int queueSize)
     {
         BlocksQueue.InitializeQueue(queueSize);
-        await BlocksQueuePresenter.DrawAllQueueBlocks(BlocksQueue.Queue.ToArray());
+        BlocksQueuePresenter.DrawAllQueueBlocks(BlocksQueue.Queue.ToArray());
     }
 }

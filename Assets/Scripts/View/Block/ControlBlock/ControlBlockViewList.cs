@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-[RequireComponent(typeof(BlockViewFactory))]
 [RequireComponent(typeof(ControlBlockViewPosition))]
 public class ControlBlockViewList : MonoBehaviour
 {
@@ -12,12 +11,12 @@ public class ControlBlockViewList : MonoBehaviour
     [SerializeField]
     private ControlBlockViewPosition ControlBlockViewPosition;
 
-    public async void InstantiateBlocks(IControlBlocks controlBlocks, Transform transform)
+    public void InstantiateBlocks(IControlBlocks controlBlocks, Transform transform)
     {
         Blocks = new List<BlockView>();
         foreach (var block in controlBlocks.Blocks.BlockList)
         {
-            var blockObject = await BlockViewFactory.InstantiateBlock(
+            var blockObject = BlockViewFactory.InstantiateBlock(
                 block.BlockColor,
                 ControlBlockViewPosition.GetPositionByControlBlocks(
                     controlBlocks,

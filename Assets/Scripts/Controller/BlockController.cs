@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 using UniRx;
-using UniRx.Triggers;
 
 public class BlockController : MonoBehaviour
 {
@@ -53,10 +52,12 @@ public class BlockController : MonoBehaviour
 
     private bool IsGameOver = false;
 
-    async void Awake()
+    public void Initialize(int playerId)
     {
+        PlayerId = playerId;
+        InitializeUiUseCase.Execute(PlayerId);
 
-        await InitializeBlocksQueueService.Execute(QueueSize);
+        InitializeBlocksQueueService.Execute(QueueSize);
         ControlBlocks = GetNextControlBlocksService.Execute(PlayerId);
         InputEventProvider = GetInputEventProvider();
     }
@@ -75,8 +76,6 @@ public class BlockController : MonoBehaviour
 
     void Start()
     {
-        InitializeUiUseCase.Execute(PlayerId);
-
         StartCoroutine(MoveDownOverTime());
 
         GameOverEvent
