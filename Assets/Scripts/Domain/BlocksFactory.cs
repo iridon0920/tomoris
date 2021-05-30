@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using Zenject;
 
 public class BlocksFactory
 {
+    private List<int> CreatedNumbers;
     private readonly Random Random;
     const int NUMBER_OF_TYPES = 7;
 
@@ -10,11 +12,36 @@ public class BlocksFactory
     public BlocksFactory(Random random)
     {
         Random = random;
+        CreatedNumbers = new List<int>();
     }
 
     public Blocks Create()
     {
-        switch (Random.Next(NUMBER_OF_TYPES))
+        int romdomNumber;
+
+        // 一度作られたブロックは一巡するまで作られないように
+        while (true)
+        {
+            var number = Random.Next(NUMBER_OF_TYPES);
+            var findIndex = CreatedNumbers.FindIndex(createdNumber => createdNumber == number);
+            if (findIndex == -1)
+            {
+                CreatedNumbers.Add(number);
+                romdomNumber = number;
+                break;
+            }
+        }
+
+        if (CreatedNumbers.Count >= NUMBER_OF_TYPES)
+        {
+            CreatedNumbers = new List<int>();
+        }
+        return CreateBlocksByNumber(romdomNumber);
+    }
+
+    private Blocks CreateBlocksByNumber(int number)
+    {
+        switch (number)
         {
             case 0:
                 return new IShapedBlocks();
