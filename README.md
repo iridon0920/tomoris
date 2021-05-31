@@ -8,6 +8,10 @@
 
 ※1 プレイヤーでのゲームプレイも対応しています。
 
+## ゲーム公開先
+
+https://unityroom.com/games/tomoris
+
 ## ゲーム画面
 
 ![game](game.png "gameImage")
@@ -36,3 +40,21 @@
 -   ハードドロップ、ホールド機能
 -   対戦ルールの検討
     -   現状では先にラインを消したプレイヤーがわざとゲームオーバーにすれば勝ってしまう
+
+## 利用ゲームエンジン
+
+-   Unity(2019.4.20f1)
+
+## ゲーム内使用素材配布元（敬称略）
+
+### BGM
+
+-   魔王魂
+    -   https://maou.audio/
+
+### 効果音
+
+-   小森平
+    -   https://taira-komori.jpn.org/index.html
+-   効果音工房
+    -   https://umipla.com/
