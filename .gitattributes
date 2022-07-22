@@ -1,6 +1,6 @@
 * text=auto
 
-Assets/Plugins/**/* linguist-vendired
+Assets/Plugins/**/* linguist-vendored
 
 # Unity files
 *.meta -text merge=unityyamlmerge diff
