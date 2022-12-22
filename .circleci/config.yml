@@ -4,6 +4,19 @@ orbs:
   unity: game-ci/unity@1.4.0
 
 workflows:
-  create-unity-activation-file:
-    jobs:
-      - unity/create-activation-file
+  build-unity-project:
+      jobs:
+        - unity/build:
+            name: 'build-windows'
+            step-name: 'Build Windows'
+            unity-license-var-name: 'UNITY_ENCODED_LICENSE'
+            unity-username-var-name: 'UNITY_USERNAME'
+            unity-password-var-name: 'UNITY_PASSWORD'
+            executor:
+              name: 'unity/windows-2022'
+              target_platform: 'windows-il2cpp'
+              editor_version: '2021.3.1f1'
+              resource_class: 'large'
+            build-target: StandaloneWindows
+            compress: true
+            context: unity
